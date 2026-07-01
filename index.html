@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apuestas Mundial 2026 — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0f1117; color: #e1e4e8; padding: 24px; }
+.container { max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
+.subtitle { font-size: 14px; color: #8b949e; margin-bottom: 24px; }
+.header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+.header .meta { font-size: 13px; color: #8b949e; }
+.badge { background: #1f6feb; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; }
+.card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #8b949e; margin-bottom: 12px; }
+.card-title .live { color: #3fb950; margin-left: 6px; }
+
+.match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.match-teams { font-size: 18px; font-weight: 700; }
+.match-teams .vs { color: #8b949e; font-weight: 400; font-size: 14px; margin: 0 6px; }
+.match-info { font-size: 12px; color: #8b949e; margin-bottom: 16px; }
+.match-info span { margin-right: 12px; }
+
+.prob-bar { display: flex; height: 32px; border-radius: 8px; overflow: hidden; margin-bottom: 12px; font-size: 12px; font-weight: 700; }
+.prob-bar .home { background: #1f6feb; display: flex; align-items: center; justify-content: center; color: #fff; transition: width 0.5s; }
+.prob-bar .draw { background: #8b949e; display: flex; align-items: center; justify-content: center; color: #000; }
+.prob-bar .away { background: #d29922; display: flex; align-items: center; justify-content: center; color: #000; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px 12px; font-size: 13px; margin-top: 12px; }
+.stats-grid .stat-label { color: #8b949e; grid-column: 2; text-align: center; font-size: 11px; }
+.stats-grid .stat-home { text-align: right; }
+.stats-grid .stat-away { text-align: left; }
+.stats-grid .stat-bar { position: relative; height: 4px; background: #30363d; border-radius: 2px; grid-column: 1 / -1; margin: -2px 0 2px; }
+.stats-grid .stat-bar .fill { height: 100%; background: #1f6feb; border-radius: 2px; }
+
+.markets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+.market-box { background: #0d1117; border-radius: 8px; padding: 10px; text-align: center; }
+.market-box .label { font-size: 11px; color: #8b949e; }
+.market-box .value { font-size: 18px; font-weight: 700; }
+.market-box .value.green { color: #3fb950; }
+.market-box .value.yellow { color: #d29922; }
+.market-box .value.red { color: #f85149; }
+
+.scores-list { margin-top: 8px; }
+.scores-list .score-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; border-bottom: 1px solid #21262d; }
+.scores-list .score-row:last-child { border-bottom: none; }
+.scores-list .score-row .prob { color: #3fb950; font-weight: 600; }
+
+.value-bet { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; margin-top: 12px; }
+.value-bet .label { font-size: 11px; color: #8b949e; text-transform: uppercase; }
+.value-bet .value { font-size: 15px; font-weight: 700; }
+
+.results-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.results-table th { text-align: left; padding: 8px 12px; color: #8b949e; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #30363d; }
+.results-table td { padding: 8px 12px; border-bottom: 1px solid #21262d; }
+.results-table .win { color: #3fb950; }
+.results-table .loss { color: #f85149; }
+.results-table .draw { color: #d29922; }
+
+.footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 32px; padding: 16px 0; border-top: 1px solid #21262d; }
+.footer a { color: #58a6ff; text-decoration: none; }
+
+.disclaimer { background: #1c2128; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #8b949e; margin-bottom: 24px; }
+
+.toggle-group { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.toggle-btn { background: #21262d; border: 1px solid #30363d; color: #8b949e; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.toggle-btn.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+.partidos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div>
+    <h1>Mundial 2026 — Dashboard de Apuestas</h1>
+    <div class="subtitle">Predicciones generadas por modelo ML | Solo fines educativos</div>
+  </div>
+  <div class="meta">
+    <span class="badge" id="matches-count">4040</span> partidos entrenados
+    <span style="margin-left: 12px;" id="update-date"></span>
+  </div>
+</div>
+
+<div class="disclaimer">
+  ⚠️ <strong>Disclaimer:</strong> Solo fines educativos y de entretenimiento. Juega con responsabilidad.
+  Estas predicciones no constituyen asesoramiento financiero.
+</div>
+
+<div class="toggle-group">
+  <button class="toggle-btn active" onclick="showSection('pendientes')">Partidos Hoy</button>
+  <button class="toggle-btn" onclick="showSection('resultados')">Resultados</button>
+  <button class="toggle-btn" onclick="showSection('modelo')">Rendimiento Modelo</button>
+</div>
+
+<div id="section-pendientes" class="partidos-container">
+
+  <!-- USA vs Bosnia -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        🇺🇸 USA <span class="vs">vs</span> 🇧🇦 Bosnia
+      </div>
+      <span class="badge" style="background: #d29922;">Hoy 8pm</span>
+    </div>
+    <div class="match-info">
+      <span>📍 Levi's Stadium, SF</span>
+      <span>👤 Claus (BRA)</span>
+      <span>🏆 R32</span>
+    </div>
+
+    <div class="prob-bar">
+      <div class="home" style="width:52%">52%</div>
+      <div class="draw" style="width:30%">30%</div>
+      <div class="away" style="width:18%">18%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value yellow">52%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value red">44%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Pronóstico</div>
+        <div class="value" style="color:#1f6feb">USA</div>
+      </div>
+    </div>
+
+    <div class="card-title" style="margin-top:8px;">Exact Scores</div>
+    <div class="scores-list">
+      <div class="score-row"><span>1-1</span><span class="prob">11%</span></div>
+      <div class="score-row"><span>2-1 USA</span><span class="prob">9%</span></div>
+      <div class="score-row"><span>1-0 USA</span><span class="prob">8%</span></div>
+      <div class="score-row"><span>0-0</span><span class="prob">7%</span></div>
+      <div class="score-row"><span>2-2</span><span class="prob">6%</span></div>
+    </div>
+
+    <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
+    <div class="stats-grid">
+      <div class="stat-home">3.5</div><div class="stat-label">Remates a puerta</div><div class="stat-away">5.0</div>
+      <div class="stat-home">4.0</div><div class="stat-label">Remates fuera</div><div class="stat-away">5.5</div>
+      <div class="stat-home">8.5</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">12.0</div>
+      <div class="stat-home">13.0</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">11.0</div>
+      <div class="stat-home">3.5</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">5.5</div>
+      <div class="stat-home">2.5</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">1.5</div>
+      <div class="stat-home">45%</div><div class="stat-label">Posesión</div><div class="stat-away">54%</div>
+      <div class="stat-home">3.5</div><div class="stat-label">Atajadas</div><div class="stat-away">2.5</div>
+    </div>
+
+    <div class="value-bet">
+      <div class="label">⚡ Value Bet</div>
+      <div class="value" style="color:#3fb950">Bosnia +1.5 — Modelo 68% vs Mercado 57%</div>
+    </div>
+  </div>
+
+  <!-- Belgium vs Senegal (completed) -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        🇧🇪 Bélgica <span class="vs">vs</span> 🇸🇳 Senegal
+      </div>
+      <span class="badge" style="background:#3fb950;">Finalizado</span>
+    </div>
+    <div class="match-info">
+      <span>📍 Lumen Field, Seattle</span>
+      <span>👤 Martínez (HON)</span>
+      <span>🏆 R32</span>
+    </div>
+    <div style="font-size:28px;font-weight:800;text-align:center;margin:8px 0;">
+      2-2 <span style="font-size:14px;color:#8b949e;">(t.e.)</span>
+    </div>
+    <div style="font-size:13px;text-align:center;color:#8b949e;margin-bottom:8px;">
+      Diarra 25' · Sarr 51' · Lukaku 86' · Tielemans 89'
+    </div>
+
+    <div class="prob-bar" style="height:20px;font-size:11px;">
+      <div class="home" style="width:37%">37%</div>
+      <div class="draw" style="width:24%">24%</div>
+      <div class="away" style="width:39%">39%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value green">53%</div>
+        <div style="font-size:11px;color:#3fb950;">✅</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value yellow">48%</div>
+        <div style="font-size:11px;color:#3fb950;">✅</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Resultado</div>
+        <div class="value yellow">Draw</div>
+        <div style="font-size:11px;color:#d29922;">24%</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">xG: BEL 0.88 - 2.80 SEN</span>
+      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">Posesión: 53%-47%</span>
+      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">Tiros: 16-13</span>
+    </div>
+
+    <div class="value-bet" style="margin-top:10px;">
+      <div class="label">🔮 Modelo acertó</div>
+      <div class="value" style="font-size:13px;color:#3fb950;">
+        ✅ Draw · ✅ O2.5 · ✅ BTTS · ✅ Senegal anota primero (3/4)
+      </div>
+    </div>
+  </div>
+
+  <!-- England vs Congo DR (completed) -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra <span class="vs">vs</span> 🇨🇩 Congo DR
+      </div>
+      <span class="badge" style="background:#3fb950;">Finalizado</span>
+    </div>
+    <div class="match-info">
+      <span>📍 Atlanta</span>
+      <span>👤 Makhadmeh (JOR)</span>
+      <span>🏆 R32</span>
+    </div>
+    <div style="font-size:28px;font-weight:800;text-align:center;margin:8px 0;">
+      2-1
+    </div>
+    <div style="font-size:13px;text-align:center;color:#8b949e;margin-bottom:8px;">
+      Cipenga 7' · Kane 75' · Kane 86'
+    </div>
+
+    <div class="prob-bar" style="height:20px;font-size:11px;">
+      <div class="home" style="width:59%">59%</div>
+      <div class="draw" style="width:18%">18%</div>
+      <div class="away" style="width:23%">23%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value green">56%</div>
+        <div style="font-size:11px;color:#3fb950;">✅</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value green">54%</div>
+        <div style="font-size:11px;color:#3fb950;">✅</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Resultado</div>
+        <div class="value" style="color:#1f6feb">England</div>
+        <div style="font-size:11px;color:#3fb950;">✅</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">xG: ENG 2.04 - 0.81 COD</span>
+      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">Posesión: 60%-40%</span>
+    </div>
+
+    <div class="value-bet" style="margin-top:10px;">
+      <div class="label">🔮 Modelo acertó</div>
+      <div class="value" style="font-size:13px;color:#3fb950;">✅ England · ✅ O2.5 · ✅ BTTS · ❌ HT (Congo 7')</div>
+    </div>
+  </div>
+</div>
+
+<div id="section-resultados" class="hidden">
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">Ronda de 32 — Resultados</div>
+    <table class="results-table">
+      <thead>
+        <tr><th>Fecha</th><th>Partido</th><th>Resultado</th><th>Pronóstico</th><th>O2.5</th><th>BTTS</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jul 1</td>
+          <td>🏴󠁧󠁢󠁥󠁮󠁧󠁿 England vs Congo DR 🇨🇩</td>
+          <td class="win">2-1</td>
+          <td class="win">✅ England (59%)</td>
+          <td class="win">✅ 56%</td>
+          <td class="win">✅ 54%</td>
+        </tr>
+        <tr>
+          <td>Jul 1</td>
+          <td>🇧🇪 Belgium vs Senegal 🇸🇳</td>
+          <td class="draw">2-2</td>
+          <td class="draw">✅ Draw (24%)</td>
+          <td class="win">✅ 53%</td>
+          <td class="win">✅ 48%</td>
+        </tr>
+        <tr>
+          <td>Jul 1</td>
+          <td>🇺🇸 USA vs Bosnia 🇧🇦</td>
+          <td>—</td>
+          <td>USA (52%)</td>
+          <td>52%</td>
+          <td>44%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="section-modelo" class="hidden">
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">Rendimiento del Modelo</div>
+    <table class="results-table">
+      <thead>
+        <tr><th>Target</th><th>CV Accuracy</th><th>Val Accuracy</th><th>ROC AUC</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1X2</td>
+          <td class="win">0.461</td>
+          <td>0.481</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Over/Under 2.5</td>
+          <td class="win">0.547</td>
+          <td>0.550</td>
+          <td class="win">0.865</td>
+        </tr>
+        <tr>
+          <td>BTTS</td>
+          <td class="win">0.511</td>
+          <td>0.514</td>
+          <td class="win">0.861</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:#8b949e;margin-top:12px;">
+      Dataset: <strong>4040</strong> partidos nacionales | Features: 19 | FIFA Rankings incluidos
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Partidos en el Dataset</div>
+    <table class="results-table">
+      <thead>
+        <tr><th>Equipo</th><th>Partidos</th><th>Fuente</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>England</td><td>46</td><td>WCQ, Nations League, Amistosos</td></tr>
+        <tr><td>USA</td><td>55</td><td>CONCACAF, Copa America, Amistosos</td></tr>
+        <tr><td>Belgium</td><td>46</td><td>UEFA, Nations League, Amistosos</td></tr>
+        <tr><td>Senegal</td><td>50</td><td>AFCON, WCQ, Amistosos</td></tr>
+        <tr><td>Bosnia</td><td>35</td><td>UEFA, Nations League, Amistosos</td></tr>
+        <tr><td>Congo DR</td><td>48</td><td>AFCON, WCQ, Amistosos</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Generado con ❤️ por Sports ML Pipeline v1.0 | <a href="#">GitHub</a></p>
+  <p>Solo fines educativos. Juega con responsabilidad.</p>
+</div>
+
+</div>
+
+<script>
+function showSection(section) {
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('section-pendientes').classList.add('hidden');
+  document.getElementById('section-resultados').classList.add('hidden');
+  document.getElementById('section-modelo').classList.add('hidden');
+  document.getElementById('section-' + section).classList.remove('hidden');
+}
+document.getElementById('update-date').textContent = '🔄 ' + new Date().toLocaleString('es-MX');
+</script>
+</body>
+</html>
