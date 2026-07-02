@@ -36,8 +36,6 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
 .stats-grid .stat-label { color: #8b949e; grid-column: 2; text-align: center; font-size: 11px; }
 .stats-grid .stat-home { text-align: right; }
 .stats-grid .stat-away { text-align: left; }
-.stats-grid .stat-bar { position: relative; height: 4px; background: #30363d; border-radius: 2px; grid-column: 1 / -1; margin: -2px 0 2px; }
-.stats-grid .stat-bar .fill { height: 100%; background: #1f6feb; border-radius: 2px; }
 
 .markets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
 .market-box { background: #0d1117; border-radius: 8px; padding: 10px; text-align: center; }
@@ -84,198 +82,207 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
     <div class="subtitle">Predicciones generadas por modelo ML | Solo fines educativos</div>
   </div>
   <div class="meta">
-    <span class="badge" id="matches-count">4040</span> partidos entrenados
+    <span class="badge" id="matches-count">4042</span> partidos entrenados
     <span style="margin-left: 12px;" id="update-date"></span>
   </div>
 </div>
 
 <div class="disclaimer">
-  ⚠️ <strong>Disclaimer:</strong> Solo fines educativos y de entretenimiento. Juega con responsabilidad.
+  Solo fines educativos y de entretenimiento. Juega con responsabilidad.
   Estas predicciones no constituyen asesoramiento financiero.
 </div>
 
 <div class="toggle-group">
-  <button class="toggle-btn active" onclick="showSection('pendientes')">Partidos Hoy</button>
+  <button class="toggle-btn active" onclick="showSection('pendientes')">Partidos 2 Jul</button>
   <button class="toggle-btn" onclick="showSection('resultados')">Resultados</button>
   <button class="toggle-btn" onclick="showSection('modelo')">Rendimiento Modelo</button>
 </div>
 
 <div id="section-pendientes" class="partidos-container">
 
-  <!-- USA vs Bosnia -->
+  <!-- Portugal vs Croatia -->
   <div class="card">
     <div class="match-header">
       <div class="match-teams">
-        🇺🇸 USA <span class="vs">vs</span> 🇧🇦 Bosnia
+        Portugal <span class="vs">vs</span> Croatia
       </div>
-      <span class="badge" style="background: #d29922;">Hoy 8pm</span>
+      <span class="badge" style="background: #d29922;">Jue 3pm</span>
     </div>
     <div class="match-info">
-      <span>📍 Levi's Stadium, SF</span>
-      <span>👤 Claus (BRA)</span>
-      <span>🏆 R32</span>
+      <span>Toronto</span>
+      <span>R32</span>
     </div>
 
     <div class="prob-bar">
-      <div class="home" style="width:52%">52%</div>
-      <div class="draw" style="width:30%">30%</div>
-      <div class="away" style="width:18%">18%</div>
+      <div class="home" style="width:32%">32%</div>
+      <div class="draw" style="width:25%">25%</div>
+      <div class="away" style="width:43%">43%</div>
     </div>
 
     <div class="markets">
       <div class="market-box">
         <div class="label">O2.5</div>
-        <div class="value yellow">52%</div>
+        <div class="value yellow">53%</div>
       </div>
       <div class="market-box">
         <div class="label">BTTS</div>
-        <div class="value red">44%</div>
+        <div class="value yellow">53%</div>
       </div>
       <div class="market-box">
-        <div class="label">Pronóstico</div>
-        <div class="value" style="color:#1f6feb">USA</div>
+        <div class="label">Pronostico</div>
+        <div class="value" style="color:#d29922">Croatia</div>
+      </div>
+    </div>
+
+    <div class="card-title" style="margin-top:8px;">Exact Scores</div>
+    <div class="scores-list">
+      <div class="score-row"><span>2-1 Portugal</span><span class="prob">9%</span></div>
+      <div class="score-row"><span>1-1</span><span class="prob">8%</span></div>
+      <div class="score-row"><span>3-1 Portugal</span><span class="prob">7%</span></div>
+      <div class="score-row"><span>1-0 Portugal</span><span class="prob">6%</span></div>
+      <div class="score-row"><span>2-2</span><span class="prob">6%</span></div>
+    </div>
+
+    <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
+    <div class="stats-grid">
+      <div class="stat-home">5.3</div><div class="stat-label">Remates a puerta</div><div class="stat-away">4.0</div>
+      <div class="stat-home">6.7</div><div class="stat-label">Remates fuera</div><div class="stat-away">5.0</div>
+      <div class="stat-home">17.7</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">14.7</div>
+      <div class="stat-home">8.3</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">15.3</div>
+      <div class="stat-home">8.3</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">1.7</div>
+      <div class="stat-home">2.3</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">2.3</div>
+      <div class="stat-home">67%</div><div class="stat-label">Posesion</div><div class="stat-away">56%</div>
+      <div class="stat-home">1.3</div><div class="stat-label">Atajadas</div><div class="stat-away">3.0</div>
+    </div>
+
+    <div class="value-bet">
+      <div class="label">Value Bet</div>
+      <div class="value" style="color:#3fb950">Croatia +374 — Modelo 43% vs Mercado 21% (+22% edge)</div>
+    </div>
+  </div>
+
+  <!-- Spain vs Austria -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        Espana <span class="vs">vs</span> Austria
+      </div>
+      <span class="badge" style="background: #d29922;">Jue 3pm</span>
+    </div>
+    <div class="match-info">
+      <span>Los Angeles</span>
+      <span>R32</span>
+    </div>
+
+    <div class="prob-bar">
+      <div class="home" style="width:57%">57%</div>
+      <div class="draw" style="width:24%">24%</div>
+      <div class="away" style="width:19%">19%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value red">48%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value red">49%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Pronostico</div>
+        <div class="value" style="color:#1f6feb">Espana</div>
       </div>
     </div>
 
     <div class="card-title" style="margin-top:8px;">Exact Scores</div>
     <div class="scores-list">
       <div class="score-row"><span>1-1</span><span class="prob">11%</span></div>
-      <div class="score-row"><span>2-1 USA</span><span class="prob">9%</span></div>
-      <div class="score-row"><span>1-0 USA</span><span class="prob">8%</span></div>
-      <div class="score-row"><span>0-0</span><span class="prob">7%</span></div>
-      <div class="score-row"><span>2-2</span><span class="prob">6%</span></div>
+      <div class="score-row"><span>2-1 Espana</span><span class="prob">9%</span></div>
+      <div class="score-row"><span>1-0 Espana</span><span class="prob">8%</span></div>
+      <div class="score-row"><span>0-0</span><span class="prob">6%</span></div>
+      <div class="score-row"><span>2-0 Espana</span><span class="prob">5%</span></div>
     </div>
 
     <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
     <div class="stats-grid">
-      <div class="stat-home">3.5</div><div class="stat-label">Remates a puerta</div><div class="stat-away">5.0</div>
-      <div class="stat-home">4.0</div><div class="stat-label">Remates fuera</div><div class="stat-away">5.5</div>
-      <div class="stat-home">8.5</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">12.0</div>
-      <div class="stat-home">13.0</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">11.0</div>
-      <div class="stat-home">3.5</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">5.5</div>
-      <div class="stat-home">2.5</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">1.5</div>
-      <div class="stat-home">45%</div><div class="stat-label">Posesión</div><div class="stat-away">54%</div>
-      <div class="stat-home">3.5</div><div class="stat-label">Atajadas</div><div class="stat-away">2.5</div>
+      <div class="stat-home">7.0</div><div class="stat-label">Remates a puerta</div><div class="stat-away">5.0</div>
+      <div class="stat-home">6.0</div><div class="stat-label">Remates fuera</div><div class="stat-away">5.5</div>
+      <div class="stat-home">19.0</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">12.0</div>
+      <div class="stat-home">10.3</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">11.0</div>
+      <div class="stat-home">9.0</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">5.5</div>
+      <div class="stat-home">1.3</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">1.5</div>
+      <div class="stat-home">66%</div><div class="stat-label">Posesion</div><div class="stat-away">54%</div>
+      <div class="stat-home">1.3</div><div class="stat-label">Atajadas</div><div class="stat-away">2.5</div>
     </div>
 
     <div class="value-bet">
-      <div class="label">⚡ Value Bet</div>
-      <div class="value" style="color:#3fb950">Bosnia +1.5 — Modelo 68% vs Mercado 57%</div>
+      <div class="label">Value Bet</div>
+      <div class="value" style="color:#d29922">Under 2.5 — Modelo 52%, partido cerrado</div>
     </div>
   </div>
 
-  <!-- Belgium vs Senegal (completed) -->
+  <!-- Switzerland vs Algeria -->
   <div class="card">
     <div class="match-header">
       <div class="match-teams">
-        🇧🇪 Bélgica <span class="vs">vs</span> 🇸🇳 Senegal
+        Suiza <span class="vs">vs</span> Argelia
       </div>
-      <span class="badge" style="background:#3fb950;">Finalizado</span>
+      <span class="badge" style="background: #d29922;">Jue 11pm</span>
     </div>
     <div class="match-info">
-      <span>📍 Lumen Field, Seattle</span>
-      <span>👤 Martínez (HON)</span>
-      <span>🏆 R32</span>
-    </div>
-    <div style="font-size:28px;font-weight:800;text-align:center;margin:8px 0;">
-      2-2 <span style="font-size:14px;color:#8b949e;">(t.e.)</span>
-    </div>
-    <div style="font-size:13px;text-align:center;color:#8b949e;margin-bottom:8px;">
-      Diarra 25' · Sarr 51' · Lukaku 86' · Tielemans 89'
+      <span>Vancouver</span>
+      <span>R32</span>
     </div>
 
-    <div class="prob-bar" style="height:20px;font-size:11px;">
-      <div class="home" style="width:37%">37%</div>
-      <div class="draw" style="width:24%">24%</div>
-      <div class="away" style="width:39%">39%</div>
+    <div class="prob-bar">
+      <div class="home" style="width:41%">41%</div>
+      <div class="draw" style="width:29%">29%</div>
+      <div class="away" style="width:30%">30%</div>
     </div>
 
     <div class="markets">
       <div class="market-box">
         <div class="label">O2.5</div>
-        <div class="value green">53%</div>
-        <div style="font-size:11px;color:#3fb950;">✅</div>
+        <div class="value red">49%</div>
       </div>
       <div class="market-box">
         <div class="label">BTTS</div>
-        <div class="value yellow">48%</div>
-        <div style="font-size:11px;color:#3fb950;">✅</div>
+        <div class="value yellow">51%</div>
       </div>
       <div class="market-box">
-        <div class="label">Resultado</div>
-        <div class="value yellow">Draw</div>
-        <div style="font-size:11px;color:#d29922;">24%</div>
+        <div class="label">Pronostico</div>
+        <div class="value" style="color:#1f6feb">Suiza</div>
       </div>
     </div>
 
-    <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
-      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">xG: BEL 0.88 - 2.80 SEN</span>
-      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">Posesión: 53%-47%</span>
-      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">Tiros: 16-13</span>
+    <div class="card-title" style="margin-top:8px;">Exact Scores</div>
+    <div class="scores-list">
+      <div class="score-row"><span>1-0 Suiza</span><span class="prob">13%</span></div>
+      <div class="score-row"><span>1-1</span><span class="prob">13%</span></div>
+      <div class="score-row"><span>0-0</span><span class="prob">10%</span></div>
+      <div class="score-row"><span>2-1 Suiza</span><span class="prob">5%</span></div>
+      <div class="score-row"><span>0-1 Argelia</span><span class="prob">5%</span></div>
     </div>
 
-    <div class="value-bet" style="margin-top:10px;">
-      <div class="label">🔮 Modelo acertó</div>
-      <div class="value" style="font-size:13px;color:#3fb950;">
-        ✅ Draw · ✅ O2.5 · ✅ BTTS · ✅ Senegal anota primero (3/4)
-      </div>
+    <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
+    <div class="stats-grid">
+      <div class="stat-home">4.0</div><div class="stat-label">Remates a puerta</div><div class="stat-away">3.5</div>
+      <div class="stat-home">5.0</div><div class="stat-label">Remates fuera</div><div class="stat-away">4.0</div>
+      <div class="stat-home">16.0</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">8.0</div>
+      <div class="stat-home">9.0</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">14.0</div>
+      <div class="stat-home">4.0</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">3.5</div>
+      <div class="stat-home">1.7</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">2.5</div>
+      <div class="stat-home">49%</div><div class="stat-label">Posesion</div><div class="stat-away">44%</div>
+      <div class="stat-home">1.0</div><div class="stat-label">Atajadas</div><div class="stat-away">3.5</div>
+    </div>
+
+    <div class="value-bet">
+      <div class="label">Value Bet</div>
+      <div class="value" style="color:#d29922">Argelia +320 — Modelo 29% vs Mercado 24% (+5%)</div>
     </div>
   </div>
 
-  <!-- England vs Congo DR (completed) -->
-  <div class="card">
-    <div class="match-header">
-      <div class="match-teams">
-        🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra <span class="vs">vs</span> 🇨🇩 Congo DR
-      </div>
-      <span class="badge" style="background:#3fb950;">Finalizado</span>
-    </div>
-    <div class="match-info">
-      <span>📍 Atlanta</span>
-      <span>👤 Makhadmeh (JOR)</span>
-      <span>🏆 R32</span>
-    </div>
-    <div style="font-size:28px;font-weight:800;text-align:center;margin:8px 0;">
-      2-1
-    </div>
-    <div style="font-size:13px;text-align:center;color:#8b949e;margin-bottom:8px;">
-      Cipenga 7' · Kane 75' · Kane 86'
-    </div>
-
-    <div class="prob-bar" style="height:20px;font-size:11px;">
-      <div class="home" style="width:59%">59%</div>
-      <div class="draw" style="width:18%">18%</div>
-      <div class="away" style="width:23%">23%</div>
-    </div>
-
-    <div class="markets">
-      <div class="market-box">
-        <div class="label">O2.5</div>
-        <div class="value green">56%</div>
-        <div style="font-size:11px;color:#3fb950;">✅</div>
-      </div>
-      <div class="market-box">
-        <div class="label">BTTS</div>
-        <div class="value green">54%</div>
-        <div style="font-size:11px;color:#3fb950;">✅</div>
-      </div>
-      <div class="market-box">
-        <div class="label">Resultado</div>
-        <div class="value" style="color:#1f6feb">England</div>
-        <div style="font-size:11px;color:#3fb950;">✅</div>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
-      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">xG: ENG 2.04 - 0.81 COD</span>
-      <span style="background:#21262d;padding:2px 8px;border-radius:4px;font-size:11px;">Posesión: 60%-40%</span>
-    </div>
-
-    <div class="value-bet" style="margin-top:10px;">
-      <div class="label">🔮 Modelo acertó</div>
-      <div class="value" style="font-size:13px;color:#3fb950;">✅ England · ✅ O2.5 · ✅ BTTS · ❌ HT (Congo 7')</div>
-    </div>
-  </div>
 </div>
 
 <div id="section-resultados" class="hidden">
@@ -283,32 +290,56 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
     <div class="card-title">Ronda de 32 — Resultados</div>
     <table class="results-table">
       <thead>
-        <tr><th>Fecha</th><th>Partido</th><th>Resultado</th><th>Pronóstico</th><th>O2.5</th><th>BTTS</th></tr>
+        <tr><th>Fecha</th><th>Partido</th><th>Resultado</th><th>Pronostico</th><th>O2.5</th><th>BTTS</th></tr>
       </thead>
       <tbody>
         <tr>
           <td>Jul 1</td>
-          <td>🏴󠁧󠁢󠁥󠁮󠁧󠁿 England vs Congo DR 🇨🇩</td>
+          <td>Inglaterra vs Congo DR</td>
           <td class="win">2-1</td>
-          <td class="win">✅ England (59%)</td>
-          <td class="win">✅ 56%</td>
-          <td class="win">✅ 54%</td>
+          <td class="win">Inglaterra (59%)</td>
+          <td class="win">56%</td>
+          <td class="win">54%</td>
         </tr>
         <tr>
           <td>Jul 1</td>
-          <td>🇧🇪 Belgium vs Senegal 🇸🇳</td>
+          <td>Belgica vs Senegal</td>
           <td class="draw">2-2</td>
-          <td class="draw">✅ Draw (24%)</td>
-          <td class="win">✅ 53%</td>
-          <td class="win">✅ 48%</td>
+          <td class="draw">Draw (24%)</td>
+          <td class="win">53%</td>
+          <td class="win">48%</td>
         </tr>
         <tr>
           <td>Jul 1</td>
-          <td>🇺🇸 USA vs Bosnia 🇧🇦</td>
+          <td>USA vs Bosnia</td>
+          <td class="win">2-0</td>
+          <td class="win">USA (52%)</td>
+          <td class="loss">52%</td>
+          <td class="loss">44%</td>
+        </tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Portugal vs Croatia</td>
           <td>—</td>
-          <td>USA (52%)</td>
-          <td>52%</td>
-          <td>44%</td>
+          <td>Croatia (43%)</td>
+          <td>53%</td>
+          <td>53%</td>
+        </tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Espana vs Austria</td>
+          <td>—</td>
+          <td>Espana (57%)</td>
+          <td>48%</td>
+          <td>49%</td>
+        </tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Suiza vs Argelia</td>
+          <td>—</td>
+          <td>Suiza (41%)</td>
+          <td>49%</td>
+          <td>51%</td>
         </tr>
       </tbody>
     </table>
@@ -325,15 +356,15 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
       <tbody>
         <tr>
           <td>1X2</td>
-          <td class="win">0.461</td>
-          <td>0.481</td>
+          <td class="win">0.460</td>
+          <td>0.486</td>
           <td>—</td>
         </tr>
         <tr>
           <td>Over/Under 2.5</td>
-          <td class="win">0.547</td>
-          <td>0.550</td>
-          <td class="win">0.865</td>
+          <td class="win">0.546</td>
+          <td>0.539</td>
+          <td class="win">0.875</td>
         </tr>
         <tr>
           <td>BTTS</td>
@@ -344,30 +375,45 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
       </tbody>
     </table>
     <div style="font-size:12px;color:#8b949e;margin-top:12px;">
-      Dataset: <strong>4040</strong> partidos nacionales | Features: 19 | FIFA Rankings incluidos
+      Dataset: <strong>4042</strong> partidos nacionales | Features: 19 | FIFA Rankings incluidos
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Partidos en el Dataset</div>
+    <div class="card-title">Proximas Predicciones</div>
     <table class="results-table">
       <thead>
-        <tr><th>Equipo</th><th>Partidos</th><th>Fuente</th></tr>
+        <tr><th>Fecha</th><th>Partido</th><th>1X2</th><th>O/U 2.5</th><th>BTTS</th></tr>
       </thead>
       <tbody>
-        <tr><td>England</td><td>46</td><td>WCQ, Nations League, Amistosos</td></tr>
-        <tr><td>USA</td><td>55</td><td>CONCACAF, Copa America, Amistosos</td></tr>
-        <tr><td>Belgium</td><td>46</td><td>UEFA, Nations League, Amistosos</td></tr>
-        <tr><td>Senegal</td><td>50</td><td>AFCON, WCQ, Amistosos</td></tr>
-        <tr><td>Bosnia</td><td>35</td><td>UEFA, Nations League, Amistosos</td></tr>
-        <tr><td>Congo DR</td><td>48</td><td>AFCON, WCQ, Amistosos</td></tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Portugal vs Croatia</td>
+          <td>32/25/<strong>43</strong></td>
+          <td class="yellow">53%</td>
+          <td class="yellow">53%</td>
+        </tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Espana vs Austria</td>
+          <td><strong>57</strong>/24/19</td>
+          <td class="red">48%</td>
+          <td class="red">49%</td>
+        </tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Suiza vs Argelia</td>
+          <td><strong>41</strong>/29/29</td>
+          <td class="red">49%</td>
+          <td class="yellow">51%</td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 
 <div class="footer">
-  <p>Generado con ❤️ por Sports ML Pipeline v1.0 | <a href="#">GitHub</a></p>
+  <p>Generado por Sports ML Pipeline v1.0 | <a href="https://github.com/mexicans-code/mundial-2026-dashboard">GitHub</a></p>
   <p>Solo fines educativos. Juega con responsabilidad.</p>
 </div>
 
@@ -382,7 +428,7 @@ function showSection(section) {
   document.getElementById('section-modelo').classList.add('hidden');
   document.getElementById('section-' + section).classList.remove('hidden');
 }
-document.getElementById('update-date').textContent = '🔄 ' + new Date().toLocaleString('es-MX');
+document.getElementById('update-date').textContent = new Date().toLocaleString('es-MX');
 </script>
 </body>
 </html>
