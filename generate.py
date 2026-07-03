@@ -990,7 +990,7 @@ def main():
             "status_short": "NS",
         }])
 
-        preds = predictor.predict_batch(synthetic, df_finished)
+        preds = predictor.predict_batch(synthetic, df_finished, neutral_venue=True)
         if preds:
             p = preds[0]
             predictions[key] = p
