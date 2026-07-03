@@ -235,6 +235,37 @@ body {
 .score-row:last-child { border-bottom: none; }
 .score-row .prob { color: var(--green); font-weight: 500; }
 
+/* Form badge */
+.form-badge { font-size: 10px; color: var(--body); margin-top: 4px; }
+.form-badge strong { font-weight: 600; }
+
+/* Form button */
+.btn-form { font-size: 11px; color: var(--blue); background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: var(--font); margin-top: 8px; transition: border-color 0.15s; }
+.btn-form:hover { border-color: var(--blue); }
+
+/* Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; position: relative; }
+.modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: var(--body); font-size: 22px; cursor: pointer; font-family: var(--font); line-height: 1; }
+.modal-close:hover { color: var(--title); }
+.modal h3 { font-size: 16px; font-weight: 600; color: var(--title); margin-bottom: 16px; }
+.modal .team-section { margin-bottom: 20px; }
+.modal .team-section:last-child { margin-bottom: 0; }
+.modal .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.modal .team-name { font-size: 14px; font-weight: 600; color: var(--title); }
+.modal .form-str { font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+.modal .form-str .w { color: var(--green); }
+.modal .form-str .l { color: var(--red); }
+.modal .form-str .d { color: var(--amber); }
+.modal .form-stats { display: flex; gap: 16px; font-size: 12px; color: var(--body); margin-bottom: 10px; }
+.modal .form-stats strong { color: var(--title); }
+.modal table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.modal th { text-align: left; padding: 6px 8px; color: var(--body); font-weight: 500; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; }
+.modal td { padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--body); }
+.modal td .fw { font-weight: 600; }
+:root { --blue: #3B82F6; }
+
 /* Value bet */
 .value-bet {
   background: rgba(255,255,255,0.03);
@@ -409,28 +440,25 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="away" style="width:34%">34%</div>
       </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">58%</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">58%</div><div class="form-badge">5/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div><div class="form-badge">3/8 ultimos</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Portugal</div></div>
       </div>
-      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
-      <div class="details-content">
-        <div class="scores-list">
-          <div class="score-row"><span>1-1</span><span class="prob">10%</span></div>
-          <div class="score-row"><span>2-1 Portugal</span><span class="prob">9%</span></div>
-          <div class="score-row"><span>1-2 Croacia</span><span class="prob">7%</span></div>
-          <div class="score-row"><span>2-0 Portugal</span><span class="prob">6%</span></div>
-        </div>
+      <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
             <div class="h">9.3</div><div class="lbl">Remates a puerta</div><div class="a">5.0</div>
+            <div class="h">9.7</div><div class="lbl">Remates fuera</div><div class="a">5.5</div>
             <div class="h">27.0</div><div class="lbl">Tiros totales</div><div class="a">12.0</div>
+            <div class="h">11.0</div><div class="lbl">Faltas</div><div class="a">11.0</div>
             <div class="h">7.0</div><div class="lbl">Esquinas</div><div class="a">5.5</div>
             <div class="h">1.3</div><div class="lbl">T. Amarillas</div><div class="a">1.5</div>
             <div class="h">73%</div><div class="lbl">Posesion</div><div class="a">54%</div>
+            <div class="h">2.0</div><div class="lbl">Atajadas</div><div class="a">2.5</div>
           </div>
         </div>
       </div>
+      <button class="btn-form" onclick="openForm('Portugal','Croacia')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
         <div class="val">Portugal +132 — Modelo 43% vs Mercado 33% (+10% edge)</div>
@@ -451,28 +479,25 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="away" style="width:13%">13%</div>
       </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">54%</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">57%</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">54%</div><div class="form-badge">7/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">57%</div><div class="form-badge">3/8 ultimos</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Espa&ntilde;a</div></div>
       </div>
-      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
-      <div class="details-content">
-        <div class="scores-list">
-          <div class="score-row"><span>2-0 Espa&ntilde;a</span><span class="prob">15%</span></div>
-          <div class="score-row"><span>3-0 Espa&ntilde;a</span><span class="prob">13%</span></div>
-          <div class="score-row"><span>1-0 Espa&ntilde;a</span><span class="prob">11%</span></div>
-          <div class="score-row"><span>3-1 Espa&ntilde;a</span><span class="prob">9%</span></div>
-        </div>
+      <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
             <div class="h">7.0</div><div class="lbl">Remates a puerta</div><div class="a">5.0</div>
+            <div class="h">6.0</div><div class="lbl">Remates fuera</div><div class="a">5.5</div>
             <div class="h">19.0</div><div class="lbl">Tiros totales</div><div class="a">12.0</div>
+            <div class="h">10.3</div><div class="lbl">Faltas</div><div class="a">11.0</div>
             <div class="h">9.0</div><div class="lbl">Esquinas</div><div class="a">5.5</div>
             <div class="h">1.3</div><div class="lbl">T. Amarillas</div><div class="a">1.5</div>
             <div class="h">66%</div><div class="lbl">Posesion</div><div class="a">54%</div>
+            <div class="h">1.3</div><div class="lbl">Atajadas</div><div class="a">2.5</div>
           </div>
         </div>
       </div>
+      <button class="btn-form" onclick="openForm('Espana','Austria')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
         <div class="val">Espa&ntilde;a gana — Modelo 67%, favoritismo solido</div>
@@ -493,28 +518,25 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="away" style="width:36%">36%</div>
       </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">51%</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">51%</div><div class="form-badge">3/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div><div class="form-badge">7/8 ultimos</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val amber">Argelia</div></div>
       </div>
-      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
-      <div class="details-content">
-        <div class="scores-list">
-          <div class="score-row"><span>1-1</span><span class="prob">12%</span></div>
-          <div class="score-row"><span>0-1 Argelia</span><span class="prob">9%</span></div>
-          <div class="score-row"><span>1-0 Suiza</span><span class="prob">9%</span></div>
-          <div class="score-row"><span>0-0</span><span class="prob">8%</span></div>
-        </div>
+      <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
             <div class="h">5.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
+            <div class="h">5.5</div><div class="lbl">Remates fuera</div><div class="a">4.0</div>
             <div class="h">12.0</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
+            <div class="h">11.0</div><div class="lbl">Faltas</div><div class="a">14.0</div>
             <div class="h">5.5</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
             <div class="h">1.5</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
             <div class="h">54%</div><div class="lbl">Posesion</div><div class="a">44%</div>
+            <div class="h">2.5</div><div class="lbl">Atajadas</div><div class="a">3.5</div>
           </div>
         </div>
       </div>
+      <button class="btn-form" onclick="openForm('Suiza','Argelia')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
         <div class="val amber">Empate +240 — Modelo ve 29% vs mercado ~24%</div>
@@ -543,28 +565,25 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="away" style="width:30%">30%</div>
       </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val red">48%</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val red">48%</div><div class="form-badge">3/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div><div class="form-badge">3/8 ultimos</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Australia</div></div>
       </div>
-      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
-      <div class="details-content">
-        <div class="scores-list">
-          <div class="score-row"><span>1-0 Australia</span><span class="prob">18%</span></div>
-          <div class="score-row"><span>0-0</span><span class="prob">17%</span></div>
-          <div class="score-row"><span>1-1</span><span class="prob">13%</span></div>
-          <div class="score-row"><span>0-1 Egipto</span><span class="prob">9%</span></div>
-        </div>
+      <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
             <div class="h">3.7</div><div class="lbl">Remates a puerta</div><div class="a">4.0</div>
+            <div class="h">4.7</div><div class="lbl">Remates fuera</div><div class="a">5.5</div>
             <div class="h">10.0</div><div class="lbl">Tiros totales</div><div class="a">11.0</div>
+            <div class="h">15.7</div><div class="lbl">Faltas</div><div class="a">15.0</div>
             <div class="h">3.7</div><div class="lbl">Esquinas</div><div class="a">3.0</div>
             <div class="h">1.0</div><div class="lbl">T. Amarillas</div><div class="a">1.0</div>
             <div class="h">58%</div><div class="lbl">Posesion</div><div class="a">46%</div>
+            <div class="h">0.7</div><div class="lbl">Atajadas</div><div class="a">1.5</div>
           </div>
         </div>
       </div>
+      <button class="btn-form" onclick="openForm('Australia','Egipto')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
         <div class="val amber">Empate +252 — Modelo ve 27% vs mercado ~22%</div>
@@ -585,28 +604,25 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="away" style="width:11%">11%</div>
       </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">61%</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">48%</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">61%</div><div class="form-badge">3/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">48%</div><div class="form-badge">2/8 ultimos</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Argentina</div></div>
       </div>
-      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
-      <div class="details-content">
-        <div class="scores-list">
-          <div class="score-row"><span>2-0 Argentina</span><span class="prob">20%</span></div>
-          <div class="score-row"><span>1-0 Argentina</span><span class="prob">19%</span></div>
-          <div class="score-row"><span>3-0 Argentina</span><span class="prob">14%</span></div>
-          <div class="score-row"><span>3-1 Argentina</span><span class="prob">7%</span></div>
-        </div>
+      <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
             <div class="h">6.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
+            <div class="h">5.7</div><div class="lbl">Remates fuera</div><div class="a">4.0</div>
             <div class="h">15.0</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
+            <div class="h">8.3</div><div class="lbl">Faltas</div><div class="a">14.0</div>
             <div class="h">6.3</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
             <div class="h">0.7</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
             <div class="h">62%</div><div class="lbl">Posesion</div><div class="a">44%</div>
+            <div class="h">2.0</div><div class="lbl">Atajadas</div><div class="a">3.5</div>
           </div>
         </div>
       </div>
+      <button class="btn-form" onclick="openForm('Argentina','Cabo Verde')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
         <div class="val">Argentina gana — Modelo 73%, favoritismo absoluto</div>
@@ -627,28 +643,25 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="away" style="width:12%">12%</div>
       </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">59%</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">42%</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">59%</div><div class="form-badge">6/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">42%</div><div class="form-badge">4/8 ultimos</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Colombia</div></div>
       </div>
-      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
-      <div class="details-content">
-        <div class="scores-list">
-          <div class="score-row"><span>2-0 Colombia</span><span class="prob">16%</span></div>
-          <div class="score-row"><span>3-0 Colombia</span><span class="prob">15%</span></div>
-          <div class="score-row"><span>1-0 Colombia</span><span class="prob">11%</span></div>
-          <div class="score-row"><span>3-1 Colombia</span><span class="prob">7%</span></div>
-        </div>
+      <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
             <div class="h">5.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
+            <div class="h">4.3</div><div class="lbl">Remates fuera</div><div class="a">4.0</div>
             <div class="h">10.3</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
+            <div class="h">15.7</div><div class="lbl">Faltas</div><div class="a">14.0</div>
             <div class="h">4.0</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
             <div class="h">2.7</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
             <div class="h">46%</div><div class="lbl">Posesion</div><div class="a">44%</div>
+            <div class="h">2.3</div><div class="lbl">Atajadas</div><div class="a">3.5</div>
           </div>
         </div>
       </div>
+      <button class="btn-form" onclick="openForm('Colombia','Ghana')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
         <div class="val">Colombia gana — Modelo 71%, favoritismo solido</div>
@@ -820,7 +833,57 @@ td .badge.blue { background: #3B82F6; color: #fff; }
 
 </div>
 
+<!-- Modal -->
+<div class="modal-overlay" id="formModal" onclick="if(event.target===this)closeForm()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeForm()">&times;</button>
+    <h3>Forma — Ultimos 8 Partidos</h3>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
 <script>
+const nameMap = {
+  'Portugal':'Portugal','Croacia':'Croatia','Espana':'Spain','Austria':'Austria',
+  'Suiza':'Switzerland','Argelia':'Algeria','Australia':'Australia','Egipto':'Egypt',
+  'Argentina':'Argentina','Cabo Verde':'Cape Verde','Colombia':'Colombia','Ghana':'Ghana'
+};
+
+const teamData = {"Portugal": {"f": "DDLWWWLW", "o": "5/8", "b": "3/8", "n": 8, "m": [{"v": "V", "vs": "France", "s": "0-0", "r": "D", "o": "N", "b": "N"}, {"v": "V", "vs": "Slovenia", "s": "0-0", "r": "D", "o": "N", "b": "N"}, {"v": "L", "vs": "Georgia", "s": "2-0", "r": "L", "o": "N", "b": "N"}, {"v": "L", "vs": "T\u00fcrkiye", "s": "0-3", "r": "W", "o": "S", "b": "N"}, {"v": "V", "vs": "Czechia", "s": "2-1", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Rep. Of Ireland", "s": "3-0", "r": "W", "o": "S", "b": "N"}, {"v": "V", "vs": "Croatia", "s": "1-2", "r": "L", "o": "S", "b": "S"}, {"v": "V", "vs": "Finland", "s": "4-2", "r": "W", "o": "S", "b": "S"}]}, "Croatia": {"f": "DDLWWWWL", "o": "7/8", "b": "5/8", "n": 8, "m": [{"v": "V", "vs": "Italy", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "V", "vs": "Albania", "s": "2-2", "r": "D", "o": "S", "b": "S"}, {"v": "L", "vs": "Spain", "s": "3-0", "r": "L", "o": "S", "b": "N"}, {"v": "L", "vs": "Portugal", "s": "1-2", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "FYR Macedonia", "s": "3-0", "r": "W", "o": "S", "b": "N"}, {"v": "L", "vs": "Egypt", "s": "2-4", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Morocco", "s": "2-1", "r": "W", "o": "S", "b": "S"}, {"v": "L", "vs": "Argentina", "s": "3-0", "r": "L", "o": "S", "b": "N"}]}, "Spain": {"f": "DWWWWWWD", "o": "7/8", "b": "3/8", "n": 8, "m": [{"v": "V", "vs": "T\u00fcrkiye", "s": "2-2", "r": "D", "o": "S", "b": "S"}, {"v": "L", "vs": "Georgia", "s": "0-4", "r": "W", "o": "S", "b": "N"}, {"v": "V", "vs": "Bulgaria", "s": "4-0", "r": "W", "o": "S", "b": "N"}, {"v": "V", "vs": "Georgia", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "L", "vs": "T\u00fcrkiye", "s": "0-6", "r": "W", "o": "S", "b": "N"}, {"v": "L", "vs": "Bulgaria", "s": "0-3", "r": "W", "o": "S", "b": "N"}, {"v": "V", "vs": "France", "s": "5-4", "r": "W", "o": "S", "b": "S"}, {"v": "L", "vs": "Netherlands", "s": "2-2", "r": "D", "o": "S", "b": "S"}]}, "Austria": {"f": "DWLWWLDW", "o": "5/8", "b": "7/8", "n": 8, "m": [{"v": "V", "vs": "Bosnia & Herzegovina", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "L", "vs": "Bosnia & Herzegovina", "s": "1-2", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "T\u00fcrkiye", "s": "1-2", "r": "L", "o": "S", "b": "S"}, {"v": "L", "vs": "Netherlands", "s": "2-3", "r": "W", "o": "S", "b": "S"}, {"v": "L", "vs": "Poland", "s": "1-3", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "France", "s": "0-1", "r": "L", "o": "N", "b": "N"}, {"v": "L", "vs": "Switzerland", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "V", "vs": "Serbia", "s": "2-1", "r": "W", "o": "S", "b": "S"}]}, "Switzerland": {"f": "LLDWDDWD", "o": "3/8", "b": "7/8", "n": 8, "m": [{"v": "L", "vs": "Spain", "s": "3-2", "r": "L", "o": "S", "b": "S"}, {"v": "V", "vs": "Spain", "s": "1-4", "r": "L", "o": "S", "b": "S"}, {"v": "L", "vs": "England", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "V", "vs": "Italy", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Germany", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "L", "vs": "Scotland", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "L", "vs": "Hungary", "s": "1-3", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Austria", "s": "1-1", "r": "D", "o": "N", "b": "S"}]}, "Algeria": {"f": "DWWDWWDL", "o": "4/8", "b": "5/8", "n": 8, "m": [{"v": "V", "vs": "South Africa", "s": "3-3", "r": "D", "o": "S", "b": "S"}, {"v": "V", "vs": "Bolivia", "s": "3-2", "r": "W", "o": "S", "b": "S"}, {"v": "L", "vs": "Burundi", "s": "0-4", "r": "W", "o": "S", "b": "N"}, {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "V", "vs": "Cape Verde Islands", "s": "5-1", "r": "W", "o": "S", "b": "S"}, {"v": "L", "vs": "Senegal", "s": "0-1", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Tunisia", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "L", "vs": "Sweden", "s": "2-0", "r": "L", "o": "N", "b": "N"}]}, "Australia": {"f": "WWWLDLLW", "o": "3/8", "b": "3/8", "n": 8, "m": [{"v": "L", "vs": "Bahrain", "s": "0-2", "r": "W", "o": "N", "b": "N"}, {"v": "L", "vs": "Bahrain", "s": "0-2", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "New Zealand", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "L", "vs": "England", "s": "1-0", "r": "L", "o": "N", "b": "N"}, {"v": "L", "vs": "Mexico", "s": "2-2", "r": "D", "o": "S", "b": "S"}, {"v": "L", "vs": "Argentina", "s": "2-0", "r": "L", "o": "N", "b": "N"}, {"v": "V", "vs": "Ecuador", "s": "1-2", "r": "L", "o": "S", "b": "S"}, {"v": "V", "vs": "Ecuador", "s": "3-1", "r": "W", "o": "S", "b": "S"}]}, "Egypt": {"f": "LWWDWLWW", "o": "4/8", "b": "4/8", "n": 8, "m": [{"v": "V", "vs": "Croatia", "s": "2-4", "r": "L", "o": "S", "b": "S"}, {"v": "V", "vs": "New Zealand", "s": "1-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Tanzania", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Algeria", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "V", "vs": "Zambia", "s": "1-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Tunisia", "s": "1-3", "r": "L", "o": "S", "b": "S"}, {"v": "V", "vs": "South Sudan", "s": "3-0", "r": "W", "o": "S", "b": "N"}, {"v": "L", "vs": "Belgium", "s": "1-2", "r": "W", "o": "S", "b": "S"}]}, "Argentina": {"f": "WWWWWWWW", "o": "3/8", "b": "2/8", "n": 8, "m": [{"v": "V", "vs": "Canada", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Peru", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "L", "vs": "Chile", "s": "0-1", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Canada", "s": "2-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Guatemala", "s": "4-1", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Ecuador", "s": "1-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Costa Rica", "s": "3-1", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "El Salvador", "s": "3-0", "r": "W", "o": "S", "b": "N"}]}, "Cape Verde": {"f": "WWLLLDWW", "o": "3/8", "b": "3/8", "n": 8, "m": [{"v": "V", "vs": "Equatorial Guinea", "s": "1-0", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Guyana", "s": "1-0", "r": "W", "o": "N", "b": "N"}, {"v": "L", "vs": "Tunisia", "s": "2-0", "r": "L", "o": "N", "b": "N"}, {"v": "V", "vs": "Comoros", "s": "1-2", "r": "L", "o": "S", "b": "S"}, {"v": "L", "vs": "Algeria", "s": "5-1", "r": "L", "o": "S", "b": "S"}, {"v": "L", "vs": "Morocco", "s": "0-0", "r": "D", "o": "N", "b": "N"}, {"v": "L", "vs": "Bahrain", "s": "1-2", "r": "W", "o": "S", "b": "S"}, {"v": "L", "vs": "San Marino", "s": "0-2", "r": "W", "o": "N", "b": "N"}]}, "Colombia": {"f": "WWDWWWWW", "o": "6/8", "b": "4/8", "n": 8, "m": [{"v": "L", "vs": "Uruguay", "s": "0-1", "r": "W", "o": "N", "b": "N"}, {"v": "V", "vs": "Panama", "s": "5-0", "r": "W", "o": "S", "b": "N"}, {"v": "L", "vs": "Brazil", "s": "1-1", "r": "D", "o": "N", "b": "S"}, {"v": "V", "vs": "Costa Rica", "s": "3-0", "r": "W", "o": "S", "b": "N"}, {"v": "V", "vs": "Paraguay", "s": "2-1", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Bolivia", "s": "3-0", "r": "W", "o": "S", "b": "N"}, {"v": "L", "vs": "USA", "s": "1-5", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Romania", "s": "3-2", "r": "W", "o": "S", "b": "S"}]}, "Ghana": {"f": "DLDLLWLW", "o": "5/8", "b": "4/8", "n": 8, "m": [{"v": "L", "vs": "Uganda", "s": "2-2", "r": "D", "o": "S", "b": "S"}, {"v": "L", "vs": "Nigeria", "s": "2-1", "r": "L", "o": "S", "b": "S"}, {"v": "V", "vs": "Namibia", "s": "0-0", "r": "D", "o": "N", "b": "N"}, {"v": "L", "vs": "USA", "s": "4-0", "r": "L", "o": "S", "b": "N"}, {"v": "L", "vs": "Mexico", "s": "2-0", "r": "L", "o": "N", "b": "N"}, {"v": "V", "vs": "Liberia", "s": "3-1", "r": "W", "o": "S", "b": "S"}, {"v": "V", "vs": "Uruguay", "s": "0-2", "r": "L", "o": "N", "b": "N"}, {"v": "L", "vs": "South Korea", "s": "2-3", "r": "W", "o": "S", "b": "S"}]}};
+
+function openForm(team1Display, team2Display) {
+  const t1 = nameMap[team1Display];
+  const t2 = nameMap[team2Display];
+  const d1 = teamData[t1], d2 = teamData[t2];
+  if (!d1 || !d2) return;
+
+  const formStr = (d) => d.f.split('').map(c => `<span class="${c === 'W' ? 'w' : c === 'L' ? 'l' : 'd'}">${c === 'W' ? 'G' : c === 'L' ? 'P' : 'E'}</span>`).join(' ');
+
+  const table = (d) => {
+    if (!d.n) return '<div style="color:var(--body);font-size:13px">Sin datos disponibles</div>';
+    let rows = d.m.map(m => {
+      const cls = m.r === 'W' ? 'w' : m.r === 'L' ? 'l' : 'd';
+      const label = m.r === 'W' ? 'G' : m.r === 'L' ? 'P' : 'E';
+      return `<tr><td class="fw ${cls}">${label}</td><td>${m.v === 'L' ? 'vs' : '@'}</td><td>${m.vs}</td><td class="fw">${m.s}</td><td>${m.o === 'S' ? '\u2713' : '\u2717'}</td><td>${m.b === 'S' ? '\u2713' : '\u2717'}</td></tr>`;
+    }).join('');
+    return `<table><thead><tr><th>Res</th><th></th><th>Rival</th><th>Marcador</th><th>O2.5</th><th>BTTS</th></tr></thead><tbody>${rows}</tbody></table>`;
+  };
+
+  document.getElementById('modalContent').innerHTML =
+    '<div class="team-section"><div class="team-header"><span class="team-name">' + team1Display + '</span><span class="form-str">' + formStr(d1) + '</span></div>' +
+    '<div class="form-stats"><span>Ultimos: <strong>' + d1.n + '</strong></span><span>O2.5: <strong>' + d1.o + '</strong></span><span>BTTS: <strong>' + d1.b + '</strong></span></div>' +
+    table(d1) + '</div>' +
+    '<div class="team-section" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div class="team-header"><span class="team-name">' + team2Display + '</span><span class="form-str">' + formStr(d2) + '</span></div>' +
+    '<div class="form-stats"><span>Ultimos: <strong>' + d2.n + '</strong></span><span>O2.5: <strong>' + d2.o + '</strong></span><span>BTTS: <strong>' + d2.b + '</strong></span></div>' +
+    table(d2) + '</div>';
+
+  document.getElementById('formModal').classList.add('open');
+}
+
+function closeForm() {
+  document.getElementById('formModal').classList.remove('open');
+}
+
 document.querySelectorAll('.nav button').forEach(btn => {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
