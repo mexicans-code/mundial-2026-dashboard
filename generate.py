@@ -31,6 +31,8 @@ MATCHES = [
     ("Colombia", "Ghana", "Kansas City", "R32", "Sab 7:30pm", "jul3"),
 ]
 
+MATCHES_MAP = {(h, a): rest[3] if len(rest) > 3 else rest[2] if len(rest) > 2 else "jul2" for h, a, *rest in MATCHES}
+
 NAME_MAP_ES = {
     "Portugal": "Portugal",
     "Croatia": "Croacia",
@@ -606,7 +608,6 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 <div class="nav">
   <button class="active" data-section="jul2">2 Jul</button>
   <button data-section="jul3">3 Jul</button>
-  <button data-section="apuestas">Apuestas</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
@@ -615,6 +616,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   <div class="card-grid">
 {generate_match_cards(predictions, stats, "jul2")}
   </div>
+{generate_bets_section(predictions, "jul2")}
 </div>
 
 <!-- ===== 3 JUL ===== -->
@@ -622,11 +624,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   <div class="card-grid">
 {generate_match_cards(predictions, stats, "jul3")}
   </div>
-</div>
-
-<!-- ===== APUESTAS ===== -->
-<div id="s-apuestas" class="section">
-{generate_bets_section(predictions)}
+{generate_bets_section(predictions, "jul3")}
 </div>
 
 <!-- ===== MODELO ===== -->
@@ -696,8 +694,9 @@ document.querySelectorAll('.nav button').forEach(btn => {{
   btn.addEventListener('click', function() {{
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
+    const sec = this.dataset.section;
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('s-' + this.dataset.section).classList.add('active');
+    document.getElementById('s-' + sec).classList.add('active');
   }});
 }});
 document.getElementById('updateDate').textContent = new Date().toLocaleDateString('es-MX', {{
@@ -797,15 +796,17 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
     return "\n".join(cards)
 
 
-def generate_bets_section(predictions: dict) -> str:
+def generate_bets_section(predictions: dict, section: str) -> str:
     lines = []
-    for home, away, *_rest in MATCHES:
+    for home, away, *_r in MATCHES:
+        sec = MATCHES_MAP.get((home, away), "jul2")
+        if sec != section:
+            continue
         key = f"{home} vs {away}"
         p = predictions.get(key, {})
         h_prob = p.get("prob_home", 0.33)
         d_prob = p.get("prob_draw", 0.33)
         a_prob = p.get("prob_away", 0.34)
-
         h_display = NAME_MAP_ES[home]
         a_display = NAME_MAP_ES[away]
         best_prob = max(h_prob, d_prob, a_prob)
@@ -815,71 +816,70 @@ def generate_bets_section(predictions: dict) -> str:
             pick_name = a_display
         else:
             pick_name = "Empate"
-
         fair = round(1.0 / max(best_prob, 0.01), 2)
         market_odds = round(fair * 0.92, 2)
-
         lines.append(f"""
     <div class="pick-row">
       <div class="left"><div class="lbl">Partido</div><div class="val">{h_display} vs {a_display}</div></div>
       <div class="right"><div class="odds">{market_odds}</div><div class="pick">{pick_name} gana ({best_prob * 100:.0f}%)</div></div>
     </div>""")
 
-    high_conf = []
-    high_conf_names = []
-    for home, away, *_rest in MATCHES:
+    simp = f"""
+  <div class="parlay-card">
+    <div class="title">Apuestas Simples</div>
+    <div class="sub">Picks del modelo con mayor probabilidad</div>{''.join(lines)}
+  </div>""" if lines else ""
+
+    parlay = _parlay_section(predictions, section)
+    return simp + parlay
+
+
+def _parlay_section(predictions, section):
+    legs = []
+    for home, away, *_r in MATCHES:
+        sec = MATCHES_MAP.get((home, away), "jul2")
+        if sec != section:
+            continue
         key = f"{home} vs {away}"
         p = predictions.get(key, {})
         h_prob = p.get("prob_home", 0.33)
-        d_prob = p.get("prob_draw", 0.33)
         a_prob = p.get("prob_away", 0.34)
         best = max(h_prob, a_prob)
         if best >= 0.55:
             h_display = NAME_MAP_ES[home]
             a_display = NAME_MAP_ES[away]
-            if best == h_prob:
-                pick_name = h_display
-            else:
-                pick_name = a_display
-            high_conf.append((home, away, best, pick_name))
-
-    parlays_html = ""
-    if len(high_conf) >= 2:
-        parlays_html = f"""
-  <div class="parlay-card">
-    <div class="title">Parlay — Favoritos del modelo</div>
-    <div class="sub">Picks con mayor confianza</div>"""
-        total_odds = 1.0
-        total_prob = 1.0
-        for i, (h, a, prob, pick_name) in enumerate(high_conf[:3], 1):
-            h_display = NAME_MAP_ES[h]
-            a_display = NAME_MAP_ES[a]
-            fair = round(1.0 / max(prob, 0.01), 2)
+            pick_name = h_display if best == h_prob else a_display
+            fair = round(1.0 / max(best, 0.01), 2)
             market = round(fair * 0.92, 2)
-            total_odds *= market
-            total_prob *= prob
-            parlays_html += f"""
+            legs.append((h_display, a_display, pick_name, best, market))
+
+    if len(legs) < 2:
+        return ""
+
+    total_odds = 1.0
+    total_prob = 1.0
+    legs_html = ""
+    for i, (h_display, a_display, pick_name, prob, market) in enumerate(legs[:3], 1):
+        total_odds *= market
+        total_prob *= prob
+        legs_html += f"""
     <div class="parlay-leg">
       <div class="num">{i}</div>
       <div class="detail"><div class="match">{h_display} vs {a_display}</div><div class="pick">{pick_name} gana ({prob * 100:.0f}%)</div></div>
       <div class="odds">{market}</div>
     </div>"""
-        total_odds = round(total_odds, 2)
-        total_prob = round(total_prob * 100)
-        parlays_html += f"""
+    total_odds = round(total_odds, 2)
+    total_prob = round(total_prob * 100)
+    return f"""
+  <div class="parlay-card">
+    <div class="title">Parlay — Favoritos del modelo</div>
+    <div class="sub">Picks con mayor confianza</div>
+    {legs_html}
     <div class="parlay-total">
       <div><div class="lbl">Cuota Total</div><div class="odds">{total_odds}</div></div>
       <div><div class="lbl">Probabilidad</div><div class="prob">{total_prob}%</div></div>
     </div>
   </div>"""
-
-    return f"""
-  <div class="parlay-card">
-    <div class="title">Apuestas Simples</div>
-    <div class="sub">Picks del modelo con mayor probabilidad</div>
-    {''.join(lines)}
-  </div>
-{parlays_html}"""
 
 
 def generate_model_section(predictions: dict) -> str:

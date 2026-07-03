@@ -344,7 +344,6 @@ td .badge.blue { background: #3B82F6; color: #fff; }
 <div class="nav">
   <button class="active" data-section="jul2">2 Jul</button>
   <button data-section="jul3">3 Jul</button>
-  <button data-section="apuestas">Apuestas</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
@@ -470,6 +469,23 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="lbl">Value Bet</div>
         <div class="val amber">Argelia — Modelo 36%</div>
       </div>
+    </div>
+  </div>
+
+  <div class="parlay-card">
+    <div class="title">Apuestas Simples</div>
+    <div class="sub">Picks del modelo con mayor probabilidad</div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Portugal vs Croacia</div></div>
+      <div class="right"><div class="odds">2.24</div><div class="pick">Croacia gana (41%)</div></div>
+    </div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">España vs Austria</div></div>
+      <div class="right"><div class="odds">1.54</div><div class="pick">España gana (60%)</div></div>
+    </div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Suiza vs Argelia</div></div>
+      <div class="right"><div class="odds">2.57</div><div class="pick">Argelia gana (36%)</div></div>
     </div>
   </div>
 </div>
@@ -598,27 +614,10 @@ td .badge.blue { background: #3B82F6; color: #fff; }
       </div>
     </div>
   </div>
-</div>
-
-<!-- ===== APUESTAS ===== -->
-<div id="s-apuestas" class="section">
 
   <div class="parlay-card">
     <div class="title">Apuestas Simples</div>
     <div class="sub">Picks del modelo con mayor probabilidad</div>
-    
-    <div class="pick-row">
-      <div class="left"><div class="lbl">Partido</div><div class="val">Portugal vs Croacia</div></div>
-      <div class="right"><div class="odds">2.24</div><div class="pick">Croacia gana (41%)</div></div>
-    </div>
-    <div class="pick-row">
-      <div class="left"><div class="lbl">Partido</div><div class="val">España vs Austria</div></div>
-      <div class="right"><div class="odds">1.54</div><div class="pick">España gana (60%)</div></div>
-    </div>
-    <div class="pick-row">
-      <div class="left"><div class="lbl">Partido</div><div class="val">Suiza vs Argelia</div></div>
-      <div class="right"><div class="odds">2.57</div><div class="pick">Argelia gana (36%)</div></div>
-    </div>
     <div class="pick-row">
       <div class="left"><div class="lbl">Partido</div><div class="val">Australia vs Egipto</div></div>
       <div class="right"><div class="odds">2.48</div><div class="pick">Australia gana (37%)</div></div>
@@ -632,28 +631,23 @@ td .badge.blue { background: #3B82F6; color: #fff; }
       <div class="right"><div class="odds">1.34</div><div class="pick">Colombia gana (68%)</div></div>
     </div>
   </div>
-
   <div class="parlay-card">
     <div class="title">Parlay — Favoritos del modelo</div>
     <div class="sub">Picks con mayor confianza</div>
+    
     <div class="parlay-leg">
       <div class="num">1</div>
-      <div class="detail"><div class="match">España vs Austria</div><div class="pick">España gana (60%)</div></div>
-      <div class="odds">1.54</div>
-    </div>
-    <div class="parlay-leg">
-      <div class="num">2</div>
       <div class="detail"><div class="match">Argentina vs Cabo Verde</div><div class="pick">Argentina gana (66%)</div></div>
       <div class="odds">1.4</div>
     </div>
     <div class="parlay-leg">
-      <div class="num">3</div>
+      <div class="num">2</div>
       <div class="detail"><div class="match">Colombia vs Ghana</div><div class="pick">Colombia gana (68%)</div></div>
       <div class="odds">1.34</div>
     </div>
     <div class="parlay-total">
-      <div><div class="lbl">Cuota Total</div><div class="odds">2.89</div></div>
-      <div><div class="lbl">Probabilidad</div><div class="prob">27%</div></div>
+      <div><div class="lbl">Cuota Total</div><div class="odds">1.88</div></div>
+      <div><div class="lbl">Probabilidad</div><div class="prob">45%</div></div>
     </div>
   </div>
 </div>
@@ -678,7 +672,7 @@ td .badge.blue { background: #3B82F6; color: #fff; }
 </div>
 
 <div class="footer">
-  <p>Sports ML Pipeline v1.0 &middot; Generado el 03/07/2026 02:03</p>
+  <p>Sports ML Pipeline v1.0 &middot; Generado el 03/07/2026 02:12</p>
   <p>Solo fines educativos. Juega con responsabilidad.</p>
 </div>
 
@@ -739,8 +733,9 @@ document.querySelectorAll('.nav button').forEach(btn => {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
+    const sec = this.dataset.section;
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('s-' + this.dataset.section).classList.add('active');
+    document.getElementById('s-' + sec).classList.add('active');
   });
 });
 document.getElementById('updateDate').textContent = new Date().toLocaleDateString('es-MX', {
