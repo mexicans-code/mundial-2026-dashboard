@@ -102,7 +102,7 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
     <div class="subtitle">Predicciones generadas por modelo ML | Solo fines educativos</div>
   </div>
   <div class="meta">
-    <span class="badge" id="matches-count">4495</span> partidos entrenados
+    <span class="badge" id="matches-count">4498</span> partidos entrenados
     <span style="margin-left: 12px;" id="update-date"></span>
   </div>
 </div>
@@ -114,6 +114,7 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
 
 <div class="toggle-group">
   <button class="toggle-btn active" onclick="showSection('pendientes')">Partidos 2 Jul</button>
+  <button class="toggle-btn" onclick="showSection('pendientes-2')">Partidos 3 Jul</button>
   <button class="toggle-btn" onclick="showSection('apuestas')">Apuestas</button>
   <button class="toggle-btn" onclick="showSection('historial')">Historial Picks</button>
   <button class="toggle-btn" onclick="showSection('modelo')">Rendimiento Modelo</button>
@@ -306,7 +307,192 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
 
 </div>
 
-<div id="section-apuestas" class="hidden">
+<div id="section-pendientes-2" class="partidos-container hidden">
+
+  <!-- Australia vs Egypt -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        Australia <span class="vs">vs</span> Egipto
+      </div>
+      <span class="badge" style="background: #d29922;">Sab 12pm</span>
+    </div>
+    <div class="match-info">
+      <span>Dallas</span>
+      <span>R32</span>
+    </div>
+
+    <div class="prob-bar">
+      <div class="home" style="width:43%">43%</div>
+      <div class="draw" style="width:27%">27%</div>
+      <div class="away" style="width:30%">30%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value red">48%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value yellow">54%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Pronostico</div>
+        <div class="value" style="color:#1f6feb">Australia</div>
+      </div>
+    </div>
+
+    <div class="card-title" style="margin-top:8px;">Exact Scores</div>
+    <div class="scores-list">
+      <div class="score-row"><span>1-0 Australia</span><span class="prob">18%</span></div>
+      <div class="score-row"><span>0-0</span><span class="prob">17%</span></div>
+      <div class="score-row"><span>1-1</span><span class="prob">13%</span></div>
+      <div class="score-row"><span>0-1 Egipto</span><span class="prob">9%</span></div>
+      <div class="score-row"><span>2-0 Australia</span><span class="prob">7%</span></div>
+    </div>
+
+    <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
+    <div class="stats-grid">
+      <div class="stat-home">3.7</div><div class="stat-label">Remates a puerta</div><div class="stat-away">4.0</div>
+      <div class="stat-home">4.7</div><div class="stat-label">Remates fuera</div><div class="stat-away">5.5</div>
+      <div class="stat-home">10.0</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">11.0</div>
+      <div class="stat-home">15.7</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">15.0</div>
+      <div class="stat-home">3.7</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">3.0</div>
+      <div class="stat-home">1.0</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">1.0</div>
+      <div class="stat-home">58%</div><div class="stat-label">Posesion</div><div class="stat-away">46%</div>
+      <div class="stat-home">0.7</div><div class="stat-label">Atajadas</div><div class="stat-away">1.5</div>
+    </div>
+
+    <div class="value-bet">
+      <div class="label">Value Bet</div>
+      <div class="value" style="color:#d29922">Empate +252 — Partido parejo, modelo ve 27% de empate vs mercado ~22%</div>
+    </div>
+  </div>
+
+  <!-- Argentina vs Cape Verde -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        Argentina <span class="vs">vs</span> Cabo Verde
+      </div>
+      <span class="badge" style="background: #d29922;">Sab 4pm</span>
+    </div>
+    <div class="match-info">
+      <span>Miami</span>
+      <span>R32</span>
+    </div>
+
+    <div class="prob-bar">
+      <div class="home" style="width:73%">73%</div>
+      <div class="draw" style="width:16%">16%</div>
+      <div class="away" style="width:11%">11%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value yellow">61%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value red">48%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Pronostico</div>
+        <div class="value" style="color:#1f6feb">Argentina</div>
+      </div>
+    </div>
+
+    <div class="card-title" style="margin-top:8px;">Exact Scores</div>
+    <div class="scores-list">
+      <div class="score-row"><span>2-0 Argentina</span><span class="prob">20%</span></div>
+      <div class="score-row"><span>1-0 Argentina</span><span class="prob">19%</span></div>
+      <div class="score-row"><span>3-0 Argentina</span><span class="prob">14%</span></div>
+      <div class="score-row"><span>3-1 Argentina</span><span class="prob">7%</span></div>
+      <div class="score-row"><span>2-1 Argentina</span><span class="prob">6%</span></div>
+    </div>
+
+    <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
+    <div class="stats-grid">
+      <div class="stat-home">6.0</div><div class="stat-label">Remates a puerta</div><div class="stat-away">3.5</div>
+      <div class="stat-home">5.7</div><div class="stat-label">Remates fuera</div><div class="stat-away">4.0</div>
+      <div class="stat-home">15.0</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">8.0</div>
+      <div class="stat-home">8.3</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">14.0</div>
+      <div class="stat-home">6.3</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">3.5</div>
+      <div class="stat-home">0.7</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">2.5</div>
+      <div class="stat-home">62%</div><div class="stat-label">Posesion</div><div class="stat-away">44%</div>
+      <div class="stat-home">2.0</div><div class="stat-label">Atajadas</div><div class="stat-away">3.5</div>
+    </div>
+
+    <div class="value-bet">
+      <div class="label">Value Bet</div>
+      <div class="value" style="color:#3fb950">Argentina gana — Modelo 73%, favoritismo absoluto con recency boost</div>
+    </div>
+  </div>
+
+  <!-- Colombia vs Ghana -->
+  <div class="card">
+    <div class="match-header">
+      <div class="match-teams">
+        Colombia <span class="vs">vs</span> Ghana
+      </div>
+      <span class="badge" style="background: #d29922;">Sab 7:30pm</span>
+    </div>
+    <div class="match-info">
+      <span>Kansas City</span>
+      <span>R32</span>
+    </div>
+
+    <div class="prob-bar">
+      <div class="home" style="width:71%">71%</div>
+      <div class="draw" style="width:17%">17%</div>
+      <div class="away" style="width:12%">12%</div>
+    </div>
+
+    <div class="markets">
+      <div class="market-box">
+        <div class="label">O2.5</div>
+        <div class="value yellow">59%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">BTTS</div>
+        <div class="value red">42%</div>
+      </div>
+      <div class="market-box">
+        <div class="label">Pronostico</div>
+        <div class="value" style="color:#1f6feb">Colombia</div>
+      </div>
+    </div>
+
+    <div class="card-title" style="margin-top:8px;">Exact Scores</div>
+    <div class="scores-list">
+      <div class="score-row"><span>2-0 Colombia</span><span class="prob">16%</span></div>
+      <div class="score-row"><span>3-0 Colombia</span><span class="prob">15%</span></div>
+      <div class="score-row"><span>1-0 Colombia</span><span class="prob">11%</span></div>
+      <div class="score-row"><span>3-1 Colombia</span><span class="prob">7%</span></div>
+      <div class="score-row"><span>2-1 Colombia</span><span class="prob">6%</span></div>
+    </div>
+
+    <div class="card-title" style="margin-top:12px;">Stats Proyectados</div>
+    <div class="stats-grid">
+      <div class="stat-home">5.0</div><div class="stat-label">Remates a puerta</div><div class="stat-away">3.5</div>
+      <div class="stat-home">4.3</div><div class="stat-label">Remates fuera</div><div class="stat-away">4.0</div>
+      <div class="stat-home">10.3</div><div class="stat-label"><strong>Tiros totales</strong></div><div class="stat-away">8.0</div>
+      <div class="stat-home">15.7</div><div class="stat-label"><strong>Faltas</strong></div><div class="stat-away">14.0</div>
+      <div class="stat-home">4.0</div><div class="stat-label"><strong>Esquinas</strong></div><div class="stat-away">3.5</div>
+      <div class="stat-home">2.7</div><div class="stat-label"><strong>T. Amarillas</strong></div><div class="stat-away">2.5</div>
+      <div class="stat-home">46%</div><div class="stat-label">Posesion</div><div class="stat-away">44%</div>
+      <div class="stat-home">2.3</div><div class="stat-label">Atajadas</div><div class="stat-away">3.5</div>
+    </div>
+
+    <div class="value-bet">
+      <div class="label">Value Bet</div>
+      <div class="value" style="color:#3fb950">Colombia gana — Modelo 71%, favoritismo solido con localia</div>
+    </div>
+  </div>
+
+</div>
   <div class="parlay-card">
     <div class="title">Apuestas Simples</div>
     <div class="subtitle">Picks individuales con mayor probabilidad del modelo</div>
@@ -314,127 +500,127 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
     <div class="pick-simple">
       <div class="left">
         <div class="label">Partido</div>
-        <div class="value">Espana vs Austria</div>
+        <div class="value">Argentina vs Cabo Verde</div>
       </div>
       <div class="right">
-        <div class="cuota">1.42</div>
-        <div class="prob">Espana gana (67%)</div>
+        <div class="cuota">1.30</div>
+        <div class="prob">Argentina gana (73%)</div>
       </div>
     </div>
 
     <div class="pick-simple">
       <div class="left">
         <div class="label">Partido</div>
-        <div class="value">Portugal vs Croatia</div>
+        <div class="value">Colombia vs Ghana</div>
       </div>
       <div class="right">
-        <div class="cuota">1.64</div>
-        <div class="prob">Over 2.5 goles (58%)</div>
+        <div class="cuota">1.34</div>
+        <div class="prob">Colombia gana (71%)</div>
       </div>
     </div>
 
     <div class="pick-simple">
       <div class="left">
         <div class="label">Partido</div>
-        <div class="value">Espana vs Austria</div>
+        <div class="value">Argentina vs Cabo Verde</div>
       </div>
       <div class="right">
-        <div class="cuota">1.66</div>
-        <div class="prob">BTTS Si (57%)</div>
+        <div class="cuota">1.56</div>
+        <div class="prob">Over 2.5 goles (61%)</div>
       </div>
     </div>
 
     <div class="pick-simple">
       <div class="left">
         <div class="label">Partido</div>
-        <div class="value">Portugal vs Croatia</div>
+        <div class="value">Colombia vs Ghana</div>
       </div>
       <div class="right">
-        <div class="cuota">2.21</div>
-        <div class="prob">Portugal gana (43%)</div>
+        <div class="cuota">1.61</div>
+        <div class="prob">Over 2.5 goles (59%)</div>
       </div>
     </div>
 
     <div class="pick-simple">
       <div class="left">
         <div class="label">Partido</div>
-        <div class="value">Suiza vs Argelia</div>
+        <div class="value">Australia vs Egipto</div>
       </div>
       <div class="right">
-        <div class="cuota">2.64</div>
-        <div class="prob">Argelia gana (36%)</div>
+        <div class="cuota">1.76</div>
+        <div class="prob">BTTS Si (54%)</div>
       </div>
     </div>
   </div>
 
   <div class="parlay-card">
     <div class="title">Parlay 2 Partidos</div>
-    <div class="subtitle">Combinacion de 2 selecciones con mayor valor</div>
+    <div class="subtitle">Combinacion de 2 favoritos del dia</div>
 
     <div class="parlay-leg">
       <div class="num">1</div>
       <div class="detail">
-        <div class="match-name">Espana vs Austria</div>
-        <div class="pick">Espana gana @ 1.42</div>
+        <div class="match-name">Argentina vs Cabo Verde</div>
+        <div class="pick">Argentina gana @ 1.30</div>
       </div>
-      <div class="odds">1.42</div>
+      <div class="odds">1.30</div>
     </div>
     <div class="parlay-leg">
       <div class="num">2</div>
       <div class="detail">
-        <div class="match-name">Portugal vs Croatia</div>
-        <div class="pick">Over 2.5 goles @ 1.64</div>
+        <div class="match-name">Colombia vs Ghana</div>
+        <div class="pick">Colombia gana @ 1.34</div>
       </div>
-      <div class="odds">1.64</div>
+      <div class="odds">1.34</div>
     </div>
     <div class="parlay-total">
       <div>
         <div class="label">Cuota Total</div>
-        <div class="cuota">2.33</div>
+        <div class="cuota">1.74</div>
       </div>
       <div>
         <div class="label">Probabilidad</div>
-        <div class="prob">39%</div>
+        <div class="prob">52%</div>
       </div>
     </div>
   </div>
 
   <div class="parlay-card">
-    <div class="title">Parlay 3 Partidos — Cuota +10.0</div>
-    <div class="subtitle">Combinacion agresiva pero logica: cada pick tiene sentido futbolistico con recency boost</div>
+    <div class="title">Parlay 3 Partidos — Cuota +6.0</div>
+    <div class="subtitle">Combinacion agresiva: 3 favoritos con over en ambos lados</div>
 
     <div class="parlay-leg">
       <div class="num">1</div>
       <div class="detail">
-        <div class="match-name">Portugal vs Croatia</div>
-        <div class="pick">Portugal gana (43% — recency boost tras Nations League 2024)</div>
+        <div class="match-name">Argentina vs Cabo Verde</div>
+        <div class="pick">Argentina gana (73% — favoritismo absoluto)</div>
       </div>
-      <div class="odds">2.21</div>
+      <div class="odds">1.30</div>
     </div>
     <div class="parlay-leg">
       <div class="num">2</div>
       <div class="detail">
-        <div class="match-name">Suiza vs Argelia</div>
-        <div class="pick">Empate (29% — partido mas parejo de la jornada)</div>
+        <div class="match-name">Colombia vs Ghana</div>
+        <div class="pick">Colombia gana (71% — solido con localia)</div>
       </div>
-      <div class="odds">3.28</div>
+      <div class="odds">1.34</div>
     </div>
     <div class="parlay-leg">
       <div class="num">3</div>
       <div class="detail">
-        <div class="match-name">Espana vs Austria</div>
-        <div class="pick">BTTS Si (57% — Austria anota en 3/5 recientes, Espana siempre marca)</div>
+        <div class="match-name">Argentina vs Cabo Verde</div>
+        <div class="pick">Over 2.5 goles (61% — Argentina promedia 2.3 goles ultimos 5)</div>
       </div>
-      <div class="odds">1.66</div>
+      <div class="odds">1.56</div>
     </div>
     <div class="parlay-total">
       <div>
         <div class="label">Cuota Total</div>
-        <div class="cuota">12.03</div>
+        <div class="cuota">2.72</div>
       </div>
       <div>
         <div class="label">Probabilidad</div>
-        <div class="prob">7%</div>
+        <div class="prob">32%</div>
       </div>
     </div>
   </div>
@@ -543,6 +729,36 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
           <td class="loss" style="font-weight:700">2-0</td>
           <td class="loss">0/3</td>
         </tr>
+        <tr style="border-top:2px solid #30363d">
+          <td><span class="badge" style="background:#1f6feb;">Proximos</span></td>
+          <td>Australia vs Egipto</td>
+          <td style="color:#1f6feb;font-weight:700">Australia 43%</td>
+          <td class="red" style="font-weight:700">No 48%</td>
+          <td class="yellow" style="font-weight:700">Si 54%</td>
+          <td style="color:#d29922">Empate +252</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#1f6feb;">Proximos</span></td>
+          <td>Argentina vs Cabo Verde</td>
+          <td style="color:#1f6feb;font-weight:700">Argentina 73%</td>
+          <td class="yellow" style="font-weight:700">Si 61%</td>
+          <td class="red" style="font-weight:700">No 48%</td>
+          <td style="color:#3fb950;font-weight:700">Argentina @ 1.30</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#1f6feb;">Proximos</span></td>
+          <td>Colombia vs Ghana</td>
+          <td style="color:#1f6feb;font-weight:700">Colombia 71%</td>
+          <td class="yellow" style="font-weight:700">Si 59%</td>
+          <td class="red" style="font-weight:700">No 42%</td>
+          <td style="color:#3fb950;font-weight:700">Colombia @ 1.34</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
       </tbody>
     </table>
     <div style="font-size:12px;color:#8b949e;margin-top:12px;">
@@ -626,7 +842,7 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
       </tbody>
     </table>
     <div style="font-size:12px;color:#8b949e;margin-top:12px;">
-      Dataset: <strong>4495</strong> partidos nacionales | Features: 19 (con recency weighting) | FIFA Rankings incluidos
+      Dataset: <strong>4498</strong> partidos nacionales | Features: 19 (con recency weighting) | FIFA Rankings incluidos
     </div>
   </div>
 
@@ -658,6 +874,27 @@ h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; color: #fff; }
           <td class="yellow">51%</td>
           <td class="yellow">54%</td>
         </tr>
+        <tr>
+          <td>Jul 3</td>
+          <td>Australia vs Egipto</td>
+          <td><strong>43</strong>/27/31</td>
+          <td class="red">48%</td>
+          <td class="yellow">54%</td>
+        </tr>
+        <tr>
+          <td>Jul 3</td>
+          <td>Argentina vs Cabo Verde</td>
+          <td><strong>73</strong>/16/11</td>
+          <td class="yellow">61%</td>
+          <td class="red">48%</td>
+        </tr>
+        <tr>
+          <td>Jul 3</td>
+          <td>Colombia vs Ghana</td>
+          <td><strong>71</strong>/17/12</td>
+          <td class="yellow">59%</td>
+          <td class="red">42%</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -675,6 +912,7 @@ function showSection(section) {
   document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById('section-pendientes').classList.add('hidden');
+  document.getElementById('section-pendientes-2').classList.add('hidden');
   document.getElementById('section-apuestas').classList.add('hidden');
   document.getElementById('section-historial').classList.add('hidden');
   document.getElementById('section-modelo').classList.add('hidden');
