@@ -1,6 +1,7 @@
 """Generate dashboard/index.html from the trained model and CSV data."""
 
 import json
+import math
 import os
 import sys
 from datetime import datetime
@@ -584,6 +585,13 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 .footer {{ text-align: center; color: rgba(148,163,184,0.5); font-size: 11px; margin-top: 32px; padding: 16px 0; border-top: 1px solid var(--border); }}
 .footer a {{ color: var(--body); text-decoration: none; }}
 .footer a:hover {{ color: var(--title); }}
+.extra-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }}
+.extra-cat {{ font-size: 11px; color: var(--body); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 8px; }}
+.m-line {{ display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 8px; }}
+.m-line:last-child {{ border-bottom: none; }}
+.m-name {{ flex: 1; font-size: 13px; color: var(--title); }}
+.m-prob {{ font-size: 13px; font-weight: 600; color: var(--amber); min-width: 40px; text-align: right; }}
+.m-odds {{ font-size: 14px; font-weight: 700; color: var(--green); min-width: 44px; text-align: right; }}
 </style>
 </head>
 <body>
@@ -617,6 +625,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 {generate_match_cards(predictions, stats, "jul2")}
   </div>
 {generate_bets_section(predictions, "jul2")}
+{generate_extra_markets(predictions, stats, "jul2")}
 </div>
 
 <!-- ===== 3 JUL ===== -->
@@ -625,6 +634,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 {generate_match_cards(predictions, stats, "jul3")}
   </div>
 {generate_bets_section(predictions, "jul3")}
+{generate_extra_markets(predictions, stats, "jul3")}
 </div>
 
 <!-- ===== MODELO ===== -->
@@ -792,6 +802,78 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
         <div class="{vb_class}">{vb_text}</div>
       </div>
     </div>""")
+
+    return "\n".join(cards)
+
+
+def _poisson_over_prob(avg: float, threshold: float) -> float:
+    """P(X > threshold) for X ~ Poisson(avg)."""
+    total = 0.0
+    for k in range(int(threshold) + 1):
+        total += (avg ** k) * math.exp(-avg) / math.factorial(k)
+    return max(0.01, min(0.99, 1.0 - total))
+
+
+def generate_extra_markets(predictions: dict, all_stats: dict, section: str) -> str:
+    cards = []
+    for home, away, *_rest in MATCHES:
+        sec = MATCHES_MAP.get((home, away), "jul2")
+        if sec != section:
+            continue
+        key = f"{home} vs {away}"
+        p = predictions.get(key, {})
+        s = all_stats.get(key, {})
+        h_display = NAME_MAP_ES[home]
+        a_display = NAME_MAP_ES[away]
+
+        home_stats = s.get("home", {})
+        away_stats = s.get("away", {})
+
+        # --- Stat O/U markets ---
+        pairs = [
+            ("Córners > 8.5", home_stats.get("Corner Kicks", 4.0) + away_stats.get("Corner Kicks", 3.0), 8.5),
+            ("T. Amarillas > 3.5", home_stats.get("Yellow Cards", 1.5) + away_stats.get("Yellow Cards", 1.5), 3.5),
+            ("Remates Puerta > 8.5", home_stats.get("Shots on Goal", 4.0) + away_stats.get("Shots on Goal", 3.5), 8.5),
+            ("Faltas > 18.5", home_stats.get("Fouls", 10.0) + away_stats.get("Fouls", 10.0), 18.5),
+        ]
+        stat_markets = ""
+        for name, avg, thresh in pairs:
+            prob = _poisson_over_prob(avg, thresh)
+            fair = round(1.0 / prob, 2)
+            stat_markets += f'<div class="m-line"><div class="m-name">{name}</div><div class="m-prob">{prob*100:.0f}%</div><div class="m-odds">{fair}</div></div>\n'
+
+        # --- Combo markets ---
+        h_prob = p.get("prob_home", 0.33)
+        a_prob = p.get("prob_away", 0.34)
+        o25 = p.get("prob_over_2_5", 0.5)
+        btts = p.get("prob_btts_yes", 0.5)
+        fave = h_display if h_prob >= a_prob else a_display
+        fave_prob = max(h_prob, a_prob)
+
+        combos = [
+            (f"BTTS + O2.5", btts * o25),
+            (f"{fave} Gana + O2.5", fave_prob * o25),
+            (f"{fave} Gana + BTTS", fave_prob * btts),
+        ]
+        combo_markets = ""
+        for name, prob in combos:
+            fair = round(1.0 / max(prob, 0.01), 2)
+            combo_markets += f'<div class="m-line"><div class="m-name">{name}</div><div class="m-prob">{prob*100:.0f}%</div><div class="m-odds">{fair}</div></div>\n'
+
+        cards.append(f"""
+  <div class="parlay-card">
+    <div class="title">Mercados Adicionales — {h_display} vs {a_display}</div>
+    <div class="extra-grid">
+      <div>
+        <div class="extra-cat">Estadísticas (O/U)</div>
+        {stat_markets}
+      </div>
+      <div>
+        <div class="extra-cat">Combinadas</div>
+        {combo_markets}
+      </div>
+    </div>
+  </div>""")
 
     return "\n".join(cards)
 
