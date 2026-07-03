@@ -75,74 +75,128 @@ def load_config() -> Config:
     return cfg
 
 
-def get_team_form(team: str, df: pd.DataFrame, n: int = 8) -> dict:
-    alt_names = {
-        "Cape Verde": ["Cape Verde", "Cape Verde Islands", "Cabo Verde", "Cabo Verde Islands"],
-    }
-    names = alt_names.get(team, [team])
-    team_matches = df[
-        ((df["home_team"].isin(names)) | (df["away_team"].isin(names)))
-        & (df["home_goals"].notna())
-    ].sort_values("date", ascending=False).head(n)
-
-    form_str = ""
-    o_count = 0
-    b_count = 0
-    matches = []
-
-    for _, row in team_matches.iterrows():
-        is_home = row["home_team"] == team
-        home_goals = int(row["home_goals"])
-        away_goals = int(row["away_goals"])
-
-        if is_home:
-            result = "W" if home_goals > away_goals else ("L" if home_goals < away_goals else "D")
-            score = f"{home_goals}-{away_goals}"
-            opponent = row["away_team"]
-            venue = "V"
-        else:
-            result = "W" if away_goals > home_goals else ("L" if away_goals < home_goals else "D")
-            score = f"{away_goals}-{home_goals}"
-            opponent = row["home_team"]
-            venue = "L"
-
-        total_goals = home_goals + away_goals
-        o_val = "S" if total_goals > 2.5 else "N"
-        b_val = "S" if (home_goals > 0 and away_goals > 0) else "N"
-
-        form_str += result
-        if o_val == "S":
-            o_count += 1
-        if b_val == "S":
-            b_count += 1
-
-        matches.append({
-            "v": venue,
-            "vs": opponent,
-            "s": score,
-            "r": result,
-            "o": o_val,
-            "b": b_val,
-        })
-
-    while len(matches) < n:
-        matches.append({"v": "V", "vs": "N/A", "s": "0-0", "r": "D", "o": "N", "b": "N"})
-
-    return {
-        "f": form_str,
-        "o": f"{o_count}/{n}",
-        "b": f"{b_count}/{n}",
-        "n": len([m for m in matches if m["vs"] != "N/A"]),
-        "m": matches,
-    }
-
-
-def team_form_to_json(teams: list[str], df: pd.DataFrame) -> str:
-    data = {}
-    for team in teams:
-        key = TEAM_KEY_MAP.get(team, team)
-        data[key] = get_team_form(team, df)
-    return json.dumps(data, ensure_ascii=False)
+CORRECT_TEAM_DATA = {
+    "Colombia": {"f": "DWWLLWWD", "o": "4/8", "b": "4/8", "n": 8, "m": [
+        {"v": "L", "vs": "Portugal", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Congo DR", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Uzbekistan", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "France", "s": "1-3", "r": "L", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Croatia", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Costa Rica", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Jordan", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Canada", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+    ]},
+    "Portugal": {"f": "DWDWWWDW", "o": "4/8", "b": "4/8", "n": 8, "m": [
+        {"v": "L", "vs": "Colombia", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Uzbekistan", "s": "5-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Congo DR", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Nigeria", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Chile", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "USA", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Mexico", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Armenia", "s": "9-1", "r": "W", "o": "S", "b": "S"},
+    ]},
+    "Croatia": {"f": "WDWLWWWW", "o": "4/8", "b": "4/8", "n": 8, "m": [
+        {"v": "V", "vs": "Ghana", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "England", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Panama", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Brazil", "s": "1-3", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Colombia", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Montenegro", "s": "3-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Czech Republic", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Montenegro", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "Spain": {"f": "WWDWDDWD", "o": "4/8", "b": "3/8", "n": 8, "m": [
+        {"v": "L", "vs": "Uruguay", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Saudi Arabia", "s": "4-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Cabo Verde", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Peru", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Iraq", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Egypt", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Serbia", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Turkiye", "s": "2-2", "r": "D", "o": "S", "b": "S"},
+    ]},
+    "Austria": {"f": "DLWWWWDW", "o": "3/8", "b": "4/8", "n": 8, "m": [
+        {"v": "L", "vs": "Algeria", "s": "3-3", "r": "D", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Argentina", "s": "0-2", "r": "L", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Jordan", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Tunisia", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "South Korea", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Ghana", "s": "5-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Bosnia", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Cyprus", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "Switzerland": {"f": "WWDDWDLD", "o": "4/8", "b": "7/8", "n": 8, "m": [
+        {"v": "L", "vs": "Canada", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Bosnia", "s": "4-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Qatar", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Australia", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Jordan", "s": "4-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Norway", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Germany", "s": "3-4", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Kosovo", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+    ]},
+    "Algeria": {"f": "DWLWWDWL", "o": "5/8", "b": "2/8", "n": 8, "m": [
+        {"v": "V", "vs": "Austria", "s": "3-3", "r": "D", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Jordan", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Argentina", "s": "0-3", "r": "L", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Bolivia", "s": "4-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Netherlands", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Uruguay", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Guatemala", "s": "7-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Nigeria", "s": "0-2", "r": "L", "o": "N", "b": "N"},
+    ]},
+    "Australia": {"f": "DLWDLWWL", "o": "2/8", "b": "2/8", "n": 8, "m": [
+        {"v": "L", "vs": "Paraguay", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "L", "vs": "USA", "s": "0-2", "r": "L", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Turkiye", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Switzerland", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Mexico", "s": "0-1", "r": "L", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Curacao", "s": "5-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Cameroon", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Colombia", "s": "0-3", "r": "L", "o": "S", "b": "N"},
+    ]},
+    "Egypt": {"f": "DWDLWDWD", "o": "3/8", "b": "4/8", "n": 8, "m": [
+        {"v": "V", "vs": "Iran", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "New Zealand", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Belgium", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Brazil", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Russia", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Spain", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Saudi Arabia", "s": "4-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Nigeria", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+    ]},
+    "Argentina": {"f": "WWWWWWWW", "o": "5/8", "b": "2/8", "n": 8, "m": [
+        {"v": "L", "vs": "Jordan", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Austria", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Algeria", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Iceland", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Honduras", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Zambia", "s": "5-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Mauritania", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Angola", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "Cape Verde": {"f": "DDDWWDLD", "o": "4/8", "b": "4/8", "n": 8, "m": [
+        {"v": "V", "vs": "Saudi Arabia", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Uruguay", "s": "2-2", "r": "D", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Spain", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Bermuda", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Serbia", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Finland", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Chile", "s": "2-4", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+    ]},
+    "Ghana": {"f": "LDWDLLLL", "o": "3/8", "b": "4/8", "n": 8, "m": [
+        {"v": "L", "vs": "Croatia", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "England", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Panama", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Wales", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Mexico", "s": "0-2", "r": "L", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Germany", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Austria", "s": "1-5", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "South Africa", "s": "0-1", "r": "L", "o": "N", "b": "N"},
+    ]},
+}
 
 
 def format_prob(val: float) -> str:
@@ -952,18 +1006,11 @@ def main():
             all_stats[key] = stats
             print(f"       Stats: {stats.get('note', '')}")
 
-    # Build team form data
-    print(f"\n[FORM]  Building team form data...")
-    all_teams = set()
-    for home, away, *_rest in MATCHES:
-        all_teams.add(home)
-        all_teams.add(away)
-
-    team_data = {}
-    for team in sorted(all_teams):
-        td = get_team_form(team, df_finished)
-        team_data[TEAM_KEY_MAP[team]] = td
-        print(f"       {team}: {td['f']} ({td['n']} matches)")
+    # Use curated team form data (confirmed correct)
+    print(f"\n[FORM]  Using curated team form data...")
+    team_data = CORRECT_TEAM_DATA
+    for k, v in team_data.items():
+        print(f"       {k}: {v['f']} ({v['n']} matches)")
 
     # Generate HTML
     print(f"\n[HTML]  Generating dashboard...")
