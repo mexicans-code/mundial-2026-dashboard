@@ -8,142 +8,359 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0A0E17; --surface: #131920; --border: #1E293B;
-  --title: #F8FAFC; --body: #94A3B8;
-  --green: #22C55E; --red: #EF4444; --amber: #F59E0B; --blue: #3B82F6;
+  --bg: #0A0E17;
+  --surface: #131920;
+  --border: #1E293B;
+  --title: #F8FAFC;
+  --body: #94A3B8;
+  --green: #22C55E;
+  --red: #EF4444;
+  --amber: #F59E0B;
   --font: 'Inter', system-ui, -apple-system, sans-serif;
-  --radius: 12px; --gap: 16px;
+  --radius: 12px;
+  --gap: 16px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--body); font-family:var(--font); font-weight:400; font-size:14px; line-height:1.5; padding:24px; -webkit-font-smoothing:antialiased; }
-.container { max-width:1200px; margin:0 auto; }
+body {
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1200px; margin: 0 auto; }
 
-.header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
-.header-left h1 { font-size:24px; font-weight:600; color:var(--title); margin-bottom:2px; }
-.header-left .sub { font-size:13px; color:var(--body); }
-.header-right { display:flex; align-items:center; gap:12px; font-size:13px; }
-.record-badge { background:var(--green); color:#000; font-weight:700; font-size:13px; padding:4px 14px; border-radius:20px; }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.header-left h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--title);
+  margin-bottom: 2px;
+}
+.header-left .sub {
+  font-size: 13px;
+  color: var(--body);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+.record-badge {
+  background: var(--green);
+  color: #000;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+.record-badge.low { background: var(--amber); }
+.record-badge.bad { background: var(--red); }
 
-.disclaimer { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:12px 16px; font-size:12px; color:var(--body); margin-bottom:20px; }
+.disclaimer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--body);
+  margin-bottom: 20px;
+}
 
-.nav { display:flex; gap:4px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid var(--border); padding-bottom:0; }
-.nav button { background:none; border:none; color:var(--body); padding:10px 18px; font-size:13px; font-weight:500; font-family:var(--font); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color 0.15s,border-color 0.15s; }
-.nav button:hover { color:var(--title); }
-.nav button.active { color:var(--title); border-bottom-color:var(--title); }
+.nav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.nav button {
+  background: none;
+  border: none;
+  color: var(--body);
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav button:hover { color: var(--title); }
+.nav button.active {
+  color: var(--title);
+  border-bottom-color: var(--title);
+}
 
-.section { display:none; }
-.section.active { display:block; }
+.section { display: none; }
+.section.active { display: block; }
 
-.card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:var(--gap); margin-bottom:24px; }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
-.card.full { grid-column:1/-1; }
-.card h2 { font-size:14px; font-weight:600; color:var(--body); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:14px; }
-.card h2 span { color:var(--green); }
+/* Card grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--gap);
+  margin-bottom: 24px;
+}
 
-.match-name { font-size:17px; font-weight:600; color:var(--title); margin-bottom:4px; }
-.match-name .vs { color:var(--body); font-weight:400; font-size:14px; margin:0 6px; }
-.match-meta { font-size:12px; color:var(--body); margin-bottom:14px; }
-.match-meta span { margin-right:14px; }
-.match-meta .tag { display:inline-block; background:var(--green); color:#000; font-size:10px; font-weight:700; padding:2px 10px; border-radius:10px; }
-.match-meta .tag.amber { background:var(--amber); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.card.full { grid-column: 1 / -1; }
 
-.prob-bar { display:flex; height:28px; border-radius:6px; overflow:hidden; margin-bottom:12px; font-size:11px; font-weight:600; }
-.prob-bar div { display:flex; align-items:center; justify-content:center; }
-.prob-bar .home { background:var(--green); color:#000; }
-.prob-bar .draw { background:var(--amber); color:#000; }
-.prob-bar .away { background:var(--red); color:#fff; }
+.card h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 14px;
+}
+.card h2 span { color: var(--green); }
 
-.markets { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
-.market-item { background:rgba(255,255,255,0.04); border-radius:8px; padding:10px; text-align:center; }
-.market-item .lbl { font-size:10px; color:var(--body); text-transform:uppercase; letter-spacing:0.3px; }
-.market-item .val { font-size:18px; font-weight:700; color:var(--title); }
-.market-item .val.green { color:var(--green); }
-.market-item .val.red { color:var(--red); }
-.market-item .val.amber { color:var(--amber); }
+/* Match card */
+.match-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--title);
+  margin-bottom: 4px;
+}
+.match-name .vs { color: var(--body); font-weight: 400; font-size: 14px; margin: 0 6px; }
+.match-meta {
+  font-size: 12px;
+  color: var(--body);
+  margin-bottom: 14px;
+}
+.match-meta span { margin-right: 14px; }
+.match-meta .badge {
+  display: inline-block;
+  background: var(--green);
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+.match-meta .badge.amber { background: var(--amber); }
 
-.form-badge { font-size:10px; color:var(--body); margin-top:4px; }
-.form-badge strong { font-weight:600; }
+/* Probability bar */
+.prob-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.prob-bar div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s;
+}
+.prob-bar .home { background: var(--green); color: #000; }
+.prob-bar .draw { background: var(--amber); color: #000; }
+.prob-bar .away { background: var(--red); color: #fff; }
 
-.stats-grid { display:grid; grid-template-columns:1fr auto 1fr; gap:4px 12px; font-size:13px; font-variant-numeric:tabular-nums; margin-top:12px; }
-.stats-grid .lbl { color:var(--body); grid-column:2; text-align:center; font-size:11px; }
-.stats-grid .h { text-align:right; color:var(--title); }
-.stats-grid .a { text-align:left; color:var(--title); }
+/* Markets row */
+.markets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.market-item {
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.market-item .lbl { font-size: 10px; color: var(--body); text-transform: uppercase; letter-spacing: 0.3px; }
+.market-item .val { font-size: 18px; font-weight: 700; color: var(--title); }
+.market-item .val.green { color: var(--green); }
+.market-item .val.red { color: var(--red); }
+.market-item .val.amber { color: var(--amber); }
 
-.value-bet { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-top:12px; }
-.value-bet .lbl { font-size:10px; color:var(--body); text-transform:uppercase; letter-spacing:0.3px; }
-.value-bet .val { font-size:13px; font-weight:600; color:var(--green); }
-.value-bet .val.amber { color:var(--amber); }
+/* Details toggle */
+.details-toggle {
+  font-size: 12px;
+  color: var(--body);
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
+  display: inline-block;
+}
+.details-toggle:hover { color: var(--title); }
+.details-content { display: none; margin-top: 12px; }
+.details-content.open { display: block; }
 
-.btn-form { font-size:11px; color:var(--blue); background:none; border:1px solid var(--border); border-radius:6px; padding:4px 10px; cursor:pointer; font-family:var(--font); margin-top:8px; transition:border-color 0.15s; }
-.btn-form:hover { border-color:var(--blue); }
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 4px 12px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.stats-grid .lbl { color: var(--body); grid-column: 2; text-align: center; font-size: 11px; }
+.stats-grid .h { text-align: right; color: var(--title); }
+.stats-grid .a { text-align: left; color: var(--title); }
 
-/* Modal */
-.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; }
-.modal-overlay.open { display:flex; }
-.modal { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); max-width:700px; width:100%; max-height:90vh; overflow-y:auto; padding:24px; position:relative; }
-.modal-close { position:absolute; top:12px; right:16px; background:none; border:none; color:var(--body); font-size:22px; cursor:pointer; font-family:var(--font); line-height:1; }
-.modal-close:hover { color:var(--title); }
-.modal h3 { font-size:16px; font-weight:600; color:var(--title); margin-bottom:16px; }
-.modal .team-section { margin-bottom:20px; }
-.modal .team-section:last-child { margin-bottom:0; }
-.modal .team-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-.modal .team-name { font-size:14px; font-weight:600; color:var(--title); }
-.modal .form-str { font-size:13px; font-weight:700; letter-spacing:2px; }
-.modal .form-str .w { color:var(--green); }
-.modal .form-str .l { color:var(--red); }
-.modal .form-str .d { color:var(--amber); }
-.modal .form-stats { display:flex; gap:16px; font-size:12px; color:var(--body); margin-bottom:10px; }
-.modal .form-stats strong { color:var(--title); }
-.modal table { width:100%; border-collapse:collapse; font-size:12px; }
-.modal th { text-align:left; padding:6px 8px; color:var(--body); font-weight:500; border-bottom:1px solid var(--border); font-size:11px; text-transform:uppercase; }
-.modal td { padding:6px 8px; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--body); }
-.modal td .fw { font-weight:600; }
-.modal td .w { color:var(--green); }
-.modal td .l { color:var(--red); }
-.modal td .d { color:var(--amber); }
+/* Exact scores */
+.scores-list { margin-top: 4px; }
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.score-row:last-child { border-bottom: none; }
+.score-row .prob { color: var(--green); font-weight: 500; }
 
-table { width:100%; border-collapse:collapse; font-size:13px; }
-th { text-align:left; padding:8px 10px; color:var(--body); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.3px; border-bottom:1px solid var(--border); }
-td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--body); }
-td strong { color:var(--title); }
-td.green { color:var(--green); }
-td.red { color:var(--red); }
-td.amber { color:var(--amber); }
-td .tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 10px; border-radius:10px; color:#000; }
-td .tag.green { background:var(--green); }
-td .tag.amber { background:var(--amber); }
-td .tag.blue { background:var(--blue); color:#fff; }
+/* Value bet */
+.value-bet {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 12px;
+}
+.value-bet .lbl { font-size: 10px; color: var(--body); text-transform: uppercase; letter-spacing: 0.3px; }
+.value-bet .val { font-size: 13px; font-weight: 600; color: var(--green); }
+.value-bet .val.amber { color: var(--amber); }
 
-.parlay-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:var(--gap); }
-.parlay-card .title { font-size:15px; font-weight:600; color:var(--title); margin-bottom:2px; }
-.parlay-card .sub { font-size:12px; color:var(--body); margin-bottom:12px; }
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--body);
+}
+td strong { color: var(--title); }
+td.green { color: var(--green); }
+td.red { color: var(--red); }
+td.amber { color: var(--amber); }
+td .badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 10px;
+  color: #000;
+}
+td .badge.green { background: var(--green); }
+td .badge.amber { background: var(--amber); }
+td .badge.blue { background: #3B82F6; color: #fff; }
 
-.pick-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
-.pick-row:last-child { border-bottom:none; }
-.pick-row .left .lbl { font-size:11px; color:var(--body); }
-.pick-row .left .val { font-size:14px; color:var(--title); font-weight:500; }
-.pick-row .right { text-align:right; }
-.pick-row .right .odds { font-size:15px; font-weight:700; color:var(--green); }
-.pick-row .right .pick { font-size:11px; color:var(--body); }
+/* Parlay cards */
+.parlay-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: var(--gap);
+}
+.parlay-card .title { font-size: 15px; font-weight: 600; color: var(--title); margin-bottom: 2px; }
+.parlay-card .sub { font-size: 12px; color: var(--body); margin-bottom: 12px; }
 
-.parlay-leg { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
-.parlay-leg:last-child { border-bottom:none; }
-.parlay-leg .num { background:var(--green); color:#000; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
-.parlay-leg .detail { flex:1; }
-.parlay-leg .detail .match { font-size:13px; color:var(--title); font-weight:500; }
-.parlay-leg .detail .pick { font-size:12px; color:var(--body); }
-.parlay-leg .odds { font-size:15px; font-weight:700; color:var(--green); text-align:right; }
-.parlay-total { display:flex; justify-content:space-between; align-items:center; padding:12px 0 0; margin-top:12px; border-top:1px solid var(--border); }
-.parlay-total .lbl { font-size:12px; color:var(--body); }
-.parlay-total .odds { font-size:22px; font-weight:700; color:var(--green); }
-.parlay-total .prob { font-size:13px; color:var(--amber); }
+.pick-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.pick-row:last-child { border-bottom: none; }
+.pick-row .left .lbl { font-size: 11px; color: var(--body); }
+.pick-row .left .val { font-size: 14px; color: var(--title); font-weight: 500; }
+.pick-row .right { text-align: right; }
+.pick-row .right .odds { font-size: 15px; font-weight: 700; color: var(--green); }
+.pick-row .right .pick { font-size: 11px; color: var(--body); }
 
-.record-line { font-size:12px; color:var(--body); margin-top:12px; padding-top:12px; border-top:1px solid var(--border); }
-.record-line strong { color:var(--title); }
+.parlay-leg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.parlay-leg:last-child { border-bottom: none; }
+.parlay-leg .num {
+  background: var(--green);
+  color: #000;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.parlay-leg .detail { flex: 1; }
+.parlay-leg .detail .match { font-size: 13px; color: var(--title); font-weight: 500; }
+.parlay-leg .detail .pick { font-size: 12px; color: var(--body); }
+.parlay-leg .odds { font-size: 15px; font-weight: 700; color: var(--green); text-align: right; }
 
-.footer { text-align:center; color:rgba(148,163,184,0.5); font-size:11px; margin-top:32px; padding:16px 0; border-top:1px solid var(--border); }
-.footer a { color:var(--body); text-decoration:none; }
-.footer a:hover { color:var(--title); }
+.parlay-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 0;
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.parlay-total .lbl { font-size: 12px; color: var(--body); }
+.parlay-total .odds { font-size: 22px; font-weight: 700; color: var(--green); }
+.parlay-total .prob { font-size: 13px; color: var(--amber); }
+
+.record-line {
+  font-size: 12px;
+  color: var(--body);
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.record-line strong { color: var(--title); }
+
+.footer {
+  text-align: center;
+  color: rgba(148,163,184,0.5);
+  font-size: 11px;
+  margin-top: 32px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--body); text-decoration: none; }
+.footer a:hover { color: var(--title); }
 </style>
 </head>
 <body>
@@ -155,13 +372,14 @@ td .tag.blue { background:var(--blue); color:#fff; }
     <div class="sub">Dashboard predictivo &middot; Machine Learning &middot; Solo educativo</div>
   </div>
   <div class="header-right">
-    <span class="record-badge">20/30</span>
+    <span class="record-badge" id="recordBadge">15/21</span>
     <span id="updateDate"></span>
   </div>
 </div>
 
 <div class="disclaimer">
-  ML entrenado con 4498 partidos — Record: 20/30 (67%) — No constituye asesoramiento financiero. Juega con responsabilidad.
+  Estas predicciones son generadas por un modelo de Machine Learning entrenado con 4498 partidos internacionales.
+  No constituyen asesoramiento financiero. Juega con responsabilidad.
 </div>
 
 <div class="nav">
@@ -174,162 +392,380 @@ td .tag.blue { background:var(--blue); color:#fff; }
 
 <!-- ===== 2 JUL ===== -->
 <div id="s-jul2" class="section active">
+
   <div class="card-grid">
+
+    <!-- Portugal vs Croatia -->
     <div class="card">
       <div class="match-name">Portugal <span class="vs">vs</span> Croacia</div>
-      <div class="match-meta"><span>Toronto</span><span class="tag amber">R32</span><span>Jue 3pm</span></div>
-      <div class="prob-bar"><div class="home" style="width:43%">43%</div><div class="draw" style="width:23%">23%</div><div class="away" style="width:34%">34%</div></div>
+      <div class="match-meta">
+        <span>Toronto</span>
+        <span class="badge amber">R32</span>
+        <span>Jue 3pm</span>
+      </div>
+      <div class="prob-bar">
+        <div class="home" style="width:43%">43%</div>
+        <div class="draw" style="width:23%">23%</div>
+        <div class="away" style="width:34%">34%</div>
+      </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">58%</div><div class="form-badge">5/8 ultimos</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div><div class="form-badge">6/8 ultimos</div></div>
-        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--blue)">Portugal</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">58%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
+        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Portugal</div></div>
       </div>
-      <div class="stats-grid">
-        <div class="h">9.3</div><div class="lbl">Remates a puerta</div><div class="a">5.0</div>
-        <div class="h">9.7</div><div class="lbl">Remates fuera</div><div class="a">5.5</div>
-        <div class="h">27.0</div><div class="lbl">Tiros totales</div><div class="a">12.0</div>
-        <div class="h">11.0</div><div class="lbl">Faltas</div><div class="a">11.0</div>
-        <div class="h">7.0</div><div class="lbl">Esquinas</div><div class="a">5.5</div>
-        <div class="h">1.3</div><div class="lbl">T. Amarillas</div><div class="a">1.5</div>
-        <div class="h">73%</div><div class="lbl">Posesion</div><div class="a">54%</div>
-        <div class="h">2.0</div><div class="lbl">Atajadas</div><div class="a">2.5</div>
+      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
+      <div class="details-content">
+        <div class="scores-list">
+          <div class="score-row"><span>1-1</span><span class="prob">10%</span></div>
+          <div class="score-row"><span>2-1 Portugal</span><span class="prob">9%</span></div>
+          <div class="score-row"><span>1-2 Croacia</span><span class="prob">7%</span></div>
+          <div class="score-row"><span>2-0 Portugal</span><span class="prob">6%</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="stats-grid">
+            <div class="h">9.3</div><div class="lbl">Remates a puerta</div><div class="a">5.0</div>
+            <div class="h">27.0</div><div class="lbl">Tiros totales</div><div class="a">12.0</div>
+            <div class="h">7.0</div><div class="lbl">Esquinas</div><div class="a">5.5</div>
+            <div class="h">1.3</div><div class="lbl">T. Amarillas</div><div class="a">1.5</div>
+            <div class="h">73%</div><div class="lbl">Posesion</div><div class="a">54%</div>
+          </div>
+        </div>
       </div>
-      <button class="btn-form" onclick="openForm('Portugal','Croacia')">Ver forma ultimos 8 partidos</button>
-      <div class="value-bet"><div class="lbl">Value Bet</div><div class="val">Portugal +132 — Modelo 43% vs Mercado 33% (+10% edge)</div></div>
+      <div class="value-bet">
+        <div class="lbl">Value Bet</div>
+        <div class="val">Portugal +132 — Modelo 43% vs Mercado 33% (+10% edge)</div>
+      </div>
     </div>
+
+    <!-- Espana vs Austria -->
     <div class="card">
       <div class="match-name">Espa&ntilde;a <span class="vs">vs</span> Austria</div>
-      <div class="match-meta"><span>Los Angeles</span><span class="tag amber">R32</span><span>Jue 3pm</span></div>
-      <div class="prob-bar"><div class="home" style="width:67%">67%</div><div class="draw" style="width:20%">20%</div><div class="away" style="width:13%">13%</div></div>
+      <div class="match-meta">
+        <span>Los Angeles</span>
+        <span class="badge amber">R32</span>
+        <span>Jue 3pm</span>
+      </div>
+      <div class="prob-bar">
+        <div class="home" style="width:67%">67%</div>
+        <div class="draw" style="width:20%">20%</div>
+        <div class="away" style="width:13%">13%</div>
+      </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">54%</div><div class="form-badge">7/8 ultimos</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">57%</div><div class="form-badge">3/8 ultimos</div></div>
-        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--blue)">Espa&ntilde;a</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">54%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">57%</div></div>
+        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Espa&ntilde;a</div></div>
       </div>
-      <div class="stats-grid">
-        <div class="h">7.0</div><div class="lbl">Remates a puerta</div><div class="a">5.0</div>
-        <div class="h">6.0</div><div class="lbl">Remates fuera</div><div class="a">5.5</div>
-        <div class="h">19.0</div><div class="lbl">Tiros totales</div><div class="a">12.0</div>
-        <div class="h">10.3</div><div class="lbl">Faltas</div><div class="a">11.0</div>
-        <div class="h">9.0</div><div class="lbl">Esquinas</div><div class="a">5.5</div>
-        <div class="h">1.3</div><div class="lbl">T. Amarillas</div><div class="a">1.5</div>
-        <div class="h">66%</div><div class="lbl">Posesion</div><div class="a">54%</div>
-        <div class="h">1.3</div><div class="lbl">Atajadas</div><div class="a">2.5</div>
+      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
+      <div class="details-content">
+        <div class="scores-list">
+          <div class="score-row"><span>2-0 Espa&ntilde;a</span><span class="prob">15%</span></div>
+          <div class="score-row"><span>3-0 Espa&ntilde;a</span><span class="prob">13%</span></div>
+          <div class="score-row"><span>1-0 Espa&ntilde;a</span><span class="prob">11%</span></div>
+          <div class="score-row"><span>3-1 Espa&ntilde;a</span><span class="prob">9%</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="stats-grid">
+            <div class="h">7.0</div><div class="lbl">Remates a puerta</div><div class="a">5.0</div>
+            <div class="h">19.0</div><div class="lbl">Tiros totales</div><div class="a">12.0</div>
+            <div class="h">9.0</div><div class="lbl">Esquinas</div><div class="a">5.5</div>
+            <div class="h">1.3</div><div class="lbl">T. Amarillas</div><div class="a">1.5</div>
+            <div class="h">66%</div><div class="lbl">Posesion</div><div class="a">54%</div>
+          </div>
+        </div>
       </div>
-      <button class="btn-form" onclick="openForm('Espana','Austria')">Ver forma ultimos 8 partidos</button>
-      <div class="value-bet"><div class="lbl">Value Bet</div><div class="val">Espa&ntilde;a gana — Modelo 67%, favoritismo solido</div></div>
+      <div class="value-bet">
+        <div class="lbl">Value Bet</div>
+        <div class="val">Espa&ntilde;a gana — Modelo 67%, favoritismo solido</div>
+      </div>
     </div>
+
+    <!-- Suiza vs Algeria -->
     <div class="card">
       <div class="match-name">Suiza <span class="vs">vs</span> Argelia</div>
-      <div class="match-meta"><span>Vancouver</span><span class="tag amber">R32</span><span>Jue 11pm</span></div>
-      <div class="prob-bar"><div class="home" style="width:35%">35%</div><div class="draw" style="width:29%">29%</div><div class="away" style="width:36%">36%</div></div>
+      <div class="match-meta">
+        <span>Vancouver</span>
+        <span class="badge amber">R32</span>
+        <span>Jue 11pm</span>
+      </div>
+      <div class="prob-bar">
+        <div class="home" style="width:35%">35%</div>
+        <div class="draw" style="width:29%">29%</div>
+        <div class="away" style="width:36%">36%</div>
+      </div>
       <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">51%</div><div class="form-badge">3/8 ultimos</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div><div class="form-badge">5/8 ultimos</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">51%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val amber">Argelia</div></div>
       </div>
-      <div class="stats-grid">
-        <div class="h">5.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
-        <div class="h">5.5</div><div class="lbl">Remates fuera</div><div class="a">4.0</div>
-        <div class="h">12.0</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
-        <div class="h">11.0</div><div class="lbl">Faltas</div><div class="a">14.0</div>
-        <div class="h">5.5</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
-        <div class="h">1.5</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
-        <div class="h">54%</div><div class="lbl">Posesion</div><div class="a">44%</div>
-        <div class="h">2.5</div><div class="lbl">Atajadas</div><div class="a">3.5</div>
+      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
+      <div class="details-content">
+        <div class="scores-list">
+          <div class="score-row"><span>1-1</span><span class="prob">12%</span></div>
+          <div class="score-row"><span>0-1 Argelia</span><span class="prob">9%</span></div>
+          <div class="score-row"><span>1-0 Suiza</span><span class="prob">9%</span></div>
+          <div class="score-row"><span>0-0</span><span class="prob">8%</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="stats-grid">
+            <div class="h">5.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
+            <div class="h">12.0</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
+            <div class="h">5.5</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
+            <div class="h">1.5</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
+            <div class="h">54%</div><div class="lbl">Posesion</div><div class="a">44%</div>
+          </div>
+        </div>
       </div>
-      <button class="btn-form" onclick="openForm('Suiza','Argelia')">Ver forma ultimos 8 partidos</button>
-      <div class="value-bet"><div class="lbl">Value Bet</div><div class="val amber">Empate +240 — Modelo ve 29% vs mercado ~24%</div></div>
+      <div class="value-bet">
+        <div class="lbl">Value Bet</div>
+        <div class="val amber">Empate +240 — Modelo ve 29% vs mercado ~24%</div>
+      </div>
     </div>
+
   </div>
 </div>
 
 <!-- ===== 3 JUL ===== -->
 <div id="s-jul3" class="section">
+
   <div class="card-grid">
+
+    <!-- Australia vs Egypt -->
     <div class="card">
-      <div class="match-name">Australia <span class="vs">1 - 1</span> Egipto</div>
-      <div class="match-meta"><span>Dallas</span><span class="tag amber">R32</span><span>Sab 12pm</span><span class="tag" style="margin-left:6px">Empate</span></div>
-      <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">48% No</div><div class="form-badge">acertado</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val green">54% Si</div><div class="form-badge">acertado</div></div>
-        <div class="market-item"><div class="lbl">Modelo</div><div class="val amber">2/3</div></div>
+      <div class="match-name">Australia <span class="vs">vs</span> Egipto</div>
+      <div class="match-meta">
+        <span>Dallas</span>
+        <span class="badge amber">R32</span>
+        <span>Sab 12pm</span>
       </div>
-      <div class="value-bet" style="border-color:var(--green)"><div class="lbl">Value Bet</div><div class="val">Empate +252 — Modelo veia 27% vs mercado ~22% (+5% edge)</div></div>
+      <div class="prob-bar">
+        <div class="home" style="width:43%">43%</div>
+        <div class="draw" style="width:27%">27%</div>
+        <div class="away" style="width:30%">30%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val red">48%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
+        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Australia</div></div>
+      </div>
+      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
+      <div class="details-content">
+        <div class="scores-list">
+          <div class="score-row"><span>1-0 Australia</span><span class="prob">18%</span></div>
+          <div class="score-row"><span>0-0</span><span class="prob">17%</span></div>
+          <div class="score-row"><span>1-1</span><span class="prob">13%</span></div>
+          <div class="score-row"><span>0-1 Egipto</span><span class="prob">9%</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="stats-grid">
+            <div class="h">3.7</div><div class="lbl">Remates a puerta</div><div class="a">4.0</div>
+            <div class="h">10.0</div><div class="lbl">Tiros totales</div><div class="a">11.0</div>
+            <div class="h">3.7</div><div class="lbl">Esquinas</div><div class="a">3.0</div>
+            <div class="h">1.0</div><div class="lbl">T. Amarillas</div><div class="a">1.0</div>
+            <div class="h">58%</div><div class="lbl">Posesion</div><div class="a">46%</div>
+          </div>
+        </div>
+      </div>
+      <div class="value-bet">
+        <div class="lbl">Value Bet</div>
+        <div class="val amber">Empate +252 — Modelo ve 27% vs mercado ~22%</div>
+      </div>
     </div>
+
+    <!-- Argentina vs Cape Verde -->
     <div class="card">
-      <div class="match-name">Argentina <span class="vs">1 - 1</span> Cabo Verde</div>
-      <div class="match-meta"><span>Miami</span><span class="tag amber">R32</span><span>Sab 4pm</span><span class="tag" style="margin-left:6px">Empate</span></div>
-      <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val red">61% Si</div><div class="form-badge">fallo</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val green">48% No → Si</div><div class="form-badge">acertado</div></div>
-        <div class="market-item"><div class="lbl">Modelo</div><div class="val amber">1/3</div></div>
+      <div class="match-name">Argentina <span class="vs">vs</span> Cabo Verde</div>
+      <div class="match-meta">
+        <span>Miami</span>
+        <span class="badge amber">R32</span>
+        <span>Sab 4pm</span>
       </div>
-      <div class="value-bet" style="border-color:var(--red)"><div class="lbl">Value Bet</div><div class="val" style="color:var(--red)">Argentina gana — Favorito no cumplio (1-1)</div></div>
+      <div class="prob-bar">
+        <div class="home" style="width:73%">73%</div>
+        <div class="draw" style="width:16%">16%</div>
+        <div class="away" style="width:11%">11%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">61%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">48%</div></div>
+        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Argentina</div></div>
+      </div>
+      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
+      <div class="details-content">
+        <div class="scores-list">
+          <div class="score-row"><span>2-0 Argentina</span><span class="prob">20%</span></div>
+          <div class="score-row"><span>1-0 Argentina</span><span class="prob">19%</span></div>
+          <div class="score-row"><span>3-0 Argentina</span><span class="prob">14%</span></div>
+          <div class="score-row"><span>3-1 Argentina</span><span class="prob">7%</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="stats-grid">
+            <div class="h">6.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
+            <div class="h">15.0</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
+            <div class="h">6.3</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
+            <div class="h">0.7</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
+            <div class="h">62%</div><div class="lbl">Posesion</div><div class="a">44%</div>
+          </div>
+        </div>
+      </div>
+      <div class="value-bet">
+        <div class="lbl">Value Bet</div>
+        <div class="val">Argentina gana — Modelo 73%, favoritismo absoluto</div>
+      </div>
     </div>
+
+    <!-- Colombia vs Ghana -->
     <div class="card">
-      <div class="match-name">Colombia <span class="vs">2 - 1</span> Ghana</div>
-      <div class="match-meta"><span>Kansas City</span><span class="tag amber">R32</span><span>Sab 7:30pm</span><span class="tag" style="margin-left:6px;background:var(--green);color:#000">Acertado</span></div>
-      <div class="markets">
-        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">59% Si</div><div class="form-badge">acertado</div></div>
-        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">42% No</div><div class="form-badge">fallo</div></div>
-        <div class="market-item"><div class="lbl">Modelo</div><div class="val green">2/3</div></div>
+      <div class="match-name">Colombia <span class="vs">vs</span> Ghana</div>
+      <div class="match-meta">
+        <span>Kansas City</span>
+        <span class="badge amber">R32</span>
+        <span>Sab 7:30pm</span>
       </div>
-      <div class="value-bet" style="border-color:var(--green)"><div class="lbl">Value Bet</div><div class="val">Colombia gana — Modelo 71% acertado, gano 2-1</div></div>
+      <div class="prob-bar">
+        <div class="home" style="width:71%">71%</div>
+        <div class="draw" style="width:17%">17%</div>
+        <div class="away" style="width:12%">12%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">59%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val red">42%</div></div>
+        <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Colombia</div></div>
+      </div>
+      <span class="details-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Ocultar detalle':'Ver detalle'">Ver detalle</span>
+      <div class="details-content">
+        <div class="scores-list">
+          <div class="score-row"><span>2-0 Colombia</span><span class="prob">16%</span></div>
+          <div class="score-row"><span>3-0 Colombia</span><span class="prob">15%</span></div>
+          <div class="score-row"><span>1-0 Colombia</span><span class="prob">11%</span></div>
+          <div class="score-row"><span>3-1 Colombia</span><span class="prob">7%</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="stats-grid">
+            <div class="h">5.0</div><div class="lbl">Remates a puerta</div><div class="a">3.5</div>
+            <div class="h">10.3</div><div class="lbl">Tiros totales</div><div class="a">8.0</div>
+            <div class="h">4.0</div><div class="lbl">Esquinas</div><div class="a">3.5</div>
+            <div class="h">2.7</div><div class="lbl">T. Amarillas</div><div class="a">2.5</div>
+            <div class="h">46%</div><div class="lbl">Posesion</div><div class="a">44%</div>
+          </div>
+        </div>
+      </div>
+      <div class="value-bet">
+        <div class="lbl">Value Bet</div>
+        <div class="val">Colombia gana — Modelo 71%, favoritismo solido</div>
+      </div>
     </div>
+
   </div>
 </div>
 
 <!-- ===== APUESTAS ===== -->
 <div id="s-apuestas" class="section">
-  <div class="card full">
-    <h2>Resultados de Apuestas <span>&middot; 3 Jul</span></h2>
-    <table><thead><tr><th>Pick</th><th>Cuota</th><th>Resultado</th><th>Estado</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Colombia gana</strong> vs Ghana</td><td>1.34</td><td>2-1</td><td class="green">Ganada (+0.34u)</td></tr>
-        <tr><td><strong>Over 2.5</strong> Colombia vs Ghana</td><td>1.61</td><td>3 goles</td><td class="green">Ganada (+0.61u)</td></tr>
-        <tr><td><strong>BTTS Si</strong> Australia vs Egipto</td><td>1.76</td><td>1-1</td><td class="green">Ganada (+0.76u)</td></tr>
-        <tr><td><strong>Argentina gana</strong> vs Cabo Verde</td><td>1.30</td><td>1-1</td><td class="red">Perdida (-1u)</td></tr>
-        <tr><td><strong>Over 2.5</strong> Argentina vs Cabo Verde</td><td>1.56</td><td>2 goles</td><td class="red">Perdida (-1u)</td></tr>
-        <tr><td><strong>BTTS No</strong> Colombia vs Ghana</td><td>—</td><td>Ambos marcaron</td><td class="red">Perdida</td></tr>
-        <tr><td><strong>Parlay: Argentina + Colombia</strong></td><td>1.74</td><td>Argentina empato</td><td class="red">Perdida (-1u)</td></tr>
-        <tr><td><strong>Parlay: Argentina + O2.5 + Colombia</strong></td><td>2.72</td><td>Argentina empato</td><td class="red">Perdida (-1u)</td></tr>
-      </tbody>
-    </table>
-    <div class="record-line">Balance del dia: <strong style="color:var(--red)">-2.29u</strong> &middot; Picks ganados: 3/8</div>
+
+  <div class="parlay-card">
+    <div class="title">Apuestas Simples</div>
+    <div class="sub">Picks del modelo con mayor probabilidad</div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Argentina vs Cabo Verde</div></div>
+      <div class="right"><div class="odds">1.30</div><div class="pick">Argentina gana (73%)</div></div>
+    </div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Colombia vs Ghana</div></div>
+      <div class="right"><div class="odds">1.34</div><div class="pick">Colombia gana (71%)</div></div>
+    </div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Argentina vs Cabo Verde</div></div>
+      <div class="right"><div class="odds">1.56</div><div class="pick">Over 2.5 goles (61%)</div></div>
+    </div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Colombia vs Ghana</div></div>
+      <div class="right"><div class="odds">1.61</div><div class="pick">Over 2.5 goles (59%)</div></div>
+    </div>
+    <div class="pick-row">
+      <div class="left"><div class="lbl">Partido</div><div class="val">Australia vs Egipto</div></div>
+      <div class="right"><div class="odds">1.76</div><div class="pick">BTTS Si (54%)</div></div>
+    </div>
   </div>
+
+  <div class="parlay-card">
+    <div class="title">Parlay — Favoritos del d&iacute;a</div>
+    <div class="sub">Argentina + Colombia, ambos ganan</div>
+    <div class="parlay-leg">
+      <div class="num">1</div>
+      <div class="detail"><div class="match">Argentina vs Cabo Verde</div><div class="pick">Argentina gana</div></div>
+      <div class="odds">1.30</div>
+    </div>
+    <div class="parlay-leg">
+      <div class="num">2</div>
+      <div class="detail"><div class="match">Colombia vs Ghana</div><div class="pick">Colombia gana</div></div>
+      <div class="odds">1.34</div>
+    </div>
+    <div class="parlay-total">
+      <div><div class="lbl">Cuota Total</div><div class="odds">1.74</div></div>
+      <div><div class="lbl">Probabilidad</div><div class="prob">52%</div></div>
+    </div>
+  </div>
+
+  <div class="parlay-card">
+    <div class="title">Parlay — Agresivo</div>
+    <div class="sub">Argentina gana + Over 2.5 + Colombia gana</div>
+    <div class="parlay-leg">
+      <div class="num">1</div>
+      <div class="detail"><div class="match">Argentina vs Cabo Verde</div><div class="pick">Argentina gana</div></div>
+      <div class="odds">1.30</div>
+    </div>
+    <div class="parlay-leg">
+      <div class="num">2</div>
+      <div class="detail"><div class="match">Colombia vs Ghana</div><div class="pick">Colombia gana</div></div>
+      <div class="odds">1.34</div>
+    </div>
+    <div class="parlay-leg">
+      <div class="num">3</div>
+      <div class="detail"><div class="match">Argentina vs Cabo Verde</div><div class="pick">Over 2.5 goles</div></div>
+      <div class="odds">1.56</div>
+    </div>
+    <div class="parlay-total">
+      <div><div class="lbl">Cuota Total</div><div class="odds">2.72</div></div>
+      <div><div class="lbl">Probabilidad</div><div class="prob">32%</div></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ===== HISTORIAL ===== -->
 <div id="s-historial" class="section">
+
   <div class="card full">
-    <h2>Historial de Picks <span>&middot; 20/30 (67%)</span></h2>
+    <h2>Historial de Picks <span>&middot; 15/21 (71%)</span></h2>
     <div style="margin-bottom:12px;font-size:12px">
-      <span class="tag green">Fase Grupos</span>
-      <span class="tag amber" style="margin-left:4px">Ronda de 32</span>
-      <span class="tag blue" style="margin-left:4px">Proximos</span>
+      <span class="badge green">Fase Grupos</span>
+      <span class="badge amber" style="margin-left:4px">Ronda de 32</span>
+      <span class="badge blue" style="margin-left:4px">Proximos</span>
     </div>
     <table>
-      <thead><tr><th>Fase</th><th>Partido</th><th>1X2</th><th>O2.5</th><th>BTTS</th><th>Value Bet</th><th>Resultado</th><th>Modelo</th></tr></thead>
+      <thead>
+        <tr><th>Fase</th><th>Partido</th><th>1X2</th><th>O2.5</th><th>BTTS</th><th>Value Bet</th><th>Resultado</th><th>Modelo</th></tr>
+      </thead>
       <tbody>
-        <tr><td><span class="tag green">Grupos</span></td><td><strong>Brasil vs Japon</strong></td><td class="green">Brasil 43%</td><td class="amber">Si 50%</td><td class="green">Si 54%</td><td>—</td><td class="green">2-1</td><td class="green">3/3</td></tr>
-        <tr><td><span class="tag green">Grupos</span></td><td><strong>Francia vs Suecia</strong></td><td>Francia 53%</td><td class="red">No 48%</td><td class="red">No 49%</td><td class="amber">Francia -1.5</td><td>—</td><td>—</td></tr>
-        <tr><td><span class="tag green">Grupos</span></td><td><strong>Mexico vs Ecuador</strong></td><td>Mexico 37%</td><td class="red">No 47%</td><td class="amber">Si 51%</td><td class="green">Empate EV+91%</td><td>—</td><td>—</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Inglaterra vs Congo DR</strong></td><td class="green">Inglaterra 59%</td><td class="green">Si 56%</td><td class="green">Si 54%</td><td>—</td><td class="green">2-1</td><td class="green">3/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Belgica vs Senegal</strong></td><td class="amber">Draw 24%</td><td class="green">Si 53%</td><td class="green">Si 48%</td><td>—</td><td class="amber">2-2</td><td class="green">3/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>USA vs Bosnia</strong></td><td class="green">USA 52%</td><td class="red">Si 52%</td><td class="red">No 44%</td><td class="amber">Bosnia +1.5</td><td class="green">2-0</td><td class="amber">1/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Portugal vs Croacia</strong></td><td class="green">Portugal 43%</td><td class="green">Si 58%</td><td class="green">Si 54%</td><td class="green">Portugal +132</td><td class="green">2-1</td><td class="green">3/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Espa&ntilde;a vs Austria</strong></td><td class="green">Espa&ntilde;a 67%</td><td class="green">Si 54%</td><td class="red">Si 57%</td><td class="green">Espa&ntilde;a @ 1.42</td><td class="green">3-0</td><td class="green">2/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Suiza vs Argelia</strong></td><td class="red">Suiza 36%</td><td class="red">Si 51%</td><td class="red">Si 54%</td><td class="green">Suiza +200</td><td class="red">2-0</td><td class="red">0/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Australia vs Egipto</strong></td><td style="color:var(--red)">Australia 43%</td><td class="green">No 48%</td><td class="green">Si 54%</td><td class="green">Empate +252</td><td class="amber">1-1</td><td class="green">2/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Argentina vs Cabo Verde</strong></td><td style="color:var(--red)">Argentina 73%</td><td class="red">Si 61%</td><td class="green">No → Si 48%</td><td style="color:var(--red)">Argentina @ 1.30</td><td class="amber">1-1</td><td class="amber">1/3</td></tr>
-        <tr><td><span class="tag amber">R32</span></td><td><strong>Colombia vs Ghana</strong></td><td class="green">Colombia 71%</td><td class="green">Si 59%</td><td class="red">No 42%</td><td class="green">Colombia @ 1.34</td><td class="green">2-1</td><td class="green">2/3</td></tr>
+        <tr><td><span class="badge green">Grupos</span></td><td><strong>Brasil vs Japon</strong></td><td class="green">Brasil 43%</td><td class="amber">Si 50%</td><td class="green">Si 54%</td><td>—</td><td class="green">2-1</td><td class="green">3/3</td></tr>
+        <tr><td><span class="badge green">Grupos</span></td><td><strong>Francia vs Suecia</strong></td><td>Francia 53%</td><td class="red">No 48%</td><td class="red">No 49%</td><td class="amber">Francia -1.5</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="badge green">Grupos</span></td><td><strong>Mexico vs Ecuador</strong></td><td>Mexico 37%</td><td class="red">No 47%</td><td class="amber">Si 51%</td><td class="green">Empate EV+91%</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="badge amber">R32</span></td><td><strong>Inglaterra vs Congo DR</strong></td><td class="green">Inglaterra 59%</td><td class="green">Si 56%</td><td class="green">Si 54%</td><td>—</td><td class="green">2-1</td><td class="green">3/3</td></tr>
+        <tr><td><span class="badge amber">R32</span></td><td><strong>Belgica vs Senegal</strong></td><td class="amber">Draw 24%</td><td class="green">Si 53%</td><td class="green">Si 48%</td><td>—</td><td class="amber">2-2</td><td class="green">3/3</td></tr>
+        <tr><td><span class="badge amber">R32</span></td><td><strong>USA vs Bosnia</strong></td><td class="green">USA 52%</td><td class="red">Si 52%</td><td class="red">No 44%</td><td class="amber">Bosnia +1.5</td><td class="green">2-0</td><td class="amber">1/3</td></tr>
+        <tr><td><span class="badge amber">R32</span></td><td><strong>Portugal vs Croacia</strong></td><td class="green">Portugal 43%</td><td class="green">Si 58%</td><td class="green">Si 54%</td><td class="green">Portugal +132</td><td class="green">2-1</td><td class="green">3/3</td></tr>
+        <tr><td><span class="badge amber">R32</span></td><td><strong>Espa&ntilde;a vs Austria</strong></td><td class="green">Espa&ntilde;a 67%</td><td class="green">Si 54%</td><td class="red">Si 57%</td><td class="green">Espa&ntilde;a @ 1.42</td><td class="green">3-0</td><td class="green">2/3</td></tr>
+        <tr><td><span class="badge amber">R32</span></td><td><strong>Suiza vs Argelia</strong></td><td class="red">Suiza 36%</td><td class="red">Si 51%</td><td class="red">Si 54%</td><td class="green">Suiza +200</td><td class="red">2-0</td><td class="red">0/3</td></tr>
+        <tr><td><span class="badge blue">Proximos</span></td><td><strong>Australia vs Egipto</strong></td><td style="color:#3B82F6">Australia 43%</td><td class="red">No 48%</td><td class="amber">Si 54%</td><td class="amber">Empate +252</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="badge blue">Proximos</span></td><td><strong>Argentina vs Cabo Verde</strong></td><td style="color:#3B82F6">Argentina 73%</td><td class="amber">Si 61%</td><td class="red">No 48%</td><td class="green">Argentina @ 1.30</td><td>—</td><td>—</td></tr>
+        <tr><td><span class="badge blue">Proximos</span></td><td><strong>Colombia vs Ghana</strong></td><td style="color:#3B82F6">Colombia 71%</td><td class="amber">Si 59%</td><td class="red">No 42%</td><td class="green">Colombia @ 1.34</td><td>—</td><td>—</td></tr>
       </tbody>
     </table>
   </div>
+
   <div class="card full">
     <h2>Resumen de Partidos Completados</h2>
-    <table><thead><tr><th>Partido</th><th>Evento Clave</th><th>Impacto</th></tr></thead>
+    <table>
+      <thead><tr><th>Partido</th><th>Evento Clave</th><th>Impacto</th></tr></thead>
       <tbody>
         <tr><td><strong>Brasil 2-1 Japon</strong></td><td>Brasil favorito gana sin problemas</td><td class="green">3/3 aciertos</td></tr>
         <tr><td><strong>Inglaterra 2-1 Congo DR</strong></td><td>Cipenga gol tempranero (7')</td><td class="green">Kane doblete salva los 3 picks</td></tr>
@@ -338,33 +774,43 @@ td .tag.blue { background:var(--blue); color:#fff; }
         <tr><td><strong>Espa&ntilde;a 3-0 Austria</strong></td><td>Oyarzabal doblete, Yamal asiste</td><td class="green">2/3 aciertos (BTTS fallo)</td></tr>
         <tr><td><strong>Portugal 2-1 Croacia</strong></td><td>Ronaldo (68' pen), Ramos (90+4); Perisic (53')</td><td class="green">3/3 perfecto</td></tr>
         <tr><td><strong>Suiza 2-0 Argelia</strong></td><td>Embolo gol tempranero; Argelia sin respuesta</td><td class="red">0/3 fallo total</td></tr>
-        <tr><td><strong>Australia 1-1 Egipto</strong></td><td>Empate inesperado; Australia domino pero no pudo</td><td class="green">2/3 (O2.5 + BTTS acertados)</td></tr>
-        <tr><td><strong>Argentina 1-1 Cabo Verde</strong></td><td>Campanada de Cabo Verde; Argentina con 73% fallo</td><td class="amber">1/3 (BTTS acertado)</td></tr>
-        <tr><td><strong>Colombia 2-1 Ghana</strong></td><td>Colombia remonto; Ghana marco pero no alcanzo</td><td class="green">2/3 (1X2 + O2.5 acertados)</td></tr>
       </tbody>
     </table>
   </div>
+
 </div>
 
 <!-- ===== MODELO ===== -->
 <div id="s-modelo" class="section">
+
   <div class="card full">
     <h2>Rendimiento del Modelo</h2>
-    <table><thead><tr><th>Target</th><th>CV Acc</th><th>Val Acc</th><th>ROC AUC</th></tr></thead>
+    <table>
+      <thead><tr><th>Target</th><th>CV Acc</th><th>Val Acc</th><th>ROC AUC</th></tr></thead>
       <tbody>
-        <tr><td><strong>1X2</strong></td><td class="green">0.479</td><td>0.494</td><td>—</td></tr>
-        <tr><td><strong>Over/Under 2.5</strong></td><td class="green">0.540</td><td>0.550</td><td class="green">0.879</td></tr>
-        <tr><td><strong>BTTS</strong></td><td class="green">0.525</td><td>0.539</td><td class="green">0.890</td></tr>
+        <tr><td><strong>1X2</strong></td><td class="green">0.463</td><td>0.496</td><td>—</td></tr>
+        <tr><td><strong>Over/Under 2.5</strong></td><td class="green">0.536</td><td>0.544</td><td class="green">0.879</td></tr>
+        <tr><td><strong>BTTS</strong></td><td class="green">0.517</td><td>0.532</td><td class="green">0.881</td></tr>
       </tbody>
     </table>
     <div class="record-line">Dataset: <strong>4498</strong> partidos nacionales &middot; 19 features &middot; Recency weighting &middot; FIFA Rankings incluidos</div>
   </div>
+
   <div class="card full">
     <h2>Proximas Predicciones</h2>
-    <div style="font-size:13px;color:var(--body);padding:12px 0">
-      Ronda de 32 completada. Esperando definicion de Octavos de Final para nuevas predicciones.
-    </div>
+    <table>
+      <thead><tr><th>Fecha</th><th>Partido</th><th>1X2</th><th>O/U 2.5</th><th>BTTS</th></tr></thead>
+      <tbody>
+        <tr><td>Jul 2</td><td><strong>Portugal vs Croacia</strong></td><td><strong>43</strong>/23/35</td><td class="amber">58%</td><td class="amber">54%</td></tr>
+        <tr><td>Jul 2</td><td><strong>Espa&ntilde;a vs Austria</strong></td><td><strong>67</strong>/20/14</td><td class="amber">54%</td><td class="amber">57%</td></tr>
+        <tr><td>Jul 2</td><td><strong>Suiza vs Argelia</strong></td><td>35/29/<strong>36</strong></td><td class="amber">51%</td><td class="amber">54%</td></tr>
+        <tr><td>Jul 3</td><td><strong>Australia vs Egipto</strong></td><td><strong>43</strong>/27/31</td><td class="red">48%</td><td class="amber">54%</td></tr>
+        <tr><td>Jul 3</td><td><strong>Argentina vs Cabo Verde</strong></td><td><strong>73</strong>/16/11</td><td class="amber">61%</td><td class="red">48%</td></tr>
+        <tr><td>Jul 3</td><td><strong>Colombia vs Ghana</strong></td><td><strong>71</strong>/17/12</td><td class="amber">59%</td><td class="red">42%</td></tr>
+      </tbody>
+    </table>
   </div>
+
 </div>
 
 <div class="footer">
@@ -374,59 +820,7 @@ td .tag.blue { background:var(--blue); color:#fff; }
 
 </div>
 
-<!-- Modal -->
-<div class="modal-overlay" id="formModal" onclick="if(event.target===this)closeForm()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeForm()">&times;</button>
-    <h3>Forma — Ultimos 8 Partidos</h3>
-    <div id="modalContent"></div>
-  </div>
-</div>
-
 <script>
-// Team name mapping (display -> canonical for lookup)
-const nameMap = {
-  'Portugal':'Portugal','Croacia':'Croatia','Espana':'Spain','Austria':'Austria',
-  'Suiza':'Switzerland','Argelia':'Algeria','Australia':'Australia','Egipto':'Egypt',
-  'Argentina':'Argentina','Cabo Verde':'Cape Verde','Colombia':'Colombia','Ghana':'Ghana'
-};
-
-const teamData = {"Portugal":{"f":"WLDWDWWW","o":"5/8","b":"6/8","n":8,"m":[{"v":"V","vs":"Germany","s":"2-1","r":"W","o":"S","b":"S"},{"v":"V","vs":"Denmark","s":"0-1","r":"L","o":"N","b":"N"},{"v":"V","vs":"Croatia","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Poland","s":"5-1","r":"W","o":"S","b":"S"},{"v":"V","vs":"Scotland","s":"0-0","r":"D","o":"N","b":"N"},{"v":"V","vs":"Poland","s":"3-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Scotland","s":"2-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Croatia","s":"2-1","r":"W","o":"S","b":"S"}]},"Croatia":{"f":"WDLDWWLD","o":"3/8","b":"5/8","n":8,"m":[{"v":"L","vs":"France","s":"2-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Portugal","s":"1-1","r":"D","o":"N","b":"S"},{"v":"V","vs":"Scotland","s":"0-1","r":"L","o":"N","b":"N"},{"v":"V","vs":"Poland","s":"3-3","r":"D","o":"S","b":"S"},{"v":"L","vs":"Scotland","s":"2-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Poland","s":"1-0","r":"W","o":"N","b":"N"},{"v":"V","vs":"Portugal","s":"1-2","r":"L","o":"S","b":"S"},{"v":"L","vs":"Italy","s":"1-1","r":"D","o":"N","b":"S"}]},"Spain":{"f":"DWWWWWWD","o":"7/8","b":"3/8","n":8,"m":[{"v":"L","vs":"T\u00fcrkiye","s":"2-2","r":"D","o":"S","b":"S"},{"v":"V","vs":"Georgia","s":"4-0","r":"W","o":"S","b":"N"},{"v":"L","vs":"Bulgaria","s":"4-0","r":"W","o":"S","b":"N"},{"v":"L","vs":"Georgia","s":"2-0","r":"W","o":"N","b":"N"},{"v":"V","vs":"T\u00fcrkiye","s":"6-0","r":"W","o":"S","b":"N"},{"v":"V","vs":"Bulgaria","s":"3-0","r":"W","o":"S","b":"N"},{"v":"L","vs":"France","s":"5-4","r":"W","o":"S","b":"S"},{"v":"V","vs":"Netherlands","s":"2-2","r":"D","o":"S","b":"S"}]},"Austria":{"f":"DWLDDWWW","o":"3/8","b":"5/8","n":8,"m":[{"v":"L","vs":"Bosnia","s":"1-1","r":"D","o":"N","b":"S"},{"v":"V","vs":"Bosnia","s":"2-1","r":"W","o":"S","b":"S"},{"v":"V","vs":"Serbia","s":"0-2","r":"L","o":"N","b":"N"},{"v":"L","vs":"Serbia","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Slovenia","s":"1-1","r":"D","o":"N","b":"S"},{"v":"V","vs":"Kazakhstan","s":"2-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Norway","s":"5-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Kazakhstan","s":"4-0","r":"W","o":"S","b":"N"}]},"Switzerland":{"f":"LDDLLLDW","o":"3/8","b":"5/8","n":8,"m":[{"v":"V","vs":"Spain","s":"2-3","r":"L","o":"S","b":"S"},{"v":"L","vs":"Serbia","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Denmark","s":"2-2","r":"D","o":"S","b":"S"},{"v":"V","vs":"Serbia","s":"0-2","r":"L","o":"N","b":"N"},{"v":"L","vs":"Spain","s":"1-4","r":"L","o":"S","b":"S"},{"v":"V","vs":"Denmark","s":"0-2","r":"L","o":"N","b":"N"},{"v":"V","vs":"England","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Italy","s":"2-0","r":"W","o":"N","b":"N"}]},"Algeria":{"f":"DWWDWWDL","o":"4/8","b":"5/8","n":8,"m":[{"v":"L","vs":"South Africa","s":"3-3","r":"D","o":"S","b":"S"},{"v":"L","vs":"Bolivia","s":"3-2","r":"W","o":"S","b":"S"},{"v":"V","vs":"Burundi","s":"4-0","r":"W","o":"S","b":"N"},{"v":"V","vs":"Egypt","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Cape Verde","s":"5-1","r":"W","o":"S","b":"S"},{"v":"V","vs":"Senegal","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Tunisia","s":"1-1","r":"D","o":"N","b":"S"},{"v":"V","vs":"Sweden","s":"0-2","r":"L","o":"N","b":"N"}]},"Australia":{"f":"WWWLDLLW","o":"3/8","b":"3/8","n":8,"m":[{"v":"V","vs":"Bahrain","s":"2-0","r":"W","o":"N","b":"N"},{"v":"V","vs":"Bahrain","s":"2-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"New Zealand","s":"2-0","r":"W","o":"N","b":"N"},{"v":"V","vs":"England","s":"0-1","r":"L","o":"N","b":"N"},{"v":"V","vs":"Mexico","s":"2-2","r":"D","o":"S","b":"S"},{"v":"V","vs":"Argentina","s":"0-2","r":"L","o":"N","b":"N"},{"v":"L","vs":"Ecuador","s":"1-2","r":"L","o":"S","b":"S"},{"v":"L","vs":"Ecuador","s":"3-1","r":"W","o":"S","b":"S"}]},"Egypt":{"f":"LWWDWLWW","o":"4/8","b":"4/8","n":8,"m":[{"v":"L","vs":"Croatia","s":"2-4","r":"L","o":"S","b":"S"},{"v":"L","vs":"New Zealand","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Tanzania","s":"2-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Algeria","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Zambia","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Tunisia","s":"1-3","r":"L","o":"S","b":"S"},{"v":"L","vs":"South Sudan","s":"3-0","r":"W","o":"S","b":"N"},{"v":"V","vs":"Belgium","s":"2-1","r":"W","o":"S","b":"S"}]},"Argentina":{"f":"WWWWWWWW","o":"3/8","b":"2/8","n":8,"m":[{"v":"L","vs":"Canada","s":"2-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Peru","s":"2-0","r":"W","o":"N","b":"N"},{"v":"V","vs":"Chile","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Canada","s":"2-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Guatemala","s":"4-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Ecuador","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Costa Rica","s":"3-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"El Salvador","s":"3-0","r":"W","o":"S","b":"N"}]},"Cape Verde":{"f":"WWLLLDWW","o":"3/8","b":"3/8","n":8,"m":[{"v":"L","vs":"Equatorial Guinea","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Guyana","s":"1-0","r":"W","o":"N","b":"N"},{"v":"V","vs":"Tunisia","s":"0-2","r":"L","o":"N","b":"N"},{"v":"L","vs":"Comoros","s":"1-2","r":"L","o":"S","b":"S"},{"v":"V","vs":"Algeria","s":"1-5","r":"L","o":"S","b":"S"},{"v":"V","vs":"Morocco","s":"0-0","r":"D","o":"N","b":"N"},{"v":"V","vs":"Bahrain","s":"2-1","r":"W","o":"S","b":"S"},{"v":"V","vs":"San Marino","s":"2-0","r":"W","o":"N","b":"N"}]},"Colombia":{"f":"WWDWWWWW","o":"6/8","b":"4/8","n":8,"m":[{"v":"V","vs":"Uruguay","s":"1-0","r":"W","o":"N","b":"N"},{"v":"L","vs":"Panama","s":"5-0","r":"W","o":"S","b":"N"},{"v":"V","vs":"Brazil","s":"1-1","r":"D","o":"N","b":"S"},{"v":"L","vs":"Costa Rica","s":"3-0","r":"W","o":"S","b":"N"},{"v":"L","vs":"Paraguay","s":"2-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Bolivia","s":"3-0","r":"W","o":"S","b":"N"},{"v":"V","vs":"USA","s":"5-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Romania","s":"3-2","r":"W","o":"S","b":"S"}]},"Ghana":{"f":"DLDLLWLW","o":"5/8","b":"4/8","n":8,"m":[{"v":"V","vs":"Uganda","s":"2-2","r":"D","o":"S","b":"S"},{"v":"V","vs":"Nigeria","s":"1-2","r":"L","o":"S","b":"S"},{"v":"L","vs":"Namibia","s":"0-0","r":"D","o":"N","b":"N"},{"v":"V","vs":"USA","s":"0-4","r":"L","o":"S","b":"N"},{"v":"V","vs":"Mexico","s":"0-2","r":"L","o":"N","b":"N"},{"v":"L","vs":"Liberia","s":"3-1","r":"W","o":"S","b":"S"},{"v":"L","vs":"Uruguay","s":"0-2","r":"L","o":"N","b":"N"},{"v":"V","vs":"South Korea","s":"3-2","r":"W","o":"S","b":"S"}]}};
-
-function openForm(team1Display, team2Display) {
-  const t1 = nameMap[team1Display];
-  const t2 = nameMap[team2Display];
-  const d1 = teamData[t1], d2 = teamData[t2];
-  if (!d1 || !d2) return;
-
-  const formStr = (d) => d.f.split('').map(c => `<span class="${c === 'W' ? 'w' : c === 'L' ? 'l' : 'd'}">${c === 'W' ? 'G' : c === 'L' ? 'P' : 'E'}</span>`).join(' ');
-
-  const table = (d, name) => {
-    if (!d.n) return '<div style="color:var(--body);font-size:13px">Sin datos disponibles</div>';
-    let rows = d.m.map(m => {
-      const cls = m.r === 'W' ? 'w' : m.r === 'L' ? 'l' : 'd';
-      const label = m.r === 'W' ? 'G' : m.r === 'L' ? 'P' : 'E';
-      return `<tr><td class="fw ${cls}">${label}</td><td>${m.v === 'L' ? 'vs' : '@'}</td><td>${m.vs}</td><td class="fw">${m.s}</td><td>${m.o === 'S' ? '✓' : '✗'}</td><td>${m.b === 'S' ? '✓' : '✗'}</td></tr>`;
-    }).join('');
-    return `<table><thead><tr><th>Res</th><th></th><th>Rival</th><th>Marcador</th><th>O2.5</th><th>BTTS</th></tr></thead><tbody>${rows}</tbody></table>`;
-  };
-
-  document.getElementById('modalContent').innerHTML =
-    `<div class="team-section"><div class="team-header"><span class="team-name">${team1Display}</span><span class="form-str">${formStr(d1)}</span></div>` +
-    `<div class="form-stats"><span>Ultimos: <strong>${d1.n}</strong></span><span>O2.5: <strong>${d1.o}</strong></span><span>BTTS: <strong>${d1.b}</strong></span></div>` +
-    `${table(d1, team1Display)}</div>` +
-    `<div class="team-section" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div class="team-header"><span class="team-name">${team2Display}</span><span class="form-str">${formStr(d2)}</span></div>` +
-    `<div class="form-stats"><span>Ultimos: <strong>${d2.n}</strong></span><span>O2.5: <strong>${d2.o}</strong></span><span>BTTS: <strong>${d2.b}</strong></span></div>` +
-    `${table(d2, team2Display)}</div>`;
-
-  document.getElementById('formModal').classList.add('open');
-}
-
-function closeForm() {
-  document.getElementById('formModal').classList.remove('open');
-}
-
-// Navigation
 document.querySelectorAll('.nav button').forEach(btn => {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
@@ -435,9 +829,9 @@ document.querySelectorAll('.nav button').forEach(btn => {
     document.getElementById('s-' + this.dataset.section).classList.add('active');
   });
 });
-
 document.getElementById('updateDate').textContent = new Date().toLocaleDateString('es-MX', {
-  year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
+  year:'numeric', month:'short', day:'numeric',
+  hour:'2-digit', minute:'2-digit'
 });
 </script>
 </body>
