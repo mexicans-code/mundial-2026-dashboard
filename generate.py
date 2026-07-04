@@ -262,7 +262,7 @@ def value_bet_text(home: float, draw: float, away: float, home_name: str, away_n
     return text, color_class
 
 
-def generate_html(predictions: dict, team_data: dict, stats: dict) -> str:
+def generate_html(predictions: dict, team_data: dict, stats: dict, retro_results: list = None) -> str:
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -603,7 +603,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
     <div class="sub">Dashboard predictivo &middot; Machine Learning &middot; Solo educativo</div>
   </div>
   <div class="header-right">
-    <span class="record-badge" id="recordBadge">--</span>
+    <span class="record-badge {_record_class(retro_results)}" id="recordBadge">{_record_html(retro_results)}</span>
     <span id="updateDate"></span>
   </div>
 </div>
@@ -639,7 +639,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 
 <!-- ===== MODELO ===== -->
 <div id="s-modelo" class="section">
-{generate_model_section(predictions)}
+{generate_model_section(predictions, retro_results)}
 </div>
 
 <div class="footer">
@@ -878,6 +878,26 @@ def generate_extra_markets(predictions: dict, all_stats: dict, section: str) -> 
     return "\n".join(cards)
 
 
+def _record_html(retro_results: list | None) -> str:
+    if not retro_results:
+        return "--"
+    wins = sum(1 for r in retro_results if r["correct"])
+    total = len(retro_results)
+    pct = wins / total * 100
+    return f"{wins}/{total} ({pct:.0f}%)"
+
+
+def _record_class(retro_results: list | None) -> str:
+    if not retro_results:
+        return ""
+    wins = sum(1 for r in retro_results if r["correct"])
+    total = len(retro_results)
+    pct = wins / total * 100
+    if pct >= 50:
+        return ""
+    return "low" if pct >= 40 else "bad"
+
+
 def generate_bets_section(predictions: dict, section: str) -> str:
     lines = []
     for home, away, *_r in MATCHES:
@@ -964,7 +984,7 @@ def _parlay_section(predictions, section):
   </div>"""
 
 
-def generate_model_section(predictions: dict) -> str:
+def generate_model_section(predictions: dict, retro_results: list = None) -> str:
     rows = ""
     for home, away, *_rest in MATCHES:
         key = f"{home} vs {away}"
@@ -990,6 +1010,26 @@ def generate_model_section(predictions: dict) -> str:
         rows += f"""
         <tr><td>{h_display} vs {a_display}</td><td>{best_highlight}</td><td class="{prob_class(o25)}">{o25 * 100:.0f}%</td><td class="{prob_class(btts)}">{btts * 100:.0f}%</td></tr>"""
 
+    retro_html = ""
+    if retro_results:
+        retro_rows = ""
+        for r in retro_results:
+            mark = "\u2713" if r["correct"] else "\u2717"
+            cls = "green" if r["correct"] else "red"
+            retro_rows += f'<tr><td>{r["home"]} vs {r["away"]}</td><td>{r["score"]}</td><td class="{cls}">{r["pred_label"]}</td><td>{r["actual_label"]}</td><td class="{cls}">{mark}</td></tr>\n'
+        wins = sum(1 for r in retro_results if r["correct"])
+        total = len(retro_results)
+        retro_html = f"""
+  <div class="card full" style="margin-top:16px">
+    <h2>Modelo vs Realidad <span>&middot; World Cup 2026 R32</span></h2>
+    <div style="font-size:13px;color:var(--body);margin-bottom:12px">Record: <strong style="color:var(--title)">{wins}/{total}</strong> correctos ({wins/total*100:.0f}%)</div>
+    <table>
+      <thead><tr><th>Partido</th><th>Resultado</th><th>Prediccion</th><th>Realidad</th><th></th></tr></thead>
+      <tbody>{retro_rows}
+      </tbody>
+    </table>
+  </div>"""
+
     return f"""
   <div class="card full">
     <h2>Proximas Predicciones <span>&middot; Datos del modelo</span></h2>
@@ -998,7 +1038,8 @@ def generate_model_section(predictions: dict) -> str:
       <tbody>{rows}
       </tbody>
     </table>
-  </div>"""
+  </div>
+{retro_html}"""
 
 
 def main():
@@ -1086,7 +1127,69 @@ def main():
             # Stats
             stats = stats_predictor.predict_stats(home, away, df_finished)
             all_stats[key] = stats
-            print(f"       Stats: {stats.get('note', '')}")
+            print(f"       Stats: {stats.get('note', '') if isinstance(stats, dict) else 'N/A'}")
+
+    # --- Retro predict finished World Cup 2026 matches ---
+    print(f"\n[RETRO] Predicting finished World Cup 2026 matches...")
+    wc_finished = df_finished[df_finished["source_league"].astype(str).str.contains("World Cup 2026", na=False)].copy()
+    wc_finished = wc_finished[wc_finished["status_short"] == "FT"].copy()
+    retro_results = []
+    if not wc_finished.empty:
+        wc_synthetic = pd.DataFrame()
+        for _, row in wc_finished.iterrows():
+            wc_synthetic = pd.concat([wc_synthetic, pd.DataFrame([{
+                "fixture_id": 0,
+                "date": datetime.now().replace(tzinfo=None),
+                "home_team": row["home_team"],
+                "away_team": row["away_team"],
+                "home_goals": None,
+                "away_goals": None,
+                "home_team_id": row["home_team_id"],
+                "away_team_id": row["away_team_id"],
+                "status_short": "NS",
+            }])], ignore_index=True)
+        retro_preds = predictor.predict_batch(wc_synthetic, df_finished)
+        if retro_preds:
+            for p, (_, row) in zip(retro_preds, wc_finished.iterrows()):
+                h_prob = p.get("prob_home", 0.33)
+                d_prob = p.get("prob_draw", 0.33)
+                a_prob = p.get("prob_away", 0.34)
+                best = max(h_prob, d_prob, a_prob)
+                if best == h_prob:
+                    pred_result = 0  # home win
+                    pred_label = row["home_team"]
+                elif best == d_prob:
+                    pred_result = 1  # draw
+                    pred_label = "Empate"
+                else:
+                    pred_result = 2  # away win
+                    pred_label = row["away_team"]
+                hg, ag = row["home_goals"], row["away_goals"]
+                if hg > ag:
+                    actual_result = 0
+                    actual_label = row["home_team"]
+                elif hg == ag:
+                    actual_result = 1
+                    actual_label = "Empate"
+                else:
+                    actual_result = 2
+                    actual_label = row["away_team"]
+                correct = pred_result == actual_result
+                retro_results.append({
+                    "home": row["home_team"], "away": row["away_team"],
+                    "score": f"{int(hg)}-{int(ag)}",
+                    "prob_home": h_prob, "prob_draw": d_prob, "prob_away": a_prob,
+                    "pred_label": pred_label, "actual_label": actual_label,
+                    "correct": correct,
+                })
+    if retro_results:
+        wins = sum(1 for r in retro_results if r["correct"])
+        total = len(retro_results)
+        print(f"       Record: {wins}/{total} correctos ({wins/total*100:.0f}%)")
+        for r in retro_results:
+            print(f"         {'OK' if r['correct'] else 'NO'} {r['home']} vs {r['away']} ({r['score']}) -> pred: {r['pred_label']}, real: {r['actual_label']}")
+    else:
+        print(f"       No se encontraron partidos FT de World Cup 2026")
 
     # Use curated team form data (confirmed correct)
     print(f"\n[FORM]  Using curated team form data...")
@@ -1096,7 +1199,7 @@ def main():
 
     # Generate HTML
     print(f"\n[HTML]  Generating dashboard...")
-    html = generate_html(predictions, team_data, all_stats)
+    html = generate_html(predictions, team_data, all_stats, retro_results)
 
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
