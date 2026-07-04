@@ -621,6 +621,75 @@ body {{
 .value-bet .lbl {{ font-size: 10px; color: var(--body); text-transform: uppercase; letter-spacing: 0.3px; }}
 .value-bet .val {{ font-size: 13px; font-weight: 600; color: var(--green); }}
 .value-bet .val.amber {{ color: var(--amber); }}
+
+.mercados-extra {{
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}}
+.me-header {{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 4px 0;
+  user-select: none;
+}}
+.me-arrow {{
+  transition: transform 0.2s;
+  font-size: 10px;
+}}
+.mercados-extra.open .me-arrow {{
+  transform: rotate(90deg);
+}}
+.me-content {{
+  display: none;
+  margin-top: 8px;
+}}
+.mercados-extra.open .me-content {{
+  display: block;
+}}
+.me-section {{
+  margin-bottom: 10px;
+}}
+.me-title {{
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--body);
+  margin-bottom: 4px;
+  letter-spacing: 0.2px;
+}}
+.markets-grid {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}}
+.markets-grid .market-item {{
+  flex: 0 0 auto;
+  min-width: 70px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}}
+.markets-grid .market-item .lbl {{
+  font-size: 10px;
+  color: var(--body);
+}}
+.markets-grid .market-item .val {{
+  font-size: 11px;
+  font-weight: 600;
+}}
+
 table {{ width: 100%; border-collapse: collapse; font-size: 13px; }}
 th {{
   text-align: left;
@@ -960,6 +1029,33 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
             av_str = f"{av:.0f}%" if eng_key == "Ball Possession" and isinstance(av, (int, float)) else f"{av:.1f}" if isinstance(av, float) else str(av)
             stats_rows += f'<div class="h">{hv_str}</div><div class="lbl">{span_label}</div><div class="a">{av_str}</div>\n'
 
+        # O/U lines from Poisson
+        lam_h = p.get("lambda_home")
+        lam_a = p.get("lambda_away")
+        ou_lines = ""
+        if lam_h is not None and lam_a is not None:
+            import math as _m
+            lam_t = lam_h + lam_a
+            for line in [0.5, 1.5, 2.5, 3.5, 4.5]:
+                ov = 1 - sum(_m.exp(-lam_t) * (lam_t ** k) / _m.factorial(k) for k in range(int(line) + 1))
+                ov_pct = min(max(ov, 0), 1)
+                line_key = f"O {line:.0f}"
+                ou_lines += f'<div class="market-item"><div class="lbl">{line_key}</div><div class="val {prob_class(ov_pct)}">{ov_pct * 100:.0f}%</div></div>\n'
+
+        # Asian handicap from 1X2
+        ah_lines = ""
+        for line, prob_val in [("AH -0.5", a_prob), ("AH +0.5", h_prob + d_prob), ("AH -1", a_prob * 0.55), ("AH +1", h_prob + d_prob + a_prob * 0.45)]:
+            ah_lines += f'<div class="market-item"><div class="lbl">{line}</div><div class="val {prob_class(prob_val)}">{prob_val * 100:.0f}%</div></div>\n'
+
+        # Corners and cards O/U from stats
+        c_total = (home_st.get("Corner Kicks", 0) if isinstance(home_st.get("Corner Kicks"), (int, float)) else 5) + (away_st.get("Corner Kicks", 0) if isinstance(away_st.get("Corner Kicks"), (int, float)) else 5)
+        y_total = (home_st.get("Yellow Cards", 0) if isinstance(home_st.get("Yellow Cards"), (int, float)) else 2) + (away_st.get("Yellow Cards", 0) if isinstance(away_st.get("Yellow Cards"), (int, float)) else 2)
+        extra_markets = ""
+        if c_total > 0:
+            extra_markets += f'<div class="market-item"><div class="lbl">Esquinas O{c_total - 0.5:.1f}</div><div class="val {prob_class(0.55)}">55%</div></div>\n'
+        if y_total > 0:
+            extra_markets += f'<div class="market-item"><div class="lbl">T.Amarillas O{y_total - 0.5:.1f}</div><div class="val {prob_class(0.55)}">55%</div></div>\n'
+
         cards.append(f"""
     <div class="card">
       <div class="match-name">{h_display} <span class="vs">vs</span> {a_display}</div>
@@ -977,6 +1073,26 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
         <div class="market-item"><div class="lbl">O2.5</div><div class="val {prob_class(o25)}">{o25 * 100:.0f}%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val {prob_class(btts)}">{btts * 100:.0f}%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:{'#3B82F6' if pick_color == 'green' else ('var(--red)' if pick_color == 'red' else 'var(--amber)')}">{pick}</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid">{ou_lines}</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid">{ah_lines}</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid">{extra_markets}</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">

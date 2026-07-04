@@ -228,6 +228,75 @@ body {
 .value-bet .lbl { font-size: 10px; color: var(--body); text-transform: uppercase; letter-spacing: 0.3px; }
 .value-bet .val { font-size: 13px; font-weight: 600; color: var(--green); }
 .value-bet .val.amber { color: var(--amber); }
+
+.mercados-extra {
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.me-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 4px 0;
+  user-select: none;
+}
+.me-arrow {
+  transition: transform 0.2s;
+  font-size: 10px;
+}
+.mercados-extra.open .me-arrow {
+  transform: rotate(90deg);
+}
+.me-content {
+  display: none;
+  margin-top: 8px;
+}
+.mercados-extra.open .me-content {
+  display: block;
+}
+.me-section {
+  margin-bottom: 10px;
+}
+.me-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--body);
+  margin-bottom: 4px;
+  letter-spacing: 0.2px;
+}
+.markets-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.markets-grid .market-item {
+  flex: 0 0 auto;
+  min-width: 70px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+.markets-grid .market-item .lbl {
+  font-size: 10px;
+  color: var(--body);
+}
+.markets-grid .market-item .val {
+  font-size: 11px;
+  font-weight: 600;
+}
+
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th {
   text-align: left;
@@ -380,6 +449,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">51%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Portugal</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">89%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">64%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">37%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">18%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">7%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">32%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">68%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">18%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">82%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O10.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O2.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -421,6 +521,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val red">49%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">España</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">89%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">65%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">38%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">18%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">7%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">16%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">84%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">9%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">91%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O10.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O2.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -461,6 +592,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">O2.5</div><div class="val red">46%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val green">56%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">Argelia</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">94%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">78%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val amber">55%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">33%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">16%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">44%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">56%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">24%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">76%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O8.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O3.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
@@ -589,6 +751,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">50%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Australia</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">90%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">68%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">42%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">21%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">9%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">26%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">74%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">15%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">85%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O6.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O4.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -630,6 +823,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">53%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Argentina</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">96%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">83%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">62%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">40%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">22%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">17%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">83%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">9%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">91%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O7.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O5.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -670,6 +894,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">O2.5</div><div class="val red">46%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">Ghana</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">95%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">80%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">58%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">36%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">19%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">36%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">64%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">20%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">80%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O7.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O5.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
@@ -798,6 +1053,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">Marruecos</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">91%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">68%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">42%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">21%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">9%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">36%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">64%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">20%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">80%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O8.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O3.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -838,6 +1124,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">O2.5</div><div class="val red">48%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">53%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">Francia</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">94%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">77%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val amber">53%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">30%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">15%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">44%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">56%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">24%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">76%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O9.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O4.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
@@ -941,6 +1258,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Brasil</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">95%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">80%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">58%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">35%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">18%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">11%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">89%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">6%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">94%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O9.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O4.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -981,6 +1329,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">O2.5</div><div class="val red">45%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val green">56%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">Inglaterra</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">93%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">74%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">48%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">27%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">12%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">35%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">65%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">19%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">81%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O8.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O3.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
@@ -1084,6 +1463,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val green">56%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">España</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">95%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">80%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">58%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">35%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">18%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">38%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">62%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">21%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">79%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O10.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O2.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -1124,6 +1534,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">O2.5</div><div class="val red">41%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">52%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--amber)">Empate</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">70%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">34%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">12%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">3%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">1%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">31%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">69%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">17%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">83%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O8.5</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O3.5</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
@@ -1227,6 +1668,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">52%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:var(--red)">Argentina</div></div>
       </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">94%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">76%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val amber">52%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">30%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">14%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">44%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">56%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">24%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">76%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O7.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O5.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
+      </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
           <div class="stats-grid">
@@ -1267,6 +1739,37 @@ td .badge.blue { background: #3B82F6; color: #fff; }
         <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">54%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">54%</div></div>
         <div class="market-item"><div class="lbl">Pronostico</div><div class="val" style="color:#3B82F6">Suiza</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Lineas de gol (Poisson)</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">O 0</div><div class="val green">92%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val green">71%</div></div>
+<div class="market-item"><div class="lbl">O 2</div><div class="val red">46%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">24%</div></div>
+<div class="market-item"><div class="lbl">O 4</div><div class="val red">11%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Handicap Asiatico</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">AH -0.5</div><div class="val red">34%</div></div>
+<div class="market-item"><div class="lbl">AH +0.5</div><div class="val green">66%</div></div>
+<div class="market-item"><div class="lbl">AH -1</div><div class="val red">19%</div></div>
+<div class="market-item"><div class="lbl">AH +1</div><div class="val green">81%</div></div>
+</div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadisticas</div>
+            <div class="markets-grid"><div class="market-item"><div class="lbl">Esquinas O9.0</div><div class="val green">55%</div></div>
+<div class="market-item"><div class="lbl">T.Amarillas O4.0</div><div class="val green">55%</div></div>
+</div>
+          </div>
+        </div>
       </div>
       <div class="details-content" style="display:block">
         <div style="margin-top:10px">
@@ -1467,7 +1970,7 @@ td .badge.blue { background: #3B82F6; color: #fff; }
 </div>
 
 <div class="footer">
-  <p>Sports ML Pipeline v1.0 &middot; Generado el 04/07/2026 03:24</p>
+  <p>Sports ML Pipeline v1.0 &middot; Generado el 04/07/2026 13:54</p>
   <p>Solo fines educativos. Juega con responsabilidad.</p>
 </div>
 
