@@ -30,6 +30,14 @@ MATCHES = [
     ("Australia", "Egypt", "Dallas", "R32", "Sab 12pm", "jul3"),
     ("Argentina", "Cape Verde", "Miami", "R32", "Sab 4pm", "jul3"),
     ("Colombia", "Ghana", "Kansas City", "R32", "Sab 7:30pm", "jul3"),
+    ("Canada", "Morocco", "Houston", "R16", "Vie 1pm", "jul4"),
+    ("Paraguay", "France", "Philadelphia", "R16", "Vie 5pm", "jul4"),
+    ("Brazil", "Norway", "New Jersey", "R16", "Sab 4pm", "jul5"),
+    ("Mexico", "England", "Mexico City", "R16", "Sab 8pm", "jul5"),
+    ("Portugal", "Spain", "Dallas", "R16", "Dom 3pm", "jul6"),
+    ("USA", "Belgium", "Seattle", "R16", "Dom 8pm", "jul6"),
+    ("Egypt", "Argentina", "Atlanta", "R16", "Lun 12pm", "jul7"),
+    ("Switzerland", "Colombia", "Vancouver", "R16", "Lun 4pm", "jul7"),
 ]
 
 MATCHES_MAP = {(h, a): rest[3] if len(rest) > 3 else rest[2] if len(rest) > 2 else "jul2" for h, a, *rest in MATCHES}
@@ -47,6 +55,16 @@ NAME_MAP_ES = {
     "Cape Verde": "Cabo Verde",
     "Colombia": "Colombia",
     "Ghana": "Ghana",
+    "Canada": "Canadá",
+    "Morocco": "Marruecos",
+    "Paraguay": "Paraguay",
+    "France": "Francia",
+    "Brazil": "Brasil",
+    "Norway": "Noruega",
+    "Mexico": "México",
+    "England": "Inglaterra",
+    "USA": "EE.UU.",
+    "Belgium": "Bélgica",
 }
 
 TEAM_KEY_MAP = {
@@ -62,6 +80,16 @@ TEAM_KEY_MAP = {
     "Cape Verde": "Cape Verde",
     "Colombia": "Colombia",
     "Ghana": "Ghana",
+    "Canada": "Canada",
+    "Morocco": "Morocco",
+    "Paraguay": "Paraguay",
+    "France": "France",
+    "Brazil": "Brazil",
+    "Norway": "Norway",
+    "Mexico": "Mexico",
+    "England": "England",
+    "USA": "USA",
+    "Belgium": "Belgium",
 }
 
 
@@ -198,6 +226,106 @@ CORRECT_TEAM_DATA = {
         {"v": "L", "vs": "Germany", "s": "1-2", "r": "L", "o": "S", "b": "S"},
         {"v": "L", "vs": "Austria", "s": "1-5", "r": "L", "o": "S", "b": "S"},
         {"v": "L", "vs": "South Africa", "s": "0-1", "r": "L", "o": "N", "b": "N"},
+    ]},
+    "Canada": {"f": "DDWDDWLW", "o": "3/8", "b": "4/8", "n": 8, "m": [
+        {"v": "L", "vs": "Iceland", "s": "2-2", "r": "D", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Tunisia", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Uzbekistan", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Republic of Ireland", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Bosnia & Herzegovina", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Qatar", "s": "6-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Switzerland", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "V", "vs": "South Africa", "s": "0-1", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "Morocco": {"f": "DWWWDDWW", "o": "4/8", "b": "5/8", "n": 8, "m": [
+        {"v": "L", "vs": "Ecuador", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Paraguay", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Burundi", "s": "5-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Madagascar", "s": "4-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Norway", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Brazil", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Scotland", "s": "0-1", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Haiti", "s": "4-2", "r": "W", "o": "S", "b": "S"},
+    ]},
+    "Paraguay": {"f": "LWWLWLWD", "o": "5/8", "b": "4/8", "n": 8, "m": [
+        {"v": "V", "vs": "USA", "s": "2-1", "r": "L", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Mexico", "s": "1-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Greece", "s": "0-1", "r": "W", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Morocco", "s": "2-1", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Nicaragua", "s": "4-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "USA", "s": "4-1", "r": "L", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Turkiye", "s": "0-1", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Australia", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+    ]},
+    "France": {"f": "WWLWWWWW", "o": "8/8", "b": "6/8", "n": 8, "m": [
+        {"v": "V", "vs": "Brazil", "s": "1-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Colombia", "s": "1-3", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Ivory Coast", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Northern Ireland", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Senegal", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Iraq", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Norway", "s": "1-4", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Sweden", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+    ]},
+    "Brazil": {"f": "DLWWWDWW", "o": "6/8", "b": "6/8", "n": 8, "m": [
+        {"v": "L", "vs": "Tunisia", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "France", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Croatia", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Panama", "s": "6-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Egypt", "s": "2-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Morocco", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Haiti", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Scotland", "s": "0-3", "r": "W", "o": "S", "b": "N"},
+    ]},
+    "Norway": {"f": "WLDWDWWL", "o": "6/8", "b": "7/8", "n": 8, "m": [
+        {"v": "V", "vs": "Italy", "s": "1-4", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Netherlands", "s": "2-1", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Switzerland", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Sweden", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Morocco", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Iraq", "s": "1-4", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Senegal", "s": "3-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "France", "s": "1-4", "r": "L", "o": "S", "b": "S"},
+    ]},
+    "Mexico": {"f": "DWWWWWWW", "o": "2/8", "b": "2/8", "n": 8, "m": [
+        {"v": "L", "vs": "Belgium", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Ghana", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Australia", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Serbia", "s": "5-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "South Africa", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "South Korea", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Czech Rep", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Ecuador", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "England": {"f": "WDLWWWDW", "o": "2/8", "b": "2/8", "n": 8, "m": [
+        {"v": "V", "vs": "Albania", "s": "0-2", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Uruguay", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Japan", "s": "0-1", "r": "L", "o": "N", "b": "N"},
+        {"v": "L", "vs": "New Zealand", "s": "1-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Costa Rica", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Croatia", "s": "4-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Ghana", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "Panama", "s": "0-2", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "USA": {"f": "LLWLWWLW", "o": "5/8", "b": "5/8", "n": 8, "m": [
+        {"v": "L", "vs": "Belgium", "s": "2-5", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Portugal", "s": "0-2", "r": "L", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Senegal", "s": "3-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Germany", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Paraguay", "s": "4-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Australia", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Turkiye", "s": "2-3", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Bosnia & Herzegovina", "s": "2-0", "r": "W", "o": "N", "b": "N"},
+    ]},
+    "Belgium": {"f": "WWDWWDDW", "o": "4/8", "b": "4/8", "n": 8, "m": [
+        {"v": "L", "vs": "Liechtenstein", "s": "7-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "USA", "s": "2-5", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Mexico", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "V", "vs": "Croatia", "s": "0-2", "r": "W", "o": "N", "b": "N"},
+        {"v": "L", "vs": "Tunisia", "s": "5-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"},
+        {"v": "L", "vs": "Iran", "s": "0-0", "r": "D", "o": "N", "b": "N"},
+        {"v": "V", "vs": "New Zealand", "s": "1-5", "r": "W", "o": "S", "b": "S"},
     ]},
 }
 
@@ -398,6 +526,7 @@ body {{
   border-radius: 10px;
 }}
 .match-meta .badge.amber {{ background: var(--amber); }}
+.match-meta .badge.blue {{ background: #3B82F6; color: #fff; }}
 .prob-bar {{
   display: flex;
   height: 28px;
@@ -616,6 +745,10 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 <div class="nav">
   <button class="active" data-section="jul2">2 Jul</button>
   <button data-section="jul3">3 Jul</button>
+  <button data-section="jul4">4 Jul</button>
+  <button data-section="jul5">5 Jul</button>
+  <button data-section="jul6">6 Jul</button>
+  <button data-section="jul7">7 Jul</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
@@ -635,6 +768,42 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   </div>
 {generate_bets_section(predictions, "jul3")}
 {generate_extra_markets(predictions, stats, "jul3")}
+</div>
+
+<!-- ===== 4 JUL - R16 ===== -->
+<div id="s-jul4" class="section">
+  <div class="card-grid">
+{generate_match_cards(predictions, stats, "jul4")}
+  </div>
+{generate_bets_section(predictions, "jul4")}
+{generate_extra_markets(predictions, stats, "jul4")}
+</div>
+
+<!-- ===== 5 JUL - R16 ===== -->
+<div id="s-jul5" class="section">
+  <div class="card-grid">
+{generate_match_cards(predictions, stats, "jul5")}
+  </div>
+{generate_bets_section(predictions, "jul5")}
+{generate_extra_markets(predictions, stats, "jul5")}
+</div>
+
+<!-- ===== 6 JUL - R16 ===== -->
+<div id="s-jul6" class="section">
+  <div class="card-grid">
+{generate_match_cards(predictions, stats, "jul6")}
+  </div>
+{generate_bets_section(predictions, "jul6")}
+{generate_extra_markets(predictions, stats, "jul6")}
+</div>
+
+<!-- ===== 7 JUL - R16 ===== -->
+<div id="s-jul7" class="section">
+  <div class="card-grid">
+{generate_match_cards(predictions, stats, "jul7")}
+  </div>
+{generate_bets_section(predictions, "jul7")}
+{generate_extra_markets(predictions, stats, "jul7")}
 </div>
 
 <!-- ===== MODELO ===== -->
@@ -662,7 +831,10 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 const nameMap = {{
   'Portugal':'Portugal','Croacia':'Croatia','Espana':'Spain','Austria':'Austria',
   'Suiza':'Switzerland','Argelia':'Algeria','Australia':'Australia','Egipto':'Egypt',
-  'Argentina':'Argentina','Cabo Verde':'Cape Verde','Colombia':'Colombia','Ghana':'Ghana'
+  'Argentina':'Argentina','Cabo Verde':'Cape Verde','Colombia':'Colombia','Ghana':'Ghana',
+  'Canada':'Canada','Marruecos':'Morocco','Paraguay':'Paraguay','Francia':'France',
+  'Brasil':'Brazil','Noruega':'Norway','Mexico':'Mexico','Inglaterra':'England',
+  'EE.UU.':'USA','Belgica':'Belgium'
 }};
 
 const teamData = {json.dumps(team_data, ensure_ascii=False)};
@@ -716,6 +888,24 @@ document.getElementById('updateDate').textContent = new Date().toLocaleDateStrin
 </script>
 </body>
 </html>"""
+
+
+ANALYSIS = {
+    "Portugal vs Croatia": "Portugal llega tras dominar el grupo con paso perfecto (2-1 vs Croacia en R32 ya es historia). Croacia mostro solidez defensiva pero poca pegada. El modelo favorece a Portugal por jerarquia individual.",
+    "Spain vs Austria": "España controlo su grupo con posesion abrumadora. Austria fue eficaz pero menos creativa. La Roja parte como favorita ante una Austria que vendra a replegarse.",
+    "Switzerland vs Algeria": "Suiza sorprendio con solidez colectiva. Algeria mostro buen contragolpe pero sufrio ante equipos organizados. Partido parejo, Suiza con leve ventaja por mejor estructura defensiva.",
+    "Australia vs Egypt": "Australia sufrio pero avanzo. Egipto mostro equilibrio. El modelo ve un duelo reñido donde los detalles definiran al ganador.",
+    "Argentina vs Cape Verde": "Argentina llega invicta y arrolladora. Cabo Verde fue la revelacion del grupo. La Albiceleste es amplia favorita pero Cabo Verde ya demostro que puede competir.",
+    "Colombia vs Ghana": "Colombia mostro solidez defensiva y efectividad. Ghana peleo pero le costo generar. Colombia favorita por su mejor momento colectivo.",
+    "Canada vs Morocco": "Canada tuvo altibajos pero mostro dinamismo ofensivo. Marruecos fue consistente y ordenado. Duelo parejo entre dos selecciones en ascenso.",
+    "Paraguay vs France": "Francia arrollo en fase de grupos con 3 victorias contundentes. Paraguay alterno buenos y malos momentos. Los Blues son claros favoritos.",
+    "Brazil vs Norway": "Brasil llega con su calidad habitual pero sin arrollar. Noruega mostro buen futbol ofensivo. El modelo favorece a Brasil pero Noruega puede complicar.",
+    "Mexico vs England": "Mexico fue solido en grupo accesible. England navergo sin brillo pero cumplio. El modelo ve ventaja para Inglaterra por mayor talento individual.",
+    "Portugal vs Spain": "Clasico iberico en Dallas. Portugal mostro equilibrio, España control. Partido muy parejo donde cualquier detalle puede definir.",
+    "USA vs Belgium": "USA irregular en grupo, Beligca solida defensivamente. Belgica tiene mas experiencia en fases eliminatorias.",
+    "Egypt vs Argentina": "Argentina imparable hasta ahora. Egypt equilibrado pero sin el poder ofensivo albiceleste. Argentina gran favorita.",
+    "Switzerland vs Colombia": "Suiza organizada, Colombia talentosa. Duelo de estilos donde la efectividad definira al ganador.",
+}
 
 
 def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
@@ -775,7 +965,7 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
       <div class="match-name">{h_display} <span class="vs">vs</span> {a_display}</div>
       <div class="match-meta">
         <span>{venue}</span>
-        <span class="badge amber">{stage}</span>
+        <span class="badge {'blue' if stage == 'R16' else 'amber'}">{stage}</span>
         <span>{time}</span>
       </div>
       <div class="prob-bar">
@@ -796,6 +986,7 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
           {scores_html}
         </div>
       </div>
+      <div style="margin-top:10px;font-size:12px;color:var(--body);line-height:1.4">{ANALYSIS.get(key, "")}</div>
       <button class="btn-form" onclick="openForm('{h_display}','{a_display}')">Ver forma ultimos 8 partidos</button>
       <div class="value-bet">
         <div class="lbl">Value Bet</div>
@@ -830,11 +1021,16 @@ def generate_extra_markets(predictions: dict, all_stats: dict, section: str) -> 
         away_stats = s.get("away", {})
 
         # --- Stat O/U markets ---
+        corners_avg = home_stats.get("Corner Kicks", 4.0) + away_stats.get("Corner Kicks", 3.0)
+        yellows_avg = home_stats.get("Yellow Cards", 1.5) + away_stats.get("Yellow Cards", 1.5)
+        shots_avg = home_stats.get("Shots on Goal", 4.0) + away_stats.get("Shots on Goal", 3.5)
+        fouls_avg = home_stats.get("Fouls", 10.0) + away_stats.get("Fouls", 10.0)
+
         pairs = [
-            ("Córners > 8.5", home_stats.get("Corner Kicks", 4.0) + away_stats.get("Corner Kicks", 3.0), 8.5),
-            ("T. Amarillas > 3.5", home_stats.get("Yellow Cards", 1.5) + away_stats.get("Yellow Cards", 1.5), 3.5),
-            ("Remates Puerta > 8.5", home_stats.get("Shots on Goal", 4.0) + away_stats.get("Shots on Goal", 3.5), 8.5),
-            ("Faltas > 18.5", home_stats.get("Fouls", 10.0) + away_stats.get("Fouls", 10.0), 18.5),
+            (f"Córners > {math.floor(corners_avg) + 0.5}", corners_avg, math.floor(corners_avg) + 0.5),
+            (f"T. Amarillas > {math.floor(yellows_avg) + 0.5}", yellows_avg, math.floor(yellows_avg) + 0.5),
+            (f"Remates Puerta > {math.floor(shots_avg) + 0.5}", shots_avg, math.floor(shots_avg) + 0.5),
+            (f"Faltas > {math.floor(fouls_avg) + 0.5}", fouls_avg, math.floor(fouls_avg) + 0.5),
         ]
         stat_markets = ""
         for name, avg, thresh in pairs:
@@ -1054,7 +1250,61 @@ def main():
     df = pd.read_csv(CSV, encoding="utf-8")
     df["date"] = pd.to_datetime(df["date"], utc=True).dt.tz_localize(None)
     df_finished = df[df["home_goals"].notna()].copy()
-    print(f"       {len(df_finished)} finished matches")
+    df_all_finished = df_finished.copy()  # keep full dataset for retro WC lookup
+    print(f"       {len(df_finished)} finished matches total")
+
+    # Precompute global team stats from full dataset (fast, no rolling windows)
+    df_all = df_finished.copy()
+    # Compute per-team stats from ALL history
+    _home_stats = df_all.groupby("home_team").agg(
+        h_gf=("home_goals", "mean"),
+        h_ga=("away_goals", "mean"),
+        h_wins=("home_goals", lambda x: ((x.values > df_all.loc[x.index, "away_goals"].values) if len(x) > 0 else 0).sum()),
+        h_n=("home_goals", "count"),
+    )
+    _away_stats = df_all.groupby("away_team").agg(
+        a_gf=("away_goals", "mean"),
+        a_ga=("home_goals", "mean"),
+        a_wins=("away_goals", lambda x: ((x.values > df_all.loc[x.index, "home_goals"].values) if len(x) > 0 else 0).sum()),
+        a_n=("away_goals", "count"),
+    )
+    _team_global = {}
+    for team in set(_home_stats.index) | set(_away_stats.index):
+        h = _home_stats.loc[team] if team in _home_stats.index else None
+        a = _away_stats.loc[team] if team in _away_stats.index else None
+        h_n = h.h_n if h is not None else 0
+        a_n = a.a_n if a is not None else 0
+        n = h_n + a_n
+        if n > 0:
+            h_gf = h.h_gf * h_n if h is not None else 0
+            h_ga = h.h_ga * h_n if h is not None else 0
+            a_gf = a.a_gf * a_n if a is not None else 0
+            a_ga = a.a_ga * a_n if a is not None else 0
+            gf = (h_gf + a_gf) / n
+            ga = (h_ga + a_ga) / n
+            wins = (h.h_wins if h is not None else 0) + (a.a_wins if a is not None else 0)
+            wr = wins / n
+        else:
+            gf = 1.2
+            ga = 1.2
+            wr = 0.35
+        _team_global[team] = {"gf": gf, "ga": ga, "gd": gf - ga, "wr": wr, "n": n}
+
+    # Load FIFA rankings
+    _fifa_ranks = {}
+    _fifa_path = "data/fifa_rankings.csv"
+    if os.path.exists(_fifa_path):
+        _fifa_df = pd.read_csv(_fifa_path)
+        rank_col = [c for c in _fifa_df.columns if "rank" in c.lower() or "position" in c.lower()]
+        team_col = [c for c in _fifa_df.columns if "team" in c.lower() or "country" in c.lower() or "name" in c.lower()]
+        if rank_col and team_col:
+            rk = rank_col[0]
+            tm = team_col[0]
+            _fifa_ranks = dict(zip(_fifa_df[tm].astype(str).str.strip(), _fifa_df[rk]))
+
+    # Use only recent data for rolling features (speed)
+    df_finished = df_finished[df_finished["date"] >= "2022-01-01"].copy()
+    print(f"       {len(df_finished)} finished matches after filtering (>= 2022)")
 
     # Load model
     if not os.path.exists(MODEL):
@@ -1093,15 +1343,10 @@ def main():
     predictor = MatchPredictor(trainer, config)
     stats_predictor = MatchStatsPredictor(config)
 
-    # Predict each match
-    predictions = {}
-    all_stats = {}
-
+    # Build synthetic batch for ALL matches at once
+    synthetic_rows = []
     for home, away, *_rest in MATCHES:
-        key = f"{home} vs {away}"
-        print(f"\n[PRED]  {home} vs {away}")
-
-        synthetic = pd.DataFrame([{
+        synthetic_rows.append({
             "fixture_id": 0,
             "date": datetime.now().replace(tzinfo=None),
             "home_team": home,
@@ -1111,11 +1356,54 @@ def main():
             "home_team_id": 0,
             "away_team_id": 0,
             "status_short": "NS",
-        }])
+        })
+    all_synthetic = pd.DataFrame(synthetic_rows)
 
-        preds = predictor.predict_batch(synthetic, df_finished, neutral_venue=True)
-        if preds:
-            p = preds[0]
+    # Build features ONCE for all matches together
+    print(f"\n[PRED]  Building features for {len(all_synthetic)} matches...")
+    historical_for_feat = df_finished.copy()
+    for col in ["home_goals", "away_goals"]:
+        historical_for_feat[col] = pd.to_numeric(historical_for_feat[col], errors="coerce")
+    combined = pd.concat([historical_for_feat, all_synthetic], ignore_index=True)
+    feat_all = feature_builder.build(combined)
+
+    # Extract synthetic match rows and predict
+    predictions = {}
+    all_stats = {}
+
+    for i, (home, away, *_rest) in enumerate(MATCHES):
+        key = f"{home} vs {away}"
+        print(f"\n[PRED]  {home} vs {away}")
+
+        match_idx = len(historical_for_feat) + i
+        feat_row = feat_all.iloc[match_idx]
+
+        # Align to training feature columns
+        feat = feat_row[trainer.feature_cols].fillna(0)
+
+        # Override global features with full-dataset stats
+        _h_stats = _team_global.get(home, {"gd": 0.0, "wr": 0.35})
+        _a_stats = _team_global.get(away, {"gd": 0.0, "wr": 0.35})
+        _fifa_h = _fifa_ranks.get(home, 150)
+        _fifa_a = _fifa_ranks.get(away, 150)
+        feat["home_win_rate"] = _h_stats["wr"]
+        feat["away_win_rate"] = _a_stats["wr"]
+        feat["win_rate_diff"] = _h_stats["wr"] - _a_stats["wr"]
+        feat["home_strength_gd"] = _h_stats["gd"]
+        feat["away_strength_gd"] = _a_stats["gd"]
+        feat["strength_diff"] = (_h_stats["wr"] - _a_stats["wr"]) * 3.0 + (_h_stats["gd"] - _a_stats["gd"]) * 0.5
+        feat["home_fifa_rank"] = _fifa_h
+        feat["away_fifa_rank"] = _fifa_a
+        feat["fifa_rank_diff"] = _fifa_h - _fifa_a
+        feat["log_rank_ratio"] = math.log((_fifa_a + 1) / (_fifa_h + 1)) if _fifa_h > 0 and _fifa_a > 0 else 0.0
+
+        # Neutral venue: only remove home advantage baseline, keep team-specific form intact
+        if "league_home_win_rate" in feat:
+            feat["league_home_win_rate"] = 0.5
+
+        # Predict
+        p = predictor.predict_match_from_features(feat, all_synthetic.iloc[i], synthetic=True)
+        if p:
             predictions[key] = p
             h_prob = p.get("prob_home", 0.33)
             d_prob = p.get("prob_draw", 0.33)
@@ -1128,41 +1416,71 @@ def main():
             stats = stats_predictor.predict_stats(home, away, df_finished)
             all_stats[key] = stats
             print(f"       Stats: {stats.get('note', '') if isinstance(stats, dict) else 'N/A'}")
-
+    
     # --- Retro predict finished World Cup 2026 matches ---
     print(f"\n[RETRO] Predicting finished World Cup 2026 matches...")
-    wc_finished = df_finished[df_finished["source_league"].astype(str).str.contains("World Cup 2026", na=False)].copy()
+    wc_finished = df_all_finished[df_all_finished["source_league"].astype(str).str.contains("World Cup 2026", na=False)].copy()
     wc_finished = wc_finished[wc_finished["status_short"] == "FT"].copy()
     retro_results = []
     if not wc_finished.empty:
-        wc_synthetic = pd.DataFrame()
-        for _, row in wc_finished.iterrows():
-            wc_synthetic = pd.concat([wc_synthetic, pd.DataFrame([{
-                "fixture_id": 0,
-                "date": datetime.now().replace(tzinfo=None),
-                "home_team": row["home_team"],
-                "away_team": row["away_team"],
-                "home_goals": None,
-                "away_goals": None,
-                "home_team_id": row["home_team_id"],
-                "away_team_id": row["away_team_id"],
-                "status_short": "NS",
-            }])], ignore_index=True)
-        retro_preds = predictor.predict_batch(wc_synthetic, df_finished)
-        if retro_preds:
-            for p, (_, row) in zip(retro_preds, wc_finished.iterrows()):
+        retro_synthetic = pd.DataFrame([{
+            "fixture_id": 0,
+            "date": datetime.now().replace(tzinfo=None),
+            "home_team": row["home_team"],
+            "away_team": row["away_team"],
+            "home_goals": None,
+            "away_goals": None,
+            "home_team_id": row["home_team_id"],
+            "away_team_id": row["away_team_id"],
+            "status_short": "NS",
+        } for _, row in wc_finished.iterrows()])
+
+        # Build features once for all retro matches
+        retro_combined = pd.concat([historical_for_feat, retro_synthetic], ignore_index=True)
+        feat_retro = feature_builder.build(retro_combined)
+
+        for i, (_, row) in enumerate(wc_finished.iterrows()):
+            match_idx = len(historical_for_feat) + i
+            feat_row = feat_retro.iloc[match_idx]
+            feat = feat_row[trainer.feature_cols].fillna(0)
+
+            # Override global features with full-dataset stats
+            _rhome = row.get("home_team", "")
+            _raway = row.get("away_team", "")
+            _rh_stats = _team_global.get(_rhome, {"gd": 0.0, "wr": 0.35})
+            _ra_stats = _team_global.get(_raway, {"gd": 0.0, "wr": 0.35})
+            _rfifa_h = _fifa_ranks.get(_rhome, 150)
+            _rfifa_a = _fifa_ranks.get(_raway, 150)
+            feat["home_win_rate"] = _rh_stats["wr"]
+            feat["away_win_rate"] = _ra_stats["wr"]
+            feat["win_rate_diff"] = _rh_stats["wr"] - _ra_stats["wr"]
+            feat["home_strength_gd"] = _rh_stats["gd"]
+            feat["away_strength_gd"] = _ra_stats["gd"]
+            feat["strength_diff"] = (_rh_stats["wr"] - _ra_stats["wr"]) * 3.0 + (_rh_stats["gd"] - _ra_stats["gd"]) * 0.5
+            feat["home_fifa_rank"] = _rfifa_h
+            feat["away_fifa_rank"] = _rfifa_a
+            feat["fifa_rank_diff"] = _rfifa_h - _rfifa_a
+            feat["log_rank_ratio"] = math.log((_rfifa_a + 1) / (_rfifa_h + 1)) if _rfifa_h > 0 and _rfifa_a > 0 else 0.0
+
+            # Neutral venue: WC matches are at neutral sites
+            # Only remove home advantage baseline; team-specific form stays intact
+            if "league_home_win_rate" in feat:
+                feat["league_home_win_rate"] = 0.5
+
+            p = predictor.predict_match_from_features(feat, retro_synthetic.iloc[i], synthetic=True)
+            if p:
                 h_prob = p.get("prob_home", 0.33)
                 d_prob = p.get("prob_draw", 0.33)
                 a_prob = p.get("prob_away", 0.34)
                 best = max(h_prob, d_prob, a_prob)
                 if best == h_prob:
-                    pred_result = 0  # home win
+                    pred_result = 0
                     pred_label = row["home_team"]
                 elif best == d_prob:
-                    pred_result = 1  # draw
+                    pred_result = 1
                     pred_label = "Empate"
                 else:
-                    pred_result = 2  # away win
+                    pred_result = 2
                     pred_label = row["away_team"]
                 hg, ag = row["home_goals"], row["away_goals"]
                 if hg > ag:
