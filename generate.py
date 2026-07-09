@@ -38,6 +38,7 @@ MATCHES = [
     ("USA", "Belgium", "Seattle", "R16", "Dom 8pm", "jul6"),
     ("Egypt", "Argentina", "Atlanta", "R16", "Lun 12pm", "jul7"),
     ("Switzerland", "Colombia", "Vancouver", "R16", "Lun 4pm", "jul7"),
+    ("France", "Morocco", "Boston", "QF", "Jue 4pm", "jul9"),
 ]
 
 MATCHES_MAP = {(h, a): rest[3] if len(rest) > 3 else rest[2] if len(rest) > 2 else "jul2" for h, a, *rest in MATCHES}
@@ -817,7 +818,8 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   <button data-section="jul4">4 Jul</button>
   <button data-section="jul5">5 Jul</button>
   <button data-section="jul6">6 Jul</button>
-  <button data-section="jul7">7 Jul</button>
+   <button data-section="jul7">7 Jul</button>
+  <button data-section="jul9">9 Jul</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
@@ -873,6 +875,15 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   </div>
 {generate_bets_section(predictions, "jul7")}
 {generate_extra_markets(predictions, stats, "jul7")}
+</div>
+
+<!-- ===== 9 JUL - QF ===== -->
+<div id="s-jul9" class="section">
+  <div class="card-grid">
+{generate_match_cards(predictions, stats, "jul9")}
+  </div>
+{generate_bets_section(predictions, "jul9")}
+{generate_extra_markets(predictions, stats, "jul9")}
 </div>
 
 <!-- ===== MODELO ===== -->
@@ -974,6 +985,7 @@ ANALYSIS = {
     "USA vs Belgium": "USA irregular en grupo, Beligca solida defensivamente. Belgica tiene mas experiencia en fases eliminatorias.",
     "Egypt vs Argentina": "Argentina imparable hasta ahora. Egypt equilibrado pero sin el poder ofensivo albiceleste. Argentina gran favorita.",
     "Switzerland vs Colombia": "Suiza organizada, Colombia talentosa. Duelo de estilos donde la efectividad definira al ganador.",
+    "France vs Morocco": "Francia llega perfecta (5-0) tras vencer 1-0 a Paraguay. Mbappe anoto en TODOS los partidos (6 goles). Marruecos viene de eliminar a Canada 3-0 y esta invicto 34 partidos. Rematch de semifinal 2022 (Francia 2-0). Los Blues son favoritos pero Marruecos ya no es sorpresa, es realidad.",
 }
 
 
@@ -1039,7 +1051,7 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
             for line in [0.5, 1.5, 2.5, 3.5, 4.5]:
                 ov = 1 - sum(_m.exp(-lam_t) * (lam_t ** k) / _m.factorial(k) for k in range(int(line) + 1))
                 ov_pct = min(max(ov, 0), 1)
-                line_key = f"O {line:.0f}"
+                line_key = f"O {line:.1f}"
                 ou_lines += f'<div class="market-item"><div class="lbl">{line_key}</div><div class="val {prob_class(ov_pct)}">{ov_pct * 100:.0f}%</div></div>\n'
 
         # Asian handicap from 1X2
@@ -1244,8 +1256,38 @@ def generate_bets_section(predictions: dict, section: str) -> str:
     <div class="sub">Picks del modelo con mayor probabilidad</div>{''.join(lines)}
   </div>""" if lines else ""
 
+    # Custom analysis card for France vs Morocco (QF, Jul 9)
+    extra = ""
+    if section == "jul9":
+        extra = """
+  <div class="parlay-card" style="border:1px solid var(--amber)">
+    <div class="title" style="color:var(--amber)">Analisis del Modelo — Francia vs Marruecos</div>
+    <div class="sub">Discrepancias modelo vs. mercado y mejores picks</div>
+    <div class="extra-grid">
+      <div>
+        <div class="extra-cat">Value Bets (modelo vs. mercado real)</div>
+        <div class="m-line"><div class="m-name">Marruecos gana</div><div class="m-prob" style="color:var(--green)">33%</div><div class="m-odds">Mercado: +500</div></div>
+        <div class="m-line"><div class="m-name">Francia gana</div><div class="m-prob" style="color:var(--red)">39%</div><div class="m-odds">Mercado: -170</div></div>
+        <div class="m-line"><div class="m-name">O2.5</div><div class="m-prob" style="color:var(--green)">57%</div><div class="m-odds">Mercado: ~48%</div></div>
+        <div class="m-line"><div class="m-name">BTTS Si</div><div class="m-prob" style="color:var(--amber)">53%</div><div class="m-odds">Mercado: ~50%</div></div>
+      </div>
+      <div>
+        <div class="extra-cat">Veredicto del modelo</div>
+        <div style="font-size:12px;color:var(--body);line-height:1.5;padding:8px 0">
+          <strong style="color:var(--title)">Marruecos +0.5 (AH)</strong> es la jugada con mas valor (67%).<br>
+          El modelo ve a Francia mucho mas debil de lo que dicta el mercado.<br>
+          <strong style="color:var(--green)">O2.5 al 57%</strong> es la apuesta mas solida por probabilidad pura.<br>
+          Si buscas riesgo: <strong style="color:var(--amber)">Marruecos gana a +500</strong> tiene 33% real segun el modelo.
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--body)">
+      <strong style="color:var(--amber)">⚠ Resumen:</strong> Francia favorita pero sobrevalorada. Marruecos invicto 34 partidos, eliminó a Canada 3-0. El modelo espera un partido cerrado (2.1 goles esperados). O2.5 es la apuesta con mayor respaldo estadistico.
+    </div>
+  </div>"""
+
     parlay = _parlay_section(predictions, section)
-    return simp + parlay
+    return simp + parlay + extra
 
 
 def _parlay_section(predictions, section):
