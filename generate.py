@@ -24,39 +24,21 @@ CONFIG = os.path.join(BASE, "config.json")
 OUT = os.path.join(os.path.dirname(__file__), "index.html")
 
 MATCHES = [
-    ("Portugal", "Croatia", "Toronto", "R32", "Jue 3pm", "jul2"),
-    ("Spain", "Austria", "Los Angeles", "R32", "Jue 3pm", "jul2"),
-    ("Switzerland", "Algeria", "Vancouver", "R32", "Jue 11pm", "jul2"),
-    ("Australia", "Egypt", "Dallas", "R32", "Sab 12pm", "jul3"),
-    ("Argentina", "Cape Verde", "Miami", "R32", "Sab 4pm", "jul3"),
-    ("Colombia", "Ghana", "Kansas City", "R32", "Sab 7:30pm", "jul3"),
-    ("Canada", "Morocco", "Houston", "R16", "Vie 1pm", "jul4"),
-    ("Paraguay", "France", "Philadelphia", "R16", "Vie 5pm", "jul4"),
-    ("Brazil", "Norway", "New Jersey", "R16", "Sab 4pm", "jul5"),
-    ("Mexico", "England", "Mexico City", "R16", "Sab 8pm", "jul5"),
-    ("Portugal", "Spain", "Dallas", "R16", "Dom 3pm", "jul6"),
-    ("USA", "Belgium", "Seattle", "R16", "Dom 8pm", "jul6"),
-    ("Egypt", "Argentina", "Atlanta", "R16", "Lun 12pm", "jul7"),
-    ("Switzerland", "Colombia", "Vancouver", "R16", "Lun 4pm", "jul7"),
-    ("France", "Morocco", "Boston", "QF", "Jue 4pm", "jul9"),
+    ("Canada", "Morocco", "Houston", "R16", "Sab 1pm", "jul4"),
+    ("Paraguay", "France", "Philadelphia", "R16", "Sab 5pm", "jul4"),
+    ("Brazil", "Norway", "East Rutherford", "R16", "Dom 4pm", "jul5"),
+    ("Mexico", "England", "Mexico City", "R16", "Dom 8pm", "jul5"),
+    ("Portugal", "Spain", "Dallas", "R16", "Lun 3pm", "jul6"),
+    ("USA", "Belgium", "Seattle", "R16", "Lun 8pm", "jul6"),
+    ("Argentina", "Egypt", "Atlanta", "R16", "Lun 12pm", "jul6"),
+    ("Switzerland", "Colombia", "Vancouver", "R16", "Lun 4pm", "jul6"),
 ]
 
 MATCHES_MAP = {(h, a): rest[3] if len(rest) > 3 else rest[2] if len(rest) > 2 else "jul2" for h, a, *rest in MATCHES}
 
 NAME_MAP_ES = {
-    "Portugal": "Portugal",
-    "Croatia": "Croacia",
-    "Spain": "España",
-    "Austria": "Austria",
-    "Switzerland": "Suiza",
-    "Algeria": "Argelia",
-    "Australia": "Australia",
-    "Egypt": "Egipto",
-    "Argentina": "Argentina",
-    "Cape Verde": "Cabo Verde",
-    "Colombia": "Colombia",
-    "Ghana": "Ghana",
-    "Canada": "Canadá",
+    "Portugal": "Portugal",    "Spain": "España",    "Switzerland": "Suiza",    "Egypt": "Egipto",
+    "Argentina": "Argentina",    "Colombia": "Colombia",    "Canada": "Canadá",
     "Morocco": "Marruecos",
     "Paraguay": "Paraguay",
     "France": "Francia",
@@ -65,23 +47,12 @@ NAME_MAP_ES = {
     "Mexico": "México",
     "England": "Inglaterra",
     "USA": "EE.UU.",
-    "Belgium": "Bélgica",
+    "Belgium": "Bélgica"
 }
 
 TEAM_KEY_MAP = {
-    "Portugal": "Portugal",
-    "Croatia": "Croatia",
-    "Spain": "Spain",
-    "Austria": "Austria",
-    "Switzerland": "Switzerland",
-    "Algeria": "Algeria",
-    "Australia": "Australia",
-    "Egypt": "Egypt",
-    "Argentina": "Argentina",
-    "Cape Verde": "Cape Verde",
-    "Colombia": "Colombia",
-    "Ghana": "Ghana",
-    "Canada": "Canada",
+    "Portugal": "Portugal",    "Spain": "Spain",    "Switzerland": "Switzerland",    "Egypt": "Egypt",
+    "Argentina": "Argentina",    "Colombia": "Colombia",    "Canada": "Canada",
     "Morocco": "Morocco",
     "Paraguay": "Paraguay",
     "France": "France",
@@ -90,9 +61,8 @@ TEAM_KEY_MAP = {
     "Mexico": "Mexico",
     "England": "England",
     "USA": "USA",
-    "Belgium": "Belgium",
+    "Belgium": "Belgium"
 }
-
 
 def load_config() -> Config:
     cfg = Config()
@@ -106,7 +76,6 @@ def load_config() -> Config:
                         setattr(getattr(cfg, section), k, v)
     return cfg
 
-
 CORRECT_TEAM_DATA = {
     "Colombia": {"f": "DWWLLWWD", "o": "4/8", "b": "4/8", "n": 8, "m": [
         {"v": "L", "vs": "Portugal", "s": "0-0", "r": "D", "o": "N", "b": "N"},
@@ -118,6 +87,7 @@ CORRECT_TEAM_DATA = {
         {"v": "V", "vs": "Jordan", "s": "2-0", "r": "W", "o": "N", "b": "N"},
         {"v": "V", "vs": "Canada", "s": "0-0", "r": "D", "o": "N", "b": "N"},
     ]},
+
     "Portugal": {"f": "DWDWWWDW", "o": "4/8", "b": "4/8", "n": 8, "m": [
         {"v": "L", "vs": "Colombia", "s": "0-0", "r": "D", "o": "N", "b": "N"},
         {"v": "V", "vs": "Uzbekistan", "s": "5-0", "r": "W", "o": "S", "b": "N"},
@@ -128,16 +98,7 @@ CORRECT_TEAM_DATA = {
         {"v": "L", "vs": "Mexico", "s": "0-0", "r": "D", "o": "N", "b": "N"},
         {"v": "V", "vs": "Armenia", "s": "9-1", "r": "W", "o": "S", "b": "S"},
     ]},
-    "Croatia": {"f": "WDWLWWWW", "o": "4/8", "b": "4/8", "n": 8, "m": [
-        {"v": "V", "vs": "Ghana", "s": "2-1", "r": "W", "o": "S", "b": "S"},
-        {"v": "L", "vs": "England", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Panama", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Brazil", "s": "1-3", "r": "L", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Colombia", "s": "2-1", "r": "W", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Montenegro", "s": "3-2", "r": "W", "o": "S", "b": "S"},
-        {"v": "V", "vs": "Czech Republic", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Montenegro", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-    ]},
+
     "Spain": {"f": "WWDWDDWD", "o": "4/8", "b": "3/8", "n": 8, "m": [
         {"v": "L", "vs": "Uruguay", "s": "1-0", "r": "W", "o": "N", "b": "N"},
         {"v": "V", "vs": "Saudi Arabia", "s": "4-0", "r": "W", "o": "S", "b": "N"},
@@ -148,16 +109,6 @@ CORRECT_TEAM_DATA = {
         {"v": "V", "vs": "Serbia", "s": "3-0", "r": "W", "o": "S", "b": "N"},
         {"v": "V", "vs": "Turkiye", "s": "2-2", "r": "D", "o": "S", "b": "S"},
     ]},
-    "Austria": {"f": "DLWWWWDW", "o": "3/8", "b": "4/8", "n": 8, "m": [
-        {"v": "L", "vs": "Algeria", "s": "3-3", "r": "D", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Argentina", "s": "0-2", "r": "L", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Jordan", "s": "3-1", "r": "W", "o": "S", "b": "S"},
-        {"v": "V", "vs": "Tunisia", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "V", "vs": "South Korea", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Ghana", "s": "5-1", "r": "W", "o": "S", "b": "S"},
-        {"v": "V", "vs": "Bosnia", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-        {"v": "L", "vs": "Cyprus", "s": "2-0", "r": "W", "o": "N", "b": "N"},
-    ]},
     "Switzerland": {"f": "WWDDWDLD", "o": "4/8", "b": "7/8", "n": 8, "m": [
         {"v": "L", "vs": "Canada", "s": "2-1", "r": "W", "o": "S", "b": "S"},
         {"v": "V", "vs": "Bosnia", "s": "4-1", "r": "W", "o": "S", "b": "S"},
@@ -167,26 +118,6 @@ CORRECT_TEAM_DATA = {
         {"v": "L", "vs": "Norway", "s": "0-0", "r": "D", "o": "N", "b": "N"},
         {"v": "V", "vs": "Germany", "s": "3-4", "r": "L", "o": "S", "b": "S"},
         {"v": "L", "vs": "Kosovo", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-    ]},
-    "Algeria": {"f": "DWLWWDWL", "o": "5/8", "b": "2/8", "n": 8, "m": [
-        {"v": "V", "vs": "Austria", "s": "3-3", "r": "D", "o": "S", "b": "S"},
-        {"v": "V", "vs": "Jordan", "s": "2-1", "r": "W", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Argentina", "s": "0-3", "r": "L", "o": "S", "b": "N"},
-        {"v": "L", "vs": "Bolivia", "s": "4-0", "r": "W", "o": "S", "b": "N"},
-        {"v": "L", "vs": "Netherlands", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Uruguay", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Guatemala", "s": "7-0", "r": "W", "o": "S", "b": "N"},
-        {"v": "L", "vs": "Nigeria", "s": "0-2", "r": "L", "o": "N", "b": "N"},
-    ]},
-    "Australia": {"f": "DLWDLWWL", "o": "2/8", "b": "2/8", "n": 8, "m": [
-        {"v": "L", "vs": "Paraguay", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "L", "vs": "USA", "s": "0-2", "r": "L", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Turkiye", "s": "2-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Switzerland", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-        {"v": "L", "vs": "Mexico", "s": "0-1", "r": "L", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Curacao", "s": "5-1", "r": "W", "o": "S", "b": "S"},
-        {"v": "V", "vs": "Cameroon", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Colombia", "s": "0-3", "r": "L", "o": "S", "b": "N"},
     ]},
     "Egypt": {"f": "DWDLWDWD", "o": "3/8", "b": "4/8", "n": 8, "m": [
         {"v": "V", "vs": "Iran", "s": "1-1", "r": "D", "o": "N", "b": "S"},
@@ -207,26 +138,6 @@ CORRECT_TEAM_DATA = {
         {"v": "V", "vs": "Zambia", "s": "5-0", "r": "W", "o": "S", "b": "N"},
         {"v": "V", "vs": "Mauritania", "s": "2-1", "r": "W", "o": "S", "b": "S"},
         {"v": "L", "vs": "Angola", "s": "2-0", "r": "W", "o": "N", "b": "N"},
-    ]},
-    "Cape Verde": {"f": "DDDWWDLD", "o": "4/8", "b": "4/8", "n": 8, "m": [
-        {"v": "V", "vs": "Saudi Arabia", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Uruguay", "s": "2-2", "r": "D", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Spain", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Bermuda", "s": "3-0", "r": "W", "o": "S", "b": "N"},
-        {"v": "V", "vs": "Serbia", "s": "3-0", "r": "W", "o": "S", "b": "N"},
-        {"v": "L", "vs": "Finland", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-        {"v": "L", "vs": "Chile", "s": "2-4", "r": "L", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-    ]},
-    "Ghana": {"f": "LDWDLLLL", "o": "3/8", "b": "4/8", "n": 8, "m": [
-        {"v": "L", "vs": "Croatia", "s": "1-2", "r": "L", "o": "S", "b": "S"},
-        {"v": "L", "vs": "England", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "V", "vs": "Panama", "s": "1-0", "r": "W", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Wales", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-        {"v": "L", "vs": "Mexico", "s": "0-2", "r": "L", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Germany", "s": "1-2", "r": "L", "o": "S", "b": "S"},
-        {"v": "L", "vs": "Austria", "s": "1-5", "r": "L", "o": "S", "b": "S"},
-        {"v": "L", "vs": "South Africa", "s": "0-1", "r": "L", "o": "N", "b": "N"},
     ]},
     "Canada": {"f": "DDWDDWLW", "o": "3/8", "b": "4/8", "n": 8, "m": [
         {"v": "L", "vs": "Iceland", "s": "2-2", "r": "D", "o": "S", "b": "S"},
@@ -327,17 +238,14 @@ CORRECT_TEAM_DATA = {
         {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"},
         {"v": "L", "vs": "Iran", "s": "0-0", "r": "D", "o": "N", "b": "N"},
         {"v": "V", "vs": "New Zealand", "s": "1-5", "r": "W", "o": "S", "b": "S"},
-    ]},
+    ]}
 }
-
 
 def format_prob(val: float) -> str:
     return f"{val * 100:.0f}%"
 
-
 def format_prob_num(val: float) -> str:
     return f"{val * 100:.0f}"
-
 
 def prob_class(val: float) -> str:
     if val >= 0.55:
@@ -347,7 +255,6 @@ def prob_class(val: float) -> str:
     else:
         return "red"
 
-
 def pick_1x2(home: float, draw: float, away: float) -> tuple[str, str, str]:
     if home >= draw and home >= away:
         return "Local", "green", f"{format_prob(home)}"
@@ -356,7 +263,6 @@ def pick_1x2(home: float, draw: float, away: float) -> tuple[str, str, str]:
     else:
         return "Empate", "amber", f"{format_prob(draw)}"
 
-
 def pick_name_1x2(home: float, draw: float, away: float, home_name: str, away_name: str) -> str:
     if home >= draw and home >= away:
         return home_name
@@ -364,7 +270,6 @@ def pick_name_1x2(home: float, draw: float, away: float, home_name: str, away_na
         return away_name
     else:
         return "Empate"
-
 
 def value_bet_text(home: float, draw: float, away: float, home_name: str, away_name: str, pred: dict) -> str:
     probs = [(home, "home", home_name), (draw, "draw", "Empate"), (away, "away", away_name)]
@@ -389,7 +294,6 @@ def value_bet_text(home: float, draw: float, away: float, home_name: str, away_n
             text += f", EV+{edge}%"
         color_class = "val amber"
     return text, color_class
-
 
 def generate_html(predictions: dict, team_data: dict, stats: dict, retro_results: list = None) -> str:
     return f"""<!DOCTYPE html>
@@ -819,24 +723,13 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   <button data-section="jul5">5 Jul</button>
   <button data-section="jul6">6 Jul</button>
    <button data-section="jul7">7 Jul</button>
-  <button data-section="jul9">9 Jul</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
-<!-- ===== 2 JUL ===== -->
-<div id="s-jul2" class="section active">
-  <div class="card-grid">
-{generate_match_cards(predictions, stats, "jul2")}
-  </div>
 {generate_bets_section(predictions, "jul2")}
 {generate_extra_markets(predictions, stats, "jul2")}
 </div>
 
-<!-- ===== 3 JUL ===== -->
-<div id="s-jul3" class="section">
-  <div class="card-grid">
-{generate_match_cards(predictions, stats, "jul3")}
-  </div>
 {generate_bets_section(predictions, "jul3")}
 {generate_extra_markets(predictions, stats, "jul3")}
 </div>
@@ -868,20 +761,10 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 {generate_extra_markets(predictions, stats, "jul6")}
 </div>
 
-<!-- ===== 7 JUL - R16 ===== -->
-<div id="s-jul7" class="section">
-  <div class="card-grid">
-{generate_match_cards(predictions, stats, "jul7")}
-  </div>
 {generate_bets_section(predictions, "jul7")}
 {generate_extra_markets(predictions, stats, "jul7")}
 </div>
 
-<!-- ===== 9 JUL - QF ===== -->
-<div id="s-jul9" class="section">
-  <div class="card-grid">
-{generate_match_cards(predictions, stats, "jul9")}
-  </div>
 {generate_bets_section(predictions, "jul9")}
 {generate_extra_markets(predictions, stats, "jul9")}
 </div>
@@ -969,25 +852,15 @@ document.getElementById('updateDate').textContent = new Date().toLocaleDateStrin
 </body>
 </html>"""
 
-
-ANALYSIS = {
-    "Portugal vs Croatia": "Portugal llega tras dominar el grupo con paso perfecto (2-1 vs Croacia en R32 ya es historia). Croacia mostro solidez defensiva pero poca pegada. El modelo favorece a Portugal por jerarquia individual.",
-    "Spain vs Austria": "España controlo su grupo con posesion abrumadora. Austria fue eficaz pero menos creativa. La Roja parte como favorita ante una Austria que vendra a replegarse.",
-    "Switzerland vs Algeria": "Suiza sorprendio con solidez colectiva. Algeria mostro buen contragolpe pero sufrio ante equipos organizados. Partido parejo, Suiza con leve ventaja por mejor estructura defensiva.",
-    "Australia vs Egypt": "Australia sufrio pero avanzo. Egipto mostro equilibrio. El modelo ve un duelo reñido donde los detalles definiran al ganador.",
-    "Argentina vs Cape Verde": "Argentina llega invicta y arrolladora. Cabo Verde fue la revelacion del grupo. La Albiceleste es amplia favorita pero Cabo Verde ya demostro que puede competir.",
-    "Colombia vs Ghana": "Colombia mostro solidez defensiva y efectividad. Ghana peleo pero le costo generar. Colombia favorita por su mejor momento colectivo.",
-    "Canada vs Morocco": "Canada tuvo altibajos pero mostro dinamismo ofensivo. Marruecos fue consistente y ordenado. Duelo parejo entre dos selecciones en ascenso.",
+ANALYSIS = {    "Canada vs Morocco": "Canada tuvo altibajos pero mostro dinamismo ofensivo. Marruecos fue consistente y ordenado. Duelo parejo entre dos selecciones en ascenso.",
     "Paraguay vs France": "Francia arrollo en fase de grupos con 3 victorias contundentes. Paraguay alterno buenos y malos momentos. Los Blues son claros favoritos.",
     "Brazil vs Norway": "Brasil llega con su calidad habitual pero sin arrollar. Noruega mostro buen futbol ofensivo. El modelo favorece a Brasil pero Noruega puede complicar.",
     "Mexico vs England": "Mexico fue solido en grupo accesible. England navergo sin brillo pero cumplio. El modelo ve ventaja para Inglaterra por mayor talento individual.",
     "Portugal vs Spain": "Clasico iberico en Dallas. Portugal mostro equilibrio, España control. Partido muy parejo donde cualquier detalle puede definir.",
     "USA vs Belgium": "USA irregular en grupo, Beligca solida defensivamente. Belgica tiene mas experiencia en fases eliminatorias.",
     "Egypt vs Argentina": "Argentina imparable hasta ahora. Egypt equilibrado pero sin el poder ofensivo albiceleste. Argentina gran favorita.",
-    "Switzerland vs Colombia": "Suiza organizada, Colombia talentosa. Duelo de estilos donde la efectividad definira al ganador.",
-    "France vs Morocco": "Francia llega perfecta (5-0) tras vencer 1-0 a Paraguay. Mbappe anoto en TODOS los partidos (6 goles). Marruecos viene de eliminar a Canada 3-0 y esta invicto 34 partidos. Rematch de semifinal 2022 (Francia 2-0). Los Blues son favoritos pero Marruecos ya no es sorpresa, es realidad.",
+    "Switzerland vs Colombia": "Suiza organizada, Colombia talentosa. Duelo de estilos donde la efectividad definira al ganador."
 }
-
 
 def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
     cards = []
@@ -1124,14 +997,12 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
 
     return "\n".join(cards)
 
-
 def _poisson_over_prob(avg: float, threshold: float) -> float:
     """P(X > threshold) for X ~ Poisson(avg)."""
     total = 0.0
     for k in range(int(threshold) + 1):
         total += (avg ** k) * math.exp(-avg) / math.factorial(k)
     return max(0.01, min(0.99, 1.0 - total))
-
 
 def generate_extra_markets(predictions: dict, all_stats: dict, section: str) -> str:
     cards = []
@@ -1201,7 +1072,6 @@ def generate_extra_markets(predictions: dict, all_stats: dict, section: str) -> 
 
     return "\n".join(cards)
 
-
 def _record_html(retro_results: list | None) -> str:
     if not retro_results:
         return "--"
@@ -1209,7 +1079,6 @@ def _record_html(retro_results: list | None) -> str:
     total = len(retro_results)
     pct = wins / total * 100
     return f"{wins}/{total} ({pct:.0f}%)"
-
 
 def _record_class(retro_results: list | None) -> str:
     if not retro_results:
@@ -1220,7 +1089,6 @@ def _record_class(retro_results: list | None) -> str:
     if pct >= 50:
         return ""
     return "low" if pct >= 40 else "bad"
-
 
 def generate_bets_section(predictions: dict, section: str) -> str:
     lines = []
@@ -1289,7 +1157,6 @@ def generate_bets_section(predictions: dict, section: str) -> str:
     parlay = _parlay_section(predictions, section)
     return simp + parlay + extra
 
-
 def _parlay_section(predictions, section):
     legs = []
     for home, away, *_r in MATCHES:
@@ -1336,7 +1203,6 @@ def _parlay_section(predictions, section):
       <div><div class="lbl">Probabilidad</div><div class="prob">{total_prob}%</div></div>
     </div>
   </div>"""
-
 
 def generate_model_section(predictions: dict, retro_results: list = None) -> str:
     rows = ""
@@ -1394,7 +1260,6 @@ def generate_model_section(predictions: dict, retro_results: list = None) -> str
     </table>
   </div>
 {retro_html}"""
-
 
 def main():
     print("=" * 60)
@@ -1513,8 +1378,8 @@ def main():
             "away_goals": None,
             "home_team_id": 0,
             "away_team_id": 0,
-            "status_short": "NS",
-        })
+            "status_short": "NS"
+})
     all_synthetic = pd.DataFrame(synthetic_rows)
 
     # Build features ONCE for all matches together
@@ -1590,8 +1455,8 @@ def main():
             "away_goals": None,
             "home_team_id": row["home_team_id"],
             "away_team_id": row["away_team_id"],
-            "status_short": "NS",
-        } for _, row in wc_finished.iterrows()])
+            "status_short": "NS"
+} for _, row in wc_finished.iterrows()])
 
         # Build features once for all retro matches
         retro_combined = pd.concat([historical_for_feat, retro_synthetic], ignore_index=True)
@@ -1656,8 +1521,8 @@ def main():
                     "score": f"{int(hg)}-{int(ag)}",
                     "prob_home": h_prob, "prob_draw": d_prob, "prob_away": a_prob,
                     "pred_label": pred_label, "actual_label": actual_label,
-                    "correct": correct,
-                })
+                    "correct": correct
+})
     if retro_results:
         wins = sum(1 for r in retro_results if r["correct"])
         total = len(retro_results)
@@ -1682,7 +1547,6 @@ def main():
 
     print(f"\n[DONE]  Dashboard saved to: {OUT}")
     print("=" * 60)
-
 
 if __name__ == "__main__":
     main()
