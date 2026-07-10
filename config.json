@@ -1,0 +1,14 @@
+{
+  "api": {
+    "football_api_key": "fc578f6e6829a158d545c5308ac23946"
+  },
+  "model": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "n_estimators": 800,
+    "max_depth": 10,
+    "learning_rate": 0.05,
+    "early_stopping_rounds": 50,
+    "cv_folds": 5
+  }
+}
