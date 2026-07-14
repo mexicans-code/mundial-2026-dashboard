@@ -24,7 +24,6 @@ CONFIG = os.path.join(BASE, "config.json")
 OUT = os.path.join(os.path.dirname(__file__), "index.html")
 
 MATCHES = [
-    ("Spain", "Belgium", "Los Angeles", "QF", "Vie 7pm", "jul10"),
     ("France", "Spain", "Dallas", "SF", "Mar 7pm", "jul14"),
 ]
 
@@ -32,13 +31,11 @@ MATCHES_MAP = {(h, a): rest[3] if len(rest) > 3 else rest[2] if len(rest) > 2 el
 
 NAME_MAP_ES = {
     "Spain": "España",
-    "Belgium": "Bélgica",
     "France": "Francia"
 }
 
 TEAM_KEY_MAP = {
     "Spain": "Spain",
-    "Belgium": "Belgium",
     "France": "France"
 }
 
@@ -64,16 +61,6 @@ CORRECT_TEAM_DATA = {
         {"v": "V", "vs": "Egypt", "s": "0-0", "r": "D", "o": "N", "b": "N"},
         {"v": "V", "vs": "Serbia", "s": "3-0", "r": "W", "o": "S", "b": "N"},
         {"v": "V", "vs": "Turkiye", "s": "2-2", "r": "D", "o": "S", "b": "S"},
-    ]},
-    "Belgium": {"f": "WWDWWDDW", "o": "4/8", "b": "4/8", "n": 8, "m": [
-        {"v": "L", "vs": "Liechtenstein", "s": "7-0", "r": "W", "o": "S", "b": "N"},
-        {"v": "V", "vs": "USA", "s": "2-5", "r": "W", "o": "S", "b": "S"},
-        {"v": "V", "vs": "Mexico", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-        {"v": "V", "vs": "Croatia", "s": "0-2", "r": "W", "o": "N", "b": "N"},
-        {"v": "L", "vs": "Tunisia", "s": "5-0", "r": "W", "o": "S", "b": "N"},
-        {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"},
-        {"v": "L", "vs": "Iran", "s": "0-0", "r": "D", "o": "N", "b": "N"},
-        {"v": "V", "vs": "New Zealand", "s": "1-5", "r": "W", "o": "S", "b": "S"},
     ]},
     "France": {"f": "WWLWWWWW", "o": "8/8", "b": "6/8", "n": 8, "m": [
         {"v": "V", "vs": "Brazil", "s": "1-2", "r": "W", "o": "S", "b": "S"},
@@ -563,22 +550,12 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 </div>
 
 <div class="nav">
-  <button class="active" data-section="jul10">10 Jul — CF</button>
-  <button data-section="jul14">14 Jul — SF</button>
+  <button class="active" data-section="jul14">14 Jul — SF</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
-<!-- ===== 10 JUL - QF ===== -->
-<div id="s-jul10" class="section active">
-  <div class="card-grid">
-{generate_match_cards(predictions, stats, "jul10")}
-  </div>
-{generate_bets_section(predictions, "jul10")}
-{generate_extra_markets(predictions, stats, "jul10")}
-</div>
-
 <!-- ===== 14 JUL - SF ===== -->
-<div id="s-jul14" class="section">
+<div id="s-jul14" class="section active">
   <div class="card-grid">
 {generate_match_cards(predictions, stats, "jul14")}
   </div>
@@ -610,7 +587,6 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 <script>
 const nameMap = {{
   'España':'Spain',
-  'Bélgica':'Belgium',
   'Francia':'France'
 }};
 
@@ -667,8 +643,7 @@ document.getElementById('updateDate').textContent = new Date().toLocaleDateStrin
 </html>"""
 
 ANALYSIS = {
-    "Spain vs Belgium": "España eliminó a Portugal 1-0 en R16. Bélgica goleó 4-1 a USA. Cuartos de final en Los Ángeles. El modelo favorece a España como local moral (56%). Bélgica ha demostrado solidez defensiva en momentos clave. Duelo tactico de alto nivel.",
-    "France vs Spain": "Semifinal en Dallas. Francia eliminó a Marruecos 2-0 en QF, mostrando solidez. El modelo ve un partido extremadamente parejo: 33% cada resultado. Francia tiene experiencia, España tiene posesion. Puede definirse por pequeños detalles."
+    "France vs Spain": "Semifinal en Dallas. Francia eliminó a Marruecos 2-0 en QF, mostrando solidez defensiva y efectividad. España viene de eliminar a Bélgica. El modelo ve un partido extremadamente parejo. Francia tiene experiencia en estas instancias, España tiene posesion y juventud. Puede definirse por pequeños detalles."
 }
 
 def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
