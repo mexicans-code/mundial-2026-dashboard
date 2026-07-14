@@ -25,18 +25,21 @@ OUT = os.path.join(os.path.dirname(__file__), "index.html")
 
 MATCHES = [
     ("Spain", "Belgium", "Los Angeles", "QF", "Vie 7pm", "jul10"),
+    ("France", "Spain", "Dallas", "SF", "Mar 7pm", "jul14"),
 ]
 
 MATCHES_MAP = {(h, a): rest[3] if len(rest) > 3 else rest[2] if len(rest) > 2 else "jul2" for h, a, *rest in MATCHES}
 
 NAME_MAP_ES = {
     "Spain": "España",
-    "Belgium": "Bélgica"
+    "Belgium": "Bélgica",
+    "France": "Francia"
 }
 
 TEAM_KEY_MAP = {
     "Spain": "Spain",
-    "Belgium": "Belgium"
+    "Belgium": "Belgium",
+    "France": "France"
 }
 
 def load_config() -> Config:
@@ -71,6 +74,16 @@ CORRECT_TEAM_DATA = {
         {"v": "L", "vs": "Egypt", "s": "1-1", "r": "D", "o": "N", "b": "S"},
         {"v": "L", "vs": "Iran", "s": "0-0", "r": "D", "o": "N", "b": "N"},
         {"v": "V", "vs": "New Zealand", "s": "1-5", "r": "W", "o": "S", "b": "S"},
+    ]},
+    "France": {"f": "WWLWWWWW", "o": "8/8", "b": "6/8", "n": 8, "m": [
+        {"v": "V", "vs": "Brazil", "s": "1-2", "r": "W", "o": "S", "b": "S"},
+        {"v": "V", "vs": "Colombia", "s": "1-3", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Ivory Coast", "s": "1-2", "r": "L", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Northern Ireland", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Senegal", "s": "3-1", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Iraq", "s": "3-0", "r": "W", "o": "S", "b": "N"},
+        {"v": "V", "vs": "Norway", "s": "1-4", "r": "W", "o": "S", "b": "S"},
+        {"v": "L", "vs": "Sweden", "s": "3-0", "r": "W", "o": "S", "b": "N"},
     ]}
 }
 
@@ -551,6 +564,7 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 
 <div class="nav">
   <button class="active" data-section="jul10">10 Jul — CF</button>
+  <button data-section="jul14">14 Jul — SF</button>
   <button data-section="modelo">Modelo</button>
 </div>
 
@@ -561,6 +575,15 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
   </div>
 {generate_bets_section(predictions, "jul10")}
 {generate_extra_markets(predictions, stats, "jul10")}
+</div>
+
+<!-- ===== 14 JUL - SF ===== -->
+<div id="s-jul14" class="section">
+  <div class="card-grid">
+{generate_match_cards(predictions, stats, "jul14")}
+  </div>
+{generate_bets_section(predictions, "jul14")}
+{generate_extra_markets(predictions, stats, "jul14")}
 </div>
 
 <!-- ===== MODELO ===== -->
@@ -587,7 +610,8 @@ td .badge.blue {{ background: #3B82F6; color: #fff; }}
 <script>
 const nameMap = {{
   'España':'Spain',
-  'Bélgica':'Belgium'
+  'Bélgica':'Belgium',
+  'Francia':'France'
 }};
 
 const teamData = {json.dumps(team_data, ensure_ascii=False)};
@@ -643,7 +667,8 @@ document.getElementById('updateDate').textContent = new Date().toLocaleDateStrin
 </html>"""
 
 ANALYSIS = {
-    "Spain vs Belgium": "España eliminó a Portugal 1-0 en R16. Bélgica goleó 4-1 a USA. Cuartos de final en Los Ángeles. El modelo favorece a España como local moral (56%). Bélgica ha demostrado solidez defensiva en momentos clave. Duelo tactico de alto nivel."
+    "Spain vs Belgium": "España eliminó a Portugal 1-0 en R16. Bélgica goleó 4-1 a USA. Cuartos de final en Los Ángeles. El modelo favorece a España como local moral (56%). Bélgica ha demostrado solidez defensiva en momentos clave. Duelo tactico de alto nivel.",
+    "France vs Spain": "Semifinal en Dallas. Francia eliminó a Marruecos 2-0 en QF, mostrando solidez. El modelo ve un partido extremadamente parejo: 33% cada resultado. Francia tiene experiencia, España tiene posesion. Puede definirse por pequeños detalles."
 }
 
 def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
@@ -730,7 +755,7 @@ def generate_match_cards(predictions: dict, stats: dict, section: str) -> str:
       <div class="match-name">{h_display} <span class="vs">vs</span> {a_display}</div>
       <div class="match-meta">
         <span>{venue}</span>
-        <span class="badge {'blue' if stage == 'R16' else 'amber'}">{stage}</span>
+        <span class="badge {'blue' if stage in ('R16','SF') else 'amber'}">{stage}</span>
         <span>{time}</span>
       </div>
       <div class="prob-bar">
