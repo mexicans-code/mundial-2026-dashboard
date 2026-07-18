@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Liga MX — Apertura 2026 J1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #0A0E17; --surface: #131920; --border: #1E293B; --title: #F8FAFC; --body: #94A3B8; --green: #22C55E; --red: #EF4444; --amber: #F59E0B; --font: 'Inter', system-ui, sans-serif; --radius: 12px; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--body); font-family:var(--font); font-size:14px; padding:24px; line-height:1.5; }
+.container { max-width:1200px; margin:0 auto; }
+.header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+.header-left h1 { font-size:24px; font-weight:600; color:var(--title); margin-bottom:2px; }
+.header-left .sub { font-size:13px; color:var(--body); }
+.header-right { font-size:12px; color:var(--body); }
+.disclaimer { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:12px 16px; font-size:12px; color:var(--body); margin-bottom:20px; }
+.nav { display:flex; gap:4px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid var(--border); }
+.nav button { background:none; border:none; color:var(--body); padding:10px 18px; font-size:13px; font-weight:500; font-family:var(--font); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color 0.15s; }
+.nav button:hover { color:var(--title); }
+.nav button.active { color:var(--title); border-bottom-color:var(--title); }
+.section { display:none; }
+.section.active { display:block; }
+.card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:16px; margin-bottom:24px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+.card.full { grid-column:1/-1; }
+.card h2 { font-size:14px; font-weight:600; color:var(--body); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:14px; }
+.match-name { font-size:17px; font-weight:600; color:var(--title); margin-bottom:4px; }
+.match-name .vs { color:var(--body); font-weight:400; font-size:14px; margin:0 6px; }
+.prob-bar { display:flex; height:28px; border-radius:6px; overflow:hidden; margin-bottom:12px; font-size:11px; font-weight:600; }
+.prob-bar div { display:flex; align-items:center; justify-content:center; }
+.prob-bar .home { background:var(--green); color:#000; }
+.prob-bar .draw { background:var(--amber); color:#000; }
+.prob-bar .away { background:var(--red); color:#fff; }
+.markets { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
+.market-item { background:rgba(255,255,255,0.04); border-radius:8px; padding:10px; text-align:center; }
+.market-item .lbl { font-size:10px; color:var(--body); text-transform:uppercase; letter-spacing:0.3px; }
+.market-item .val { font-size:16px; font-weight:700; color:var(--title); }
+.market-item .val.green { color:var(--green); }
+.market-item .val.red { color:var(--red); }
+.market-item .val.amber { color:var(--amber); }
+.value-bet { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-top:8px; }
+.value-bet .lbl { font-size:10px; color:var(--body); text-transform:uppercase; letter-spacing:0.3px; }
+.value-bet .val { font-size:13px; font-weight:600; color:var(--green); }
+.stat-box { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:12px; margin-bottom:20px; }
+.stat-item { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; text-align:center; }
+.stat-item .num { font-size:28px; font-weight:700; color:var(--title); }
+.stat-item .lbl { font-size:12px; color:var(--body); margin-top:4px; }
+table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; }
+th { text-align:left; padding:8px 10px; color:var(--body); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.3px; border-bottom:1px solid var(--border); }
+td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--body); white-space:nowrap; }
+td strong { color:var(--title); }
+td.green { color:var(--green); }
+td.red { color:var(--red); }
+td.amber { color:var(--amber); }
+.fw-G { color:var(--green); font-weight:700; } .fw-E { color:var(--amber); font-weight:700; } .fw-P { color:var(--red); font-weight:700; }
+.mercados-extra { margin-top:12px; border-top:1px solid var(--border); padding-top:8px; }
+.me-header { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-size:12px; font-weight:600; color:var(--body); text-transform:uppercase; letter-spacing:0.3px; padding:4px 0; user-select:none; }
+.me-arrow { transition:transform 0.2s; font-size:10px; }
+.mercados-extra.open .me-arrow { transform:rotate(90deg); }
+.me-content { display:none; margin-top:8px; }
+.mercados-extra.open .me-content { display:block; }
+.me-section { margin-bottom:10px; }
+.me-title { font-size:11px; font-weight:600; color:var(--body); margin-bottom:4px; letter-spacing:0.2px; }
+.markets-grid { display:flex; flex-wrap:wrap; gap:4px; }
+.markets-grid .market-item { flex:0 0 auto; min-width:65px; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:4px 8px; display:flex; justify-content:space-between; align-items:center; gap:6px; }
+.markets-grid .market-item .lbl { font-size:10px; color:var(--body); }
+.markets-grid .market-item .val { font-size:11px; font-weight:600; }
+.combo-grid { display:grid; gap:4px; }
+.m-line { display:flex; align-items:center; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.04); gap:8px; }
+.m-line:last-child { border-bottom:none; }
+.m-name { flex:1; font-size:12px; color:var(--title); }
+.m-prob { font-size:12px; font-weight:600; color:var(--amber); min-width:36px; text-align:right; }
+.m-odds { font-size:13px; font-weight:700; color:var(--green); min-width:42px; text-align:right; }
+.footer { text-align:center; color:rgba(148,163,184,0.4); font-size:11px; margin-top:32px; padding:16px 0; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="header-left">
+    <h1>Liga MX — Apertura 2026</h1>
+    <div class="sub">Jornada 1 18/07/2026 &middot; 8 partidos</div>
+  </div>
+  <div class="header-right">18/07/2026 16:46</div>
+</div>
+
+<div class="disclaimer">
+  Predicciones generadas por modelo ML entrenado con datos 2016-2024 (Random Forest + XGBoost). Solo fines educativos. Juega con responsabilidad.
+</div>
+
+<div class="nav">
+  <button class="active" data-section="predicciones">Predicciones J1</button>
+  <button data-section="estadisticas">Estadísticas</button>
+  <button data-section="tabla">Tabla Histórica</button>
+</div>
+
+<!-- ===== PREDICCIONES ===== -->
+<div id="s-predicciones" class="section active">
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="match-name">Club Tijuana <span class="vs">vs</span> Tigres UANL</div>
+      <div class="prob-bar">
+        <div class="home" style="width:14%">14%</div>
+        <div class="draw" style="width:29%">29%</div>
+        <div class="away" style="width:57%">57%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--red)">Tigres UANL (57%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">53%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">49%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=2.91)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">95%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">79%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">53%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">33%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">17%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">Club Tijuana AH -0.5</div><div class="val green">57%</div></div>
+              <div class="market-item"><div class="lbl">Tigres UANL AH -0.5</div><div class="val green">57%</div></div>
+              <div class="market-item"><div class="lbl">Club Tijuana AH +0.5</div><div class="val red">43%</div></div>
+              <div class="market-item"><div class="lbl">Tigres UANL AH +0.5</div><div class="val red">14%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val amber">55%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val green">59%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val green">58%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">26%</div><div class="m-odds">3.82</div></div>
+              <div class="m-line"><div class="m-name">Tigres UANL Gana + O2.5</div><div class="m-prob">30%</div><div class="m-odds">3.31</div></div>
+              <div class="m-line"><div class="m-name">Tigres UANL Gana + BTTS</div><div class="m-prob">28%</div><div class="m-odds">3.58</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">Leon <span class="vs">vs</span> Atlas</div>
+      <div class="prob-bar">
+        <div class="home" style="width:27%">27%</div>
+        <div class="draw" style="width:19%">19%</div>
+        <div class="away" style="width:54%">54%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--red)">Atlas (54%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">55%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">51%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=1.81)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">84%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val amber">54%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val green">55%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">11%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">4%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">Leon AH -0.5</div><div class="val amber">54%</div></div>
+              <div class="market-item"><div class="lbl">Atlas AH -0.5</div><div class="val amber">54%</div></div>
+              <div class="market-item"><div class="lbl">Leon AH +0.5</div><div class="val red">46%</div></div>
+              <div class="market-item"><div class="lbl">Atlas AH +0.5</div><div class="val red">27%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val red">21%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val red">14%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val red">16%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">28%</div><div class="m-odds">3.54</div></div>
+              <div class="m-line"><div class="m-name">Atlas Gana + O2.5</div><div class="m-prob">30%</div><div class="m-odds">3.36</div></div>
+              <div class="m-line"><div class="m-name">Atlas Gana + BTTS</div><div class="m-prob">28%</div><div class="m-odds">3.63</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">Atletico San Luis <span class="vs">vs</span> Cruz Azul</div>
+      <div class="prob-bar">
+        <div class="home" style="width:10%">10%</div>
+        <div class="draw" style="width:21%">21%</div>
+        <div class="away" style="width:69%">69%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--red)">Cruz Azul (69%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">54%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">57%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=2.37)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">91%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">68%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">54%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">21%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">9%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">Atletico San Luis AH -0.5</div><div class="val green">69%</div></div>
+              <div class="market-item"><div class="lbl">Cruz Azul AH -0.5</div><div class="val green">69%</div></div>
+              <div class="market-item"><div class="lbl">Atletico San Luis AH +0.5</div><div class="val red">31%</div></div>
+              <div class="market-item"><div class="lbl">Cruz Azul AH +0.5</div><div class="val red">10%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val red">37%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val red">34%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val red">35%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">31%</div><div class="m-odds">3.27</div></div>
+              <div class="m-line"><div class="m-name">Cruz Azul Gana + O2.5</div><div class="m-prob">37%</div><div class="m-odds">2.70</div></div>
+              <div class="m-line"><div class="m-name">Cruz Azul Gana + BTTS</div><div class="m-prob">39%</div><div class="m-odds">2.53</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">FC Juarez <span class="vs">vs</span> Puebla</div>
+      <div class="prob-bar">
+        <div class="home" style="width:31%">31%</div>
+        <div class="draw" style="width:13%">13%</div>
+        <div class="away" style="width:56%">56%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--red)">Puebla (56%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">48%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">51%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=2.59)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">93%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">73%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val red">48%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">26%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">12%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">FC Juarez AH -0.5</div><div class="val green">56%</div></div>
+              <div class="market-item"><div class="lbl">Puebla AH -0.5</div><div class="val green">56%</div></div>
+              <div class="market-item"><div class="lbl">FC Juarez AH +0.5</div><div class="val red">44%</div></div>
+              <div class="market-item"><div class="lbl">Puebla AH +0.5</div><div class="val red">31%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val red">45%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val red">45%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val red">45%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">25%</div><div class="m-odds">4.08</div></div>
+              <div class="m-line"><div class="m-name">Puebla Gana + O2.5</div><div class="m-prob">27%</div><div class="m-odds">3.72</div></div>
+              <div class="m-line"><div class="m-name">Puebla Gana + BTTS</div><div class="m-prob">29%</div><div class="m-odds">3.50</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">U.N.A.M. - Pumas <span class="vs">vs</span> Pachuca</div>
+      <div class="prob-bar">
+        <div class="home" style="width:60%">60%</div>
+        <div class="draw" style="width:15%">15%</div>
+        <div class="away" style="width:26%">26%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--green)">U.N.A.M. - Pumas (60%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">56%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">56%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=3.74)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">98%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">89%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val green">56%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val amber">51%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">32%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">U.N.A.M. - Pumas AH -0.5</div><div class="val red">26%</div></div>
+              <div class="market-item"><div class="lbl">Pachuca AH -0.5</div><div class="val red">26%</div></div>
+              <div class="market-item"><div class="lbl">U.N.A.M. - Pumas AH +0.5</div><div class="val green">60%</div></div>
+              <div class="market-item"><div class="lbl">Pachuca AH +0.5</div><div class="val green">60%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val green">69%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val green">79%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val green">76%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">32%</div><div class="m-odds">3.16</div></div>
+              <div class="m-line"><div class="m-name">U.N.A.M. - Pumas Gana + O2.5</div><div class="m-prob">34%</div><div class="m-odds">2.97</div></div>
+              <div class="m-line"><div class="m-name">U.N.A.M. - Pumas Gana + BTTS</div><div class="m-prob">34%</div><div class="m-odds">2.98</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">Monterrey <span class="vs">vs</span> Santos Laguna</div>
+      <div class="prob-bar">
+        <div class="home" style="width:40%">40%</div>
+        <div class="draw" style="width:23%">23%</div>
+        <div class="away" style="width:37%">37%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--green)">Monterrey (40%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">55%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">60%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=2.89)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">94%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">78%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val green">55%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">33%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">17%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">Monterrey AH -0.5</div><div class="val red">37%</div></div>
+              <div class="market-item"><div class="lbl">Santos Laguna AH -0.5</div><div class="val red">37%</div></div>
+              <div class="market-item"><div class="lbl">Monterrey AH +0.5</div><div class="val red">40%</div></div>
+              <div class="market-item"><div class="lbl">Santos Laguna AH +0.5</div><div class="val red">40%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val amber">54%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val green">58%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val green">57%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">33%</div><div class="m-odds">3.01</div></div>
+              <div class="m-line"><div class="m-name">Monterrey Gana + O2.5</div><div class="m-prob">22%</div><div class="m-odds">4.46</div></div>
+              <div class="m-line"><div class="m-name">Monterrey Gana + BTTS</div><div class="m-prob">24%</div><div class="m-odds">4.13</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">Guadalajara Chivas <span class="vs">vs</span> Toluca</div>
+      <div class="prob-bar">
+        <div class="home" style="width:41%">41%</div>
+        <div class="draw" style="width:17%">17%</div>
+        <div class="away" style="width:42%">42%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--red)">Toluca (42%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">51%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">53%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=2.86)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">94%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">78%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val amber">51%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">32%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">16%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">Guadalajara Chivas AH -0.5</div><div class="val red">42%</div></div>
+              <div class="market-item"><div class="lbl">Toluca AH -0.5</div><div class="val red">42%</div></div>
+              <div class="market-item"><div class="lbl">Guadalajara Chivas AH +0.5</div><div class="val green">58%</div></div>
+              <div class="market-item"><div class="lbl">Toluca AH +0.5</div><div class="val red">41%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val amber">53%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val green">57%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val green">56%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">27%</div><div class="m-odds">3.65</div></div>
+              <div class="m-line"><div class="m-name">Toluca Gana + O2.5</div><div class="m-prob">22%</div><div class="m-odds">4.64</div></div>
+              <div class="m-line"><div class="m-name">Toluca Gana + BTTS</div><div class="m-prob">22%</div><div class="m-odds">4.48</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="match-name">Club Queretaro <span class="vs">vs</span> Club America</div>
+      <div class="prob-bar">
+        <div class="home" style="width:26%">26%</div>
+        <div class="draw" style="width:13%">13%</div>
+        <div class="away" style="width:60%">60%</div>
+      </div>
+      <div class="markets">
+        <div class="market-item"><div class="lbl">Pronóstico</div><div class="val" style="color:var(--red)">Club America (60%)</div></div>
+        <div class="market-item"><div class="lbl">O2.5</div><div class="val green">47%</div></div>
+        <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">51%</div></div>
+      </div>
+      <div class="mercados-extra">
+        <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>Mercados Adicionales</span>
+          <span class="me-arrow">&#9654;</span>
+        </div>
+        <div class="me-content">
+          <div class="me-section">
+            <div class="me-title">Líneas de Gol (Poisson λ=3.21)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">O0.5</div><div class="val green">96%</div></div>
+              <div class="market-item"><div class="lbl">O1.5</div><div class="val green">83%</div></div>
+              <div class="market-item"><div class="lbl">O2.5</div><div class="val red">47%</div></div>
+              <div class="market-item"><div class="lbl">O3.5</div><div class="val red">40%</div></div>
+              <div class="market-item"><div class="lbl">O4.5</div><div class="val red">22%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Hándicap Asiático</div>
+            <div class="markets-grid" style="grid-template-columns:1fr 1fr">
+              <div class="market-item"><div class="lbl">Club Queretaro AH -0.5</div><div class="val green">60%</div></div>
+              <div class="market-item"><div class="lbl">Club America AH -0.5</div><div class="val green">60%</div></div>
+              <div class="market-item"><div class="lbl">Club Queretaro AH +0.5</div><div class="val red">40%</div></div>
+              <div class="market-item"><div class="lbl">Club America AH +0.5</div><div class="val red">26%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Estadísticas (Estimación Liga MX)</div>
+            <div class="markets-grid">
+              <div class="market-item"><div class="lbl">T. Amarillas O4.5</div><div class="val green">63%</div></div>
+              <div class="market-item"><div class="lbl">Córners O9.5</div><div class="val green">71%</div></div>
+              <div class="market-item"><div class="lbl">Remates P. O7.5</div><div class="val green">68%</div></div>
+            </div>
+          </div>
+          <div class="me-section">
+            <div class="me-title">Combinadas</div>
+            <div class="combo-grid">
+              <div class="m-line"><div class="m-name">BTTS + O2.5</div><div class="m-prob">24%</div><div class="m-odds">4.17</div></div>
+              <div class="m-line"><div class="m-name">Club America Gana + O2.5</div><div class="m-prob">28%</div><div class="m-odds">3.54</div></div>
+              <div class="m-line"><div class="m-name">Club America Gana + BTTS</div><div class="m-prob">31%</div><div class="m-odds">3.24</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ESTADISTICAS ===== -->
+<div id="s-estadisticas" class="section">
+  <div class="stat-box">
+    <div class="stat-item"><div class="num">2.66</div><div class="lbl">Goles x Partido</div></div>
+    <div class="stat-item"><div class="num">50%</div><div class="lbl">Over 2.5</div></div>
+    <div class="stat-item"><div class="num">54%</div><div class="lbl">BTTS</div></div>
+    <div class="stat-item"><div class="num">45%</div><div class="lbl">Local Gana</div></div>
+  </div>
+  <div class="card full">
+    <h2>Rendimiento del Modelo (CV)</h2>
+    <div style="font-size:13px;color:var(--body)">
+      1X2: <strong style="color:var(--title)">61%</strong> &middot;
+      O/U 2.5: <strong style="color:var(--title)">51%</strong> &middot;
+      BTTS: <strong style="color:var(--title)">53%</strong>
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--body)">
+      Random Forest (100 árboles, max_depth=5) + XGBoost (learning_rate=0.05) &middot; 33 features
+    </div>
+  </div>
+</div>
+
+<!-- ===== TABLA ===== -->
+<div id="s-tabla" class="section">
+  <div class="card full">
+    <h2>Tabla Histórica 2016-2024</h2>
+    <div style="font-size:12px;color:var(--body);margin-bottom:8px">2813 partidos · 24 equipos</div>
+    <table>
+      <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GA</th><th>DG</th><th>Pts</th><th>%</th><th>Forma</th></tr></thead>
+      <tbody>
+    <tr><td>1</td><td><strong>Club America</strong></td><td>350</td><td class="green">178</td><td>99</td><td class="red">73</td><td>579</td><td>370</td><td class="green">+209.0</td><td class="green">633</td><td>51%</td><td><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span></td></tr>
+    <tr><td>2</td><td><strong>Tigres UANL</strong></td><td>345</td><td class="green">164</td><td>101</td><td class="red">80</td><td>526</td><td>338</td><td class="green">+188.0</td><td class="green">593</td><td>48%</td><td><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-E">E</span></td></tr>
+    <tr><td>3</td><td><strong>Monterrey</strong></td><td>334</td><td class="green">157</td><td>92</td><td class="red">85</td><td>521</td><td>357</td><td class="green">+164.0</td><td class="green">563</td><td>47%</td><td><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-E">E</span></td></tr>
+    <tr><td>4</td><td><strong>Cruz Azul</strong></td><td>321</td><td class="green">141</td><td>85</td><td class="red">95</td><td>446</td><td>361</td><td class="green">+85.0</td><td class="green">508</td><td>44%</td><td><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-P">P</span></td></tr>
+    <tr><td>5</td><td><strong>Leon</strong></td><td>315</td><td class="green">134</td><td>78</td><td class="red">103</td><td>464</td><td>405</td><td class="green">+59.0</td><td class="green">480</td><td>43%</td><td><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-P">P</span></td></tr>
+    <tr><td>6</td><td><strong>Pachuca</strong></td><td>312</td><td class="green">127</td><td>85</td><td class="red">100</td><td>472</td><td>396</td><td class="green">+76.0</td><td class="green">466</td><td>41%</td><td><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr>
+    <tr><td>7</td><td><strong>Toluca</strong></td><td>315</td><td class="green">126</td><td>85</td><td class="red">104</td><td>480</td><td>432</td><td class="green">+48.0</td><td class="green">463</td><td>40%</td><td><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr>
+    <tr><td>8</td><td><strong>Guadalajara Chivas</strong></td><td>315</td><td class="green">116</td><td>96</td><td class="red">103</td><td>384</td><td>359</td><td class="green">+25.0</td><td class="green">444</td><td>37%</td><td><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr>
+    <tr><td>9</td><td><strong>Santos Laguna</strong></td><td>313</td><td class="green">113</td><td>88</td><td class="red">112</td><td>450</td><td>444</td><td class="green">+6.0</td><td class="green">427</td><td>36%</td><td><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr>
+    <tr><td>10</td><td><strong>U.N.A.M. - Pumas</strong></td><td>312</td><td class="green">105</td><td>92</td><td class="red">115</td><td>408</td><td>424</td><td class="red">-16.0</td><td class="green">407</td><td>34%</td><td><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr>
+    <tr><td>11</td><td><strong>Club Tijuana</strong></td><td>299</td><td class="green">98</td><td>77</td><td class="red">124</td><td>351</td><td>434</td><td class="red">-83.0</td><td class="green">371</td><td>33%</td><td><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-P">P</span></td></tr>
+    <tr><td>12</td><td><strong>Atlas</strong></td><td>307</td><td class="green">94</td><td>81</td><td class="red">132</td><td>334</td><td>403</td><td class="red">-69.0</td><td class="green">363</td><td>31%</td><td><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-P">P</span></td></tr>
+    <tr><td>13</td><td><strong>Necaxa</strong></td><td>298</td><td class="green">91</td><td>89</td><td class="red">118</td><td>365</td><td>402</td><td class="red">-37.0</td><td class="green">362</td><td>31%</td><td><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-E">E</span></td></tr>
+    <tr><td>14</td><td><strong>Puebla</strong></td><td>302</td><td class="green">90</td><td>82</td><td class="red">130</td><td>366</td><td>454</td><td class="red">-88.0</td><td class="green">352</td><td>30%</td><td><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr>
+    <tr><td>15</td><td><strong>Club Queretaro</strong></td><td>289</td><td class="green">74</td><td>85</td><td class="red">130</td><td>309</td><td>423</td><td class="red">-114.0</td><td class="green">307</td><td>26%</td><td><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-G">G</span></td></tr>
+    <tr><td>16</td><td><strong>Atletico San Luis</strong></td><td>196</td><td class="green">62</td><td>41</td><td class="red">93</td><td>245</td><td>310</td><td class="red">-65.0</td><td class="green">227</td><td>32%</td><td><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-P">P</span></td></tr>
+    <tr><td>17</td><td><strong>Monarcas</strong></td><td>142</td><td class="green">51</td><td>38</td><td class="red">53</td><td>200</td><td>210</td><td class="red">-10.0</td><td class="green">191</td><td>36%</td><td><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-G">G</span></td></tr>
+    <tr><td>18</td><td><strong>FC Juarez</strong></td><td>182</td><td class="green">45</td><td>43</td><td class="red">94</td><td>189</td><td>288</td><td class="red">-99.0</td><td class="green">178</td><td>25%</td><td><span class="fw-G">G</span><span class="fw-G">G</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-G">G</span></td></tr>
+    <tr><td>19</td><td><strong>Mazatlán</strong></td><td>155</td><td class="green">38</td><td>41</td><td class="red">76</td><td>176</td><td>252</td><td class="red">-76.0</td><td class="green">155</td><td>25%</td><td><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-E">E</span><span class="fw-P">P</span></td></tr>
+    <tr><td>20</td><td><strong>Veracruz</strong></td><td>120</td><td class="green">22</td><td>21</td><td class="red">77</td><td>97</td><td>230</td><td class="red">-133.0</td><td class="green">87</td><td>18%</td><td><span class="fw-E">E</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-P">P</span><span class="fw-G">G</span><span class="fw-E">E</span><span class="fw-P">P</span><span class="fw-P">P</span></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Sports ML Pipeline v1.0 &middot; Apertura 2026 Jornada 1</p>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('s-' + this.dataset.section).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
