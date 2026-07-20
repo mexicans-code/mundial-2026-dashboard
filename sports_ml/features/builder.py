@@ -225,7 +225,9 @@ class FeatureBuilder:
 
         for team_col in ["home_team", "away_team"]:
             prefix = "home" if "home" in team_col else "away"
-            df[f"{prefix}_rest_days"] = df.groupby(team_col)["date"].diff().dt.days
+            team_sorted = df.sort_values([team_col, "date"])
+            rest = team_sorted.groupby(team_col)["date"].diff().dt.days
+            df[f"{prefix}_rest_days"] = rest
         df.fillna({c: 7 for c in df.columns if "rest_days" in c.lower()}, inplace=True)
         return df
 
@@ -234,7 +236,8 @@ class FeatureBuilder:
             return df
 
         # Drop existing H2H columns to avoid duplication on re-build
-        h2h_cols = ["h2h_home_wins", "h2h_draws", "h2h_away_wins"]
+        h2h_cols = ["h2h_home_wins", "h2h_draws", "h2h_away_wins",
+                     "h2h_total_goals_avg", "h2h_over_rate", "h2h_btts_rate"]
         df = df.drop(columns=[c for c in h2h_cols if c in df.columns], errors="ignore")
 
         h2h_rows = []
@@ -249,15 +252,28 @@ class FeatureBuilder:
                 & (df["date"] < date)
             ].tail(5)
 
-            if past.empty:
-                h2h_rows.append({"h2h_home_wins": 0, "h2h_draws": 0, "h2h_away_wins": 0})
+            if past.empty or past["home_goals"].isna().all():
+                h2h_rows.append({
+                    "h2h_home_wins": 0, "h2h_draws": 0, "h2h_away_wins": 0,
+                    "h2h_total_goals_avg": 2.5, "h2h_over_rate": 0.5, "h2h_btts_rate": 0.5,
+                })
             else:
-                h2h_home = past[(past["home_team"] == home) & (past["home_goals"] > past["away_goals"])].shape[0]
-                h2h_home += past[(past["away_team"] == home) & (past["away_goals"] > past["home_goals"])].shape[0]
-                h2h_away = past[(past["home_team"] == away) & (past["home_goals"] > past["away_goals"])].shape[0]
-                h2h_away += past[(past["away_team"] == away) & (past["away_goals"] > past["home_goals"])].shape[0]
-                h2h_draws = past[past["home_goals"] == past["away_goals"]].shape[0]
-                h2h_rows.append({"h2h_home_wins": h2h_home, "h2h_draws": h2h_draws, "h2h_away_wins": h2h_away})
+                past_c = past.dropna(subset=["home_goals"])
+                h2h_home = past_c[(past_c["home_team"] == home) & (past_c["home_goals"] > past_c["away_goals"])].shape[0]
+                h2h_home += past_c[(past_c["away_team"] == home) & (past_c["away_goals"] > past_c["home_goals"])].shape[0]
+                h2h_away = past_c[(past_c["home_team"] == away) & (past_c["home_goals"] > past_c["away_goals"])].shape[0]
+                h2h_away += past_c[(past_c["away_team"] == away) & (past_c["away_goals"] > past_c["home_goals"])].shape[0]
+                h2h_draws = past_c[past_c["home_goals"] == past_c["away_goals"]].shape[0]
+
+                total_goals_h2h = past_c["home_goals"] + past_c["away_goals"]
+                avg_goals = total_goals_h2h.mean()
+                over_rate = (total_goals_h2h > 2.5).mean()
+                btts_rate = ((past_c["home_goals"] > 0) & (past_c["away_goals"] > 0)).mean()
+
+                h2h_rows.append({
+                    "h2h_home_wins": h2h_home, "h2h_draws": h2h_draws, "h2h_away_wins": h2h_away,
+                    "h2h_total_goals_avg": avg_goals, "h2h_over_rate": over_rate, "h2h_btts_rate": btts_rate,
+                })
 
         h2h_df = pd.DataFrame(h2h_rows, index=df.index)
         return pd.concat([df, h2h_df], axis=1)
@@ -422,11 +438,24 @@ class FeatureBuilder:
             raise ValueError("Synthetic match row not found after feature building.")
         result = featured.loc[match_idx[0]]
 
+        result = result.copy()
+
         # Neutralise home advantage for neutral venues
         # Only remove home advantage baseline; team-specific form stays intact
         if neutral_venue:
             if "league_home_win_rate" in result:
                 result["league_home_win_rate"] = 0.5
+
+        # Clamp rest_days to training-reasonable range to avoid extreme
+        # extrapolation (e.g. predicting Jul 2026 with data ending Dec 2024
+        # produces ~600-day rest days when real in-season rest is 5-14 days).
+        REST_DAYS_MIN = 2
+        REST_DAYS_MAX = 30
+        for col in ("home_rest_days", "away_rest_days"):
+            if col in result:
+                val = result[col]
+                clamped = REST_DAYS_MIN if val < REST_DAYS_MIN else (REST_DAYS_MAX if val > REST_DAYS_MAX else val)
+                result[col] = clamped
 
         # Align to training feature columns if specified
         if feature_cols is not None:
