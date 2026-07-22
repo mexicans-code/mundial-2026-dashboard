@@ -14,11 +14,18 @@ class ModelConfig:
     model_dir: str = "models/saved"
     test_size: float = 0.2
     random_state: int = 42
-    n_estimators: int = 500
-    max_depth: int = 8
+    n_estimators: int = 100
+    max_depth: int = 3
     learning_rate: float = 0.05
     early_stopping_rounds: int = 50
     cv_folds: int = 5
+    xgb_reg_lambda: float = 5.0
+    xgb_reg_alpha: float = 1.0
+    xgb_subsample: float = 0.7
+    xgb_colsample_bytree: float = 0.7
+    xgb_min_child_weight: int = 5
+    rf_weight: float = 0.6
+    xgb_weight: float = 0.4
 
 
 @dataclass

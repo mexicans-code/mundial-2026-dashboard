@@ -108,6 +108,11 @@ class ModelTrainer:
                 eval_metric="mlogloss" if n_classes > 2 else "logloss",
                 use_label_encoder=False,
                 early_stopping_rounds=self.cfg.model.early_stopping_rounds,
+                reg_lambda=self.cfg.model.xgb_reg_lambda,
+                reg_alpha=self.cfg.model.xgb_reg_alpha,
+                subsample=self.cfg.model.xgb_subsample,
+                colsample_bytree=self.cfg.model.xgb_colsample_bytree,
+                min_child_weight=self.cfg.model.xgb_min_child_weight,
                 n_jobs=-1,
             )
 
@@ -151,15 +156,22 @@ class ModelTrainer:
         return metrics
 
     def predict_proba(self, X: np.ndarray, target_key: str = "1X2") -> np.ndarray:
-        """Ensemble average of predicted probabilities."""
+        """Weighted ensemble average of predicted probabilities.
+        
+        RF gets more weight (more stable), XGB gets less (prone to overfitting).
+        """
         if target_key not in self.models:
             raise ValueError(f"No model trained for target '{target_key}'.")
 
         probas = []
+        weights = []
+        rf_w = getattr(self.cfg.model, 'rf_weight', 0.5)
+        xgb_w = getattr(self.cfg.model, 'xgb_weight', 0.5)
+
         for name, model in self.models[target_key]:
             p = model.predict_proba(X)
-            # Handle different class counts across models
             probas.append(p)
+            weights.append(rf_w if name == "rf" else xgb_w)
 
         if not probas:
             return np.array([])
@@ -172,7 +184,12 @@ class ModelTrainer:
                 p = np.hstack([p, pad])
             aligned.append(p)
 
-        return np.mean(aligned, axis=0)
+        total_weight = sum(weights)
+        weighted = np.zeros_like(aligned[0])
+        for p, w in zip(aligned, weights):
+            weighted += p * (w / total_weight)
+
+        return weighted
 
     def predict(self, X: np.ndarray, target_key: str = "1X2") -> np.ndarray:
         return self.predict_proba(X, target_key).argmax(axis=1)

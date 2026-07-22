@@ -459,6 +459,28 @@ class FeatureBuilder:
 
         # Align to training feature columns if specified
         if feature_cols is not None:
-            result = result[feature_cols].fillna(0)
+            result = result[feature_cols]
+            # Fill NaN with league-appropriate defaults instead of 0
+            # (0 for goals features is misleading — looks like team scores 0 goals)
+            defaults = {
+                "home_avg_gf_last5": 1.2, "home_avg_ga_last5": 1.2,
+                "away_avg_gf_last5": 1.2, "away_avg_ga_last5": 1.2,
+                "home_gd_last5": 0.0, "away_gd_last5": 0.0,
+                "home_total_goals_avg_last5": 2.5, "away_total_goals_avg_last5": 2.5,
+                "home_over_rate_last5": 0.5, "away_over_rate_last5": 0.5,
+                "home_btts_rate_last5": 0.5, "away_btts_rate_last5": 0.5,
+                "home_win_streak": 0, "away_win_streak": 0,
+                "home_win_rate": 0.4, "away_win_rate": 0.4,
+                "win_rate_diff": 0.0,
+                "home_strength_gd": 0.0, "away_strength_gd": 0.0,
+                "strength_diff": 0.0,
+                "home_attack_ratio": 1.0, "away_attack_ratio": 1.0,
+                "home_defense_ratio": 1.0, "away_defense_ratio": 1.0,
+                "home_team_freq": 200, "away_team_freq": 200,
+            }
+            for col in result.index:
+                if pd.isna(result[col]) and col in defaults:
+                    result[col] = defaults[col]
+            result = result.fillna(0)
 
         return result.copy()
