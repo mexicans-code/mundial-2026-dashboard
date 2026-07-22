@@ -160,12 +160,13 @@ for home, away, p in pred_cards:
         badge = '⏳'
         correct = None
 
+    exact_scores = p.get('exact_scores', [])[:3]
     card_data.append({
         'home': h, 'away': a, 'ph': ph, 'pd_': pd_, 'pa': pa,
         'o25': o25, 'bt': bt, 'lh': lh, 'la': la,
         'fave': fave, 'fave_p': fave_p, 'fair': fair,
         'actual_score': actual_score, 'badge': badge, 'correct': correct,
-        'hg': hg, 'ag': ag,
+        'hg': hg, 'ag': ag, 'exact_scores': exact_scores,
     })
 
 acc_pct = (correct_count / total_resolved * 100) if total_resolved else 0
@@ -186,10 +187,11 @@ for home, away, _ in MATCHES_J2:
     if ph >= pd_ and ph >= pa: fave = home; fave_p = ph
     elif pa >= ph and pa >= pd_: fave = away; fave_p = pa
     else: fave = "Empate"; fave_p = pd_
+    exact_scores = p.get('exact_scores', [])[:3]
     j2_card_data.append({
         'home': home, 'away': away, 'ph': ph, 'pd_': pd_, 'pa': pa,
         'o25': o25, 'bt': bt, 'lh': lh, 'la': la,
-        'fave': fave, 'fave_p': fave_p,
+        'fave': fave, 'fave_p': fave_p, 'exact_scores': exact_scores,
     })
 
 # Result table rows
@@ -255,6 +257,11 @@ for d in card_data:
     else:
         result_line = f'<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--body)">Resultado: Pendiente</span><span style="font-size:16px">{badge}</span></div>'
 
+    exact_html = ""
+    if d.get('exact_scores'):
+        scores_str = " / ".join(f"{s['score']} ({s['prob']*100:.0f}%)" for s in d['exact_scores'])
+        exact_html = f'<div style="margin-top:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--body);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Marcador Exacto</div><div style="font-size:13px;font-weight:600;color:var(--title)">{scores_str}</div></div>'
+
     cards_html += f"""
     <div class="card">
       <div class="match-name">{h} <span class="vs">vs</span> {a}</div>
@@ -268,6 +275,7 @@ for d in card_data:
         <div class="market-item"><div class="lbl">O2.5</div><div class="val green">{o25:.0f}%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">{bt:.0f}%</div></div>
       </div>
+      {exact_html}
       {result_line}
       <div class="mercados-extra">
         <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
@@ -354,6 +362,11 @@ for d in j2_card_data:
     fave_o25 = fave_p/100 * o25/100 * 100
     fave_bt = fave_p/100 * bt/100 * 100
 
+    j2_exact_html = ""
+    if d.get('exact_scores'):
+        scores_str = " / ".join(f"{s['score']} ({s['prob']*100:.0f}%)" for s in d['exact_scores'])
+        j2_exact_html = f'<div style="margin-top:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--body);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Marcador Exacto</div><div style="font-size:13px;font-weight:600;color:var(--title)">{scores_str}</div></div>'
+
     j2_cards_html += f"""
     <div class="card">
       <div class="match-name">{h} <span class="vs">vs</span> {a}</div>
@@ -367,6 +380,7 @@ for d in j2_card_data:
         <div class="market-item"><div class="lbl">O2.5</div><div class="val green">{o25:.0f}%</div></div>
         <div class="market-item"><div class="lbl">BTTS</div><div class="val amber">{bt:.0f}%</div></div>
       </div>
+      {j2_exact_html}
       <div class="mercados-extra">
         <div class="me-header" onclick="this.parentElement.classList.toggle('open')">
           <span>Mercados Adicionales</span>
